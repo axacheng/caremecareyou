@@ -1,9 +1,5 @@
-#!/usr/bin/env python
-#
-#
+# -*- coding: utf-8 -*-
 
-""" 
-"""
 
 import logging
 
@@ -46,7 +42,15 @@ class Report(polymodel.PolyModel):
     data = ndb.IntegerProperty()
 
 
-class Medicine(Report):
+class SideEffect(ndb.Model):
+  name = ndb.StringProperty()
+
+  @classmethod
+  def query_sideeffect(cls, ancestor_key):
+    return cls.query(ancestor=ancestor_key)
+
+
+class Medicine(ndb.Model):
   """docstring for Profile"""
 
   medicine_name = ndb.StringProperty()
@@ -55,7 +59,7 @@ class Medicine(Report):
   medicine_side_effect = ndb.StructuredProperty(SideEffect)
 
 
-class Tool(Report):
+class Tool(ndb.Model):
   """docstring for Profile"""
 
   tool_name = ndb.StringProperty()
@@ -63,24 +67,28 @@ class Tool(Report):
   tool_packing_image = ndb.BlobProperty()
   tool_side_effect = ndb.StructuredProperty(SideEffect)
 
-class CheckList(Report):
+
+class CheckList(ndb.Model):
   """docstring for Profile"""
 
   check_name = ndb.StringProperty()
 
 
-class SideEffect(Report):
-  """docstring for Profile"""
-  side_effect_name = ndb.StringProperty()
-
-
-class Social(ndb.Model):
+class Social(polymodel.PolyModel):
   """docstring for Profile"""
 
-  message = ndb.StructuredProperty(Message)
   follower = ndb.StringProperty(repeated=True)
   display = ndb.BooleanProperty(default=False)
     
+
+class Message(Social):
+  """docstring for Profile"""
+
+  mesg_date_created = ndb.DateTimeProperty(auto_now_add=True)
+  mesg_from = ndb.StringProperty()
+  mesg_to = ndb.StringProperty()
+  mesg = ndb.TextProperty()
+
 
 class User(ndb.Model):
   """使用者資訊。此為最主要的 Kind 由此延伸到使用者其他的Kinds，例如：Profile, Report 和 Social"""
