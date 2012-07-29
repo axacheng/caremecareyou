@@ -1,0 +1,16 @@
+
+
+<form name="myform" action="/upload" enctype="multipart/form-data" method="post"> 
+      <div>Please choose file from your laptop...
+      	<input type="file" name="csv"/>
+      </div> 
+      <div><input type="submit" value="Upload"></div> 
+</form> 
+
+<hr>
+
+{% if all_side_effect %}
+  {% for i in all_side_effect %}
+    <p> {{ i.name }}</p>
+  {% endfor %}
+{% endif %}
