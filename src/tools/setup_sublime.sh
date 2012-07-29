@@ -5,8 +5,8 @@
 # Instead of ./setup_sublime.sh
 # Because CWD issue can not allow you change directory!
 
+# Constants
 SUBLIME_HOME="$HOME"/Library/Application\ Support/Sublime\ Text\ 2
-#SUBLIME_HOME='/tmp/aaa'
 
 
 ### Setup Git ###
