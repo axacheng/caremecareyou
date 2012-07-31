@@ -95,5 +95,3 @@ class User(ndb.Model):
 
   name = ndb.StringProperty()
   profile = ndb.StructuredProperty(Profile)
-  report = ndb.StructuredProperty(Report)
-  social = ndb.StructuredProperty(Social)
