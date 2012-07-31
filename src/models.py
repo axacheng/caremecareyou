@@ -58,6 +58,10 @@ class Medicine(ndb.Model):
   medicine_packing_image = ndb.BlobProperty()
   medicine_side_effect = ndb.StructuredProperty(SideEffect)
 
+  @classmethod
+  def query_medicine(cls, ancestor_key):
+    return cls.query(ancestor=ancestor_key)
+
 
 class Tool(ndb.Model):
   """docstring for Profile"""
@@ -95,3 +99,5 @@ class User(ndb.Model):
 
   name = ndb.StringProperty()
   profile = ndb.StructuredProperty(Profile)
+  report = ndb.StructuredProperty(Report)
+  social = ndb.StructuredProperty(Social)
