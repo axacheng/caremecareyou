@@ -23,7 +23,7 @@ class ShowNdbKinds(webapp2.RequestHandler):
         total_medicine_count = all_medicine.count()
 
         sideeffect_ancestor_key = ndb.Key("SideEffect", "sideeffect")
-        all_sideeffect = models.Medicine.query_medicine(sideeffect_ancestor_key)
+        all_sideeffect = models.SideEffect.query_medicine(sideeffect_ancestor_key)
         total_sideeffect_count = all_sideeffect.count()
 
         template_dict = {'total_medicine_count': total_medicine_count,
