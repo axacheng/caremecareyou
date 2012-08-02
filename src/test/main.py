@@ -19,17 +19,17 @@ class MainPage(webapp2.RequestHandler):
         ##############################################
         # username = 'axa'
         # store_user = models.User(name=username,
-				       #  		   profile=[models.Profile(status=True,
-					   #      							   account_type='facebook',
-					   #      							   account_id='44',
-					   #      							   account_name=username,
-					   #      							   access_token='####111222333###',
-					   #      							   country='TAIWAN',
-					   #      							   protray='',
-					   #      							   email='axa.cheng@gmail.com',
-					   #      							   birthday=datetime.datetime.now().date(),
-					   #      							   gender='male'
-					   #      							  )])
+	#  		   profile=[models.Profile(status=True,
+	#      					account_type='facebook',
+	#      					account_id='44',
+	#      					account_name=username,
+	#      					access_token='####111222333###',
+	#      					country='TAIWAN',
+	#      					protray='',
+	#      					email='axa.cheng@gmail.com',
+	#      					birthday=datetime.datetime.now().date(),
+	#      					gender='male'
+	#      					)])
         # store_user.put()
 
         ############################################
