@@ -95,8 +95,8 @@ def UserLoginHandler(self):
         return {openid_username: logout_link}
 
     elif facebook_user:
-        logging.info("%s logged in." % facebook_user.profile.account_name)
         facebook_user = facebook_user.profile.account_id + ':' + facebook_user.profile.account_name + '@facebook'
+        logging.info("%s logged in." % facebook_user)
         logout_link = '/oauth/facebook_logout'
         return {facebook_user: logout_link}
 
@@ -116,6 +116,7 @@ class MainPage(webapp2.RequestHandler):
         logout_link = "".join(UserLoginHandler(self).values())
 
         if username:
+            username = username
             url_link = logout_link
             url_text = '登出'
             login_status = True
@@ -128,7 +129,7 @@ class MainPage(webapp2.RequestHandler):
         # This url_link could be logout_link or login_link depends on whether
         # username exist or not. If it's exist then url_link is logout_link,
         # vice versa.
-        template_dict = {'url_link': url_link, 'url_text': url_text,
+        template_dict = {'username': username, 'url_link': url_link, 'url_text': url_text,
                          'login_status': login_status}
 
         path = os.path.join(os.path.dirname(__file__), 'index.html')
