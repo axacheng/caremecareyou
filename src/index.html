@@ -31,6 +31,9 @@
   </head>
 
   <body>
+    {{ url_link }}
+    {{ url_text }}
+    {{ login_status }}
 
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
@@ -55,10 +58,9 @@
              <span class="caret"></span>
             </a>
             <ul class="dropdown-menu">
-              <li><a href="#use"><img src="static/img/login/icon_facebook.png"> Facebook</a></li>
-              <li><a href="#use"><img src="static/img/login/icon_Google.png"> google</a></li>
-              <li><a href="#use"><img src="static/img/login/icon_sina.GIF"> Sina 微博</a></li>
-
+                  <li><a href="/oauth/facebook_login"><img src="static/img/login/icon_facebook.png"> Facebook</a></li>
+                  <li><a href="http://caremecareyou.appspot.com/_ah/login_redir?claimid=google.com/accounts/o8/id&continue=http://caremecareyou.appspot.com/"><img src="static/img/login/icon_Google.png"> google</a></li>
+                  <li><a href="/oauth/weibo_login"><img src="static/img/login/icon_sina.GIF"> Sina 微博</a></li>
             <!-- dropdown menu links -->
             </ul>
           </div> <!--/.nav-collapse -->
