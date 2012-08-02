@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
 
-
-import logging
-
 from google.appengine.api import memcache
 from google.appengine.ext import ndb
 from google.appengine.ext.ndb import polymodel
@@ -20,10 +17,11 @@ class Profile(ndb.Model):
     account_name = ndb.StringProperty()
     access_token = ndb.StringProperty()
     country = ndb.StringProperty()
-    image = ndb.BlobProperty()
+    protray = ndb.BlobProperty()
     email = ndb.StringProperty()
     birthday = ndb.DateProperty()
     gender = ndb.StringProperty()
+    url = ndb.StringProperty()
 
 
 class Report(polymodel.PolyModel):
@@ -43,61 +41,61 @@ class Report(polymodel.PolyModel):
 
 
 class SideEffect(ndb.Model):
-  name = ndb.StringProperty()
+    name = ndb.StringProperty()
 
-  @classmethod
-  def query_sideeffect(cls, ancestor_key):
-    return cls.query(ancestor=ancestor_key)
+    @classmethod
+    def query_sideeffect(cls, ancestor_key):
+        return cls.query(ancestor=ancestor_key)
 
 
 class Medicine(ndb.Model):
-  """docstring for Profile"""
+    """docstring for Profile"""
 
-  medicine_name = ndb.StringProperty()
-  medicine_source = ndb.StringProperty()  #Company
-  medicine_packing_image = ndb.BlobProperty()
-  medicine_side_effect = ndb.StructuredProperty(SideEffect)
+    medicine_name = ndb.StringProperty()
+    medicine_source = ndb.StringProperty()  # A company name
+    medicine_packing_image = ndb.BlobProperty()
+    medicine_side_effect = ndb.StructuredProperty(SideEffect)
 
-  @classmethod
-  def query_medicine(cls, ancestor_key):
-    return cls.query(ancestor=ancestor_key)
+    @classmethod
+    def query_medicine(cls, ancestor_key):
+        return cls.query(ancestor=ancestor_key)
 
 
 class Tool(ndb.Model):
-  """docstring for Profile"""
+    """docstring for Profile"""
 
-  tool_name = ndb.StringProperty()
-  tool_source = ndb.StringProperty()  #Company
-  tool_packing_image = ndb.BlobProperty()
-  tool_side_effect = ndb.StructuredProperty(SideEffect)
+    tool_name = ndb.StringProperty()
+    tool_source = ndb.StringProperty()  # A company name
+    tool_packing_image = ndb.BlobProperty()
+    tool_side_effect = ndb.StructuredProperty(SideEffect)
 
 
 class CheckList(ndb.Model):
-  """docstring for Profile"""
+    """docstring for Profile"""
 
-  check_name = ndb.StringProperty()
+    check_name = ndb.StringProperty()
 
 
 class Social(polymodel.PolyModel):
-  """docstring for Profile"""
+    """docstring for Profile"""
 
-  follower = ndb.StringProperty(repeated=True)
-  display = ndb.BooleanProperty(default=False)
-    
+    follower = ndb.StringProperty(repeated=True)
+    display = ndb.BooleanProperty(default=False)
+
 
 class Message(Social):
-  """docstring for Profile"""
+    """docstring for Profile"""
 
-  mesg_date_created = ndb.DateTimeProperty(auto_now_add=True)
-  mesg_from = ndb.StringProperty()
-  mesg_to = ndb.StringProperty()
-  mesg = ndb.TextProperty()
+    mesg_date_created = ndb.DateTimeProperty(auto_now_add=True)
+    mesg_from = ndb.StringProperty()
+    mesg_to = ndb.StringProperty()
+    mesg = ndb.TextProperty()
 
 
 class User(ndb.Model):
-  """使用者資訊。此為最主要的 Kind 由此延伸到使用者其他的Kinds，例如：Profile, Report 和 Social"""
+    """使用者資訊。此為最主要的 Kind 由此延伸到使用者其他的Kinds，例如：Profile, Report 和 Social"""
 
-  name = ndb.StringProperty()
-  profile = ndb.StructuredProperty(Profile)
-  report = ndb.StructuredProperty(Report)
-  social = ndb.StructuredProperty(Social)
+    name = ndb.StringProperty()
+    profile = ndb.StructuredProperty(Profile)
+    report = ndb.StructuredProperty(Report)
+    social = ndb.StructuredProperty(Social)
