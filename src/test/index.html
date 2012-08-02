@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8">
+    <title> dbtest </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+  </head>
+
+
+  <body>
+    Hello 
+    <hr>
+    <!-- Query for .get() method -->
+    {% for i in all_query_result %}
+    <pre>
+        User ID: {{ i.name }}
+        User ID: {{ i.profile.account_id }}
+    </pre>
+    {% endfor %}
+
+
+  </body>
+</html>
