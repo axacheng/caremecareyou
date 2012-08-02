@@ -95,7 +95,7 @@ def UserLoginHandler(self):
         return {openid_username: logout_link}
 
     elif facebook_user:
-        logging.info("%s logged in." % facebook_user.account_name)
+        logging.info("%s logged in." % facebook_user.profile.account_name)
         facebook_user = facebook_user.profile.account_id + ':' + facebook_user.profile.account_name + '@facebook'
         logout_link = '/oauth/facebook_logout'
         return {facebook_user: logout_link}
@@ -121,7 +121,7 @@ class MainPage(webapp2.RequestHandler):
             login_status = True
         else:
             url_link = users.create_login_url(self.request.path)
-            url_text = '先登入才能增加新字'
+            url_text = '請先登入'
             login_status = None
 
         # Compile all the 'key' to template_dict and pass them to index.html

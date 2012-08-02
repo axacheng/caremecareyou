@@ -66,8 +66,10 @@ class BaseHandler(webapp2.RequestHandler):
             self._current_user = None
             user_id = parse_cookie(self.request.cookies.get("fb_user"))
             if user_id:
+                logging.info('User IDDDDD %s' % user_id)
                 #self._current_user = models.Profile.get_by_key_name(user_id)
                 self._current_user = models.User.query(models.User.profile.account_id == user_id).get()
+                logging.info('self_current_user from DB %s' % self_current_user)
         return self._current_user
 
 
@@ -98,6 +100,13 @@ class LoginHandler(BaseHandler):
                 "https://graph.facebook.com/me?" +
                 urllib.urlencode(dict(access_token=access_token))))
 
+            fb_user_protray = json.load(urllib.urlopen(
+                "https://graph.facebook.com/me?fields=picture&" +
+                urllib.urlencode(dict(access_token=access_token))))
+
+            logging.info('FB profile resful result: %s' % fb_user_profile)
+            logging.info('FB profile resful result: %s' % fb_user_protray)
+
             user_profile = models.Profile()
             user_profile.account_type = 'facebook'
             user_profile.account_id = str(fb_user_profile["id"])
@@ -107,7 +116,7 @@ class LoginHandler(BaseHandler):
             user_profile.birthday = datetime.datetime.strptime(fb_user_profile["birthday"], '%m/%d/%Y')
             user_profile.email = fb_user_profile["email"]
             user_profile.gender = fb_user_profile["gender"]
-            #protray=user_profile["picture"]
+            user_profile.protray = fb_user_protray["picture"]["data"]["url"]
             #key_name=str(user_profile["id"])
             user_profile.url = fb_user_profile["link"]
 
