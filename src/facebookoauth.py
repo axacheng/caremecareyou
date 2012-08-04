@@ -104,32 +104,21 @@ class LoginHandler(BaseHandler):
                 urllib.urlencode(dict(access_token=access_token))))
 
             logging.info('FB profile resful result: %s' % fb_user_profile)
+            user_key_name = 'facebook_' + str(fb_user_profile["id"])
+            verify_user = models.User.get_by_id(user_key_name)
+            logging.info('Verify user %s' % verify_user)
 
-
-            # (TODO) We should fetch models.User to verify user is existing in our
-            # User db. If it's not there, then we can populate User, vise versa.
-            
-            user_profile = models.Profile()
-            user_profile.account_type = 'facebook'
-            user_profile.account_id = str(fb_user_profile["id"])
-            user_profile.account_name = fb_user_profile["name"]
-
-            user_profile.access_token = ''.join(access_token)
-            user_profile.birthday = datetime.datetime.strptime(fb_user_profile["birthday"], '%m/%d/%Y')
-            user_profile.email = fb_user_profile["email"]
-            user_profile.gender = fb_user_profile["gender"]
-            user_profile.protray = fb_user_protray["picture"]["data"]["url"]
-            #key_name=str(user_profile["id"])
-            user_profile.url =   fb_user_profile["link"]
-
-
-            user = models.User()
-            user.name = fb_user_profile["name"]
-            user.profile = user_profile
-            user.put()
-            set_cookie(self.response, "fb_user", str(fb_user_profile["id"]),
-                       expires=time.time() + 30 * 86400)
-            self.redirect("/")
+            if verify_user:
+                logging.info('User facebook account is existing. No adding.')
+                set_cookie(self.response, "fb_user", str(fb_user_profile["id"]),
+                           expires=time.time() + 30 * 86400)
+                self.redirect("/")
+            else:
+                models.User.AddFacebookUser(fb_user_profile, fb_user_protray,
+                                            access_token, user_key_name)
+                set_cookie(self.response, "fb_user", str(fb_user_profile["id"]),
+                           expires=time.time() + 30 * 86400)
+                self.redirect("/")
         else:
             self.redirect(
                 "https://graph.facebook.com/oauth/authorize?" +

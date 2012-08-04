@@ -35,6 +35,7 @@
     {{ url_text }}
     {{ login_status }}
 
+
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
@@ -52,6 +53,9 @@
               <li><a href="#more">更多統計</a></li>
             </ul>
           </div>
+
+
+         {% if not login_status %}
           <div class="btn-group pull-right">
             <a class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="#">
               登入
@@ -64,9 +68,14 @@
             <!-- dropdown menu links -->
             </ul>
           </div> <!--/.nav-collapse -->
-        </div>
-      </div>
-    </div>
+        {% else %}
+            <div>
+              我的紀錄
+            </div>
+        {% endif %}    
+        </div> <!-- container -->
+      </div> <!-- navbar-inner -->
+    </div> <!-- navbar -->
 
     <div class="container">
 

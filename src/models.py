@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import datetime
+import logging
 
 from google.appengine.api import memcache
 from google.appengine.ext import ndb
@@ -100,3 +102,23 @@ class User(ndb.Model):
     profile = ndb.StructuredProperty(Profile)
     report = ndb.StructuredProperty(Report)
     social = ndb.StructuredProperty(Social)
+
+    @classmethod
+    def AddFacebookUser(cls, fb_user_profile, fb_user_protray, access_token, user_key_name):
+        logging.info('Adding new facebook user.')
+        user_profile = Profile()
+        user_profile.account_type = 'facebook'
+        user_profile.account_id = str(fb_user_profile["id"])
+        user_profile.account_name = fb_user_profile["name"]
+
+        user_profile.access_token = ''.join(access_token)
+        user_profile.birthday = datetime.datetime.strptime(fb_user_profile["birthday"], '%m/%d/%Y')
+        user_profile.email = fb_user_profile["email"]
+        user_profile.gender = fb_user_profile["gender"]
+        user_profile.protray = fb_user_protray["picture"]["data"]["url"]
+        user_profile.url = fb_user_profile["link"]
+
+        user = User(id=user_key_name)
+        user.name = fb_user_profile["name"]
+        user.profile = user_profile
+        user.put()
