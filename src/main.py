@@ -176,10 +176,10 @@ class UploadData(webapp2.RequestHandler):
         uploaded_file = csv.reader(self.request.get('csv'))
         for side_effect_name in uploaded_file:
             if side_effect_name:
-                #side_effect = models.SideEffect(parent=ndb.Key('SideEffect', 'sideeffect'),
-                #name=''.join(side_effect_name),)
-                side_effect = models.Medicine(parent=ndb.Key('Medicine', 'medicine'),
-                                              medicine_name=''.join(side_effect_name),)
+                side_effect = models.SideEffect(parent=ndb.Key('SideEffect', 'sideeffect'),
+                name=''.join(side_effect_name),)
+                #side_effect = models.Medicine(parent=ndb.Key('Medicine', 'medicine'),
+                #                              medicine_name=''.join(side_effect_name),)
                 side_effect.put()
         self.redirect('/upload')
 
@@ -198,9 +198,19 @@ class DeleteData(webapp2.RequestHandler):
         self.response.out.write(entity_key)
 
 
+class MyRecord(webapp2.RequestHandler):
+    """docstring for MyRecord"""
+    def get(self):
+        template_dict = {}
+        path = os.path.join(os.path.dirname(__file__), 'myrecord.html')
+        self.response.out.write(template.render(path, template_dict))
+        
+
+
 app = webapp2.WSGIApplication([('/', MainPage),
                                 ('/backend_data', ShowNdbKinds),
                                 ('/delete', DeleteData),
+                                ('/myrecord', MyRecord),
                                 ('/oauth/facebook_login', foauth.LoginHandler),
                                 ('/oauth/facebook_logout', foauth.LogoutHandler),
                                 ('/oauth/weibo_login', weibo_oauth_v2.LoginHandler),
