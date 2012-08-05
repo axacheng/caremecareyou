@@ -17,7 +17,6 @@ from google.appengine.ext.webapp import template
 from google.appengine.ext.webapp.util import login_required
 
 
-
 def UserLoginHandler(self):
     """ This method offers username and logout_link to MainPage().
 
@@ -211,7 +210,7 @@ class SearchMedicine(webapp2.RequestHandler):
     def get(self):
         medicine_result = []
         search_word = self.request.get('term')
-        all_medicine = models.Medicine.query(models.Medicine.medicine_name >= unicode(search_word))
+        all_medicine = models.Medicine.query(models.Medicine.medicine_name >= unicode(search_word.capitalize()))
         result = all_medicine.fetch(10)
 
         if result:
