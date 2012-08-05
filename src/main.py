@@ -212,15 +212,12 @@ class SearchMedicine(webapp2.RequestHandler):
         medicine_result = []
         search_word = self.request.get('term')
         all_medicine = models.Medicine.query(models.Medicine.medicine_name >= unicode(search_word))
-
         result = all_medicine.fetch(10)
-        logging.info('All medicine name: %s' % result)
 
         if result:
-            for i in result:
-                medicine_result.append(i.medicine_name)
+            for medicine in result:
+                medicine_result.append(medicine.medicine_name)
 
-            logging.info('return %s' % medicine_result)
             self.response.out.write(json.dumps(medicine_result))
 
 
@@ -228,17 +225,13 @@ class SearchSideEffect(webapp2.RequestHandler):
     def get(self):
         side_effect_result = []
         search_word = self.request.get('term')
-        logging.info('xxxxxxxxxxxxxxxxxxxxx %s' % search_word)
         all_side_effect = models.SideEffect.query(models.SideEffect.name >= unicode(search_word))
-
         result = all_side_effect.fetch(10)
-        logging.info('All side_effect name: %s' % result)
 
         if result:
-            for i in result:
-                side_effect_result.append(i.name)
+            for side_effect in result:
+                side_effect_result.append(side_effect.name)
 
-            logging.info('return %s' % side_effect_result)
             self.response.out.write(json.dumps(side_effect_result))
 
 
