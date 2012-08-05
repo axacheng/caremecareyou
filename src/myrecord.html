@@ -1,33 +1,50 @@
 <!DOCTYPE html>
 <html lang="zh">
   <head>
-    <meta charset="utf-8">
-    <title> 我的紀錄 </title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style type="text/css">@media print {  .gmnoprint {    display:none  }}@media screen {  .gmnoscreen {    display:none  }}</style>
+      <meta charset="utf-8">
+      <title> 我的紀錄 </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="description" content="">
+      <meta name="author" content="">
 
-    <!-- Le styles -->
-    <link href="static/css/bootstrap.css" rel="stylesheet">
-    <style type="text/css">
-      body {
-        padding-top: 60px;
-        padding-bottom: 40px;
-      }
-    </style>
-    <link href="static/css/bootstrap-responsive.css" rel="stylesheet">
+      <!-- bootstrap css -->
+      <link href="static/css/bootstrap.css" rel="stylesheet">
+      <link href="static/css/style.css" rel="stylesheet">
+      <!-- base css -->
+      <link class="links-css" href="static/css/base.css" rel="stylesheet">
+      <!-- home page css -->
+      <link href="static/css/home-page.css" rel="stylesheet">
+      <style type="text/css">
+        body {
+          padding-top: 60px;
+          padding-bottom: 40px;
+         }
+        .sidebar-nav {
+         padding: 9px 0;
+        }
+      </style>
+      <!-- datepicker css -->
+      <link href="static/css/datepicker.css" rel="stylesheet">
+      <!-- responsive css -->
+      <link href="static/css/bootstrap-responsive.css" rel="stylesheet">
+      <!-- media query css -->
+      <link href="static/css/media-fluid.css" rel="stylesheet">
 
-    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+       <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+       <!--[if lt IE 9]>
+       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+       <![endif]-->
 
-    <!---- Le fav and touch icons ---->
-    <link rel="shortcut icon" href="static/ico/favicon.ico">
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="static/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="static/ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="static/ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="static/ico/apple-touch-icon-57-precomposed.png">
+       <!---- Le fav and touch icons ---->
+       <link rel="shortcut icon" href="static/ico/favicon.ico">
+       <link rel="apple-touch-icon-precomposed" sizes="144x144" href="static/ico/apple-touch-icon-144-precomposed.png">
+       <link rel="apple-touch-icon-precomposed" sizes="114x114" href="static/ico/apple-touch-icon-114-precomposed.png">
+       <link rel="apple-touch-icon-precomposed" sizes="72x72" href="static/ico/apple-touch-icon-72-precomposed.png">
+       <link rel="apple-touch-icon-precomposed" href="static/ico/apple-touch-icon-57-precomposed.png">
+    <script src="static/js/{common,map}.js"></script>
+    <script src="static/js/{util,onion}.js"></script>
+    <script src="static/js/{controls,marker,overlay,stats}.js"></script>
   </head>
 
   <body>
@@ -38,37 +55,725 @@
 
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
-        <div class="container">
+        <div class="container-fluid">
           <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a> 
-          <a class="brand" href="#"> 永保安康 </a>
+          <a class="brand" href="#" data-original-title=""> 永保安康 </a>
           <div class="nav-collapse">
-            <ul class="nav">
-              <li class="active"><a href="#">首頁</a></li>
+            <ul class="nav pull-left bar-root">
+              <li><a href="#">首頁</a></li>
               <li><a href="#use">如何使用</a></li>
-              <li><a href="/myrecord">我的紀錄</a></li>
+              <li  class="active"><a href="/myrecord">我的紀錄</a></li>
               <li><a href="#more">更多統計</a></li>
             </ul>
+            <!-- user dropdown -->
+            <ul class="nav pull-right">
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                   <i class="icon-xlarge icon-user"></i> 
+                   <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu dropdown-user-account">
+                  <li class="account-img-container">
+                      <img class="thumb account-img" src="#">
+                  </li>
+                  <li class="account-info">
+                    <h3>王大華</h3>
+                    <p>
+                    <a href="#">編輯</a> 
+                     "| "
+                    <a href="#">隱私設定</a></p>
+                  </li>
+                  <li class="account-footer">
+                    <div class="row-fluid">
+                      <div class="span8">
+                           <a class="btn btn-primary btn-small" href="#">更換照片</a> 
+                           <a class="btn btn-primary btn-small" href="#">檢視檔案</a>
+                      </div>
+                      <div class="span4 align-right">
+                           <a class="btn btn-danger btn-small" href="#">登出</a>
+                      </div>
+                    </div>                  
+                  </li>
+                </ul>
+              </li>
+            </ul>
+                <!-- ./ user dropdown -->
+            <ul class="nav pull-right bar-root">
+              <li class="divider-vertical"></li>
+              <li><a href="chat.html" data-original-title=""><i class="icon-large icon-comment icon-white"></i><span class="label label-important">6</span></a> </li>
+              <li class="dropdown"><a href="#" data-toggle="dropdown" data-original-title=""> <i class="icon-large icon-envelope icon-white"></i><span class="label label-important">5 new</span></a> 
+                  <ul class="dropdown-menu">
+                     <li><a href="http://wbpreview.com/previews/WB0881879/inbox.html" data-original-title=""><img src="./Maniadmin_files/thumb1.png" alt=""> Subject : Project <p class="help-block"><small>From: ab.alhyane@gmail.com</small></p><span class="label">23/09/2012</span></a></li>
+                      <li class="divider"></li>
+                      <li><a href="http://wbpreview.com/previews/WB0881879/inbox.html" data-original-title=""><img src="./Maniadmin_files/thumb2.png" alt=""> Subject : Film <p class="help-block"><small>From: ab.alhyane@gmail.com</small></p><span class="label">21/04/2012</span> </a></li>
+                      <li class="divider"></li>
+                      <li><a href="http://wbpreview.com/previews/WB0881879/inbox.html" data-original-title=""><img src="./Maniadmin_files/thumb3.png" alt=""> Subject : Meeting <p class="help-block"><small>From: ab.alhyane@gmail.com</small></p><span class="label">20/02/2012</span></a></li>
+                      <li class="divider"></li>
+                      <li><a href="http://wbpreview.com/previews/WB0881879/inbox.html" data-original-title=""><img src="./Maniadmin_files/thumb4.png" alt=""> Subject : Tasks <p class="help-block"><small>From: ab.alhyane@gmail.com</small></p><span class="label">19/01/2012</span></a></li>
+                      <li class="divider"></li>
+                      <li class="active"><a href="http://wbpreview.com/previews/WB0881879/inbox.html" data-original-title=""> Show All </a></li>
+                  </ul>
+                </li>
+                <li class="dropdown"><a href="http://wbpreview.com/previews/WB0881879/#" data-toggle="dropdown" data-original-title=""> <i class="icon-large icon-refresh icon-white"></i><span class="label label-info">3 Updates</span></a> 
+                  <ul class="dropdown-menu">
+                      <li><a href="http://wbpreview.com/previews/WB0881879/#" data-original-title=""> Theme </a></li>
+                      <li><a href="http://wbpreview.com/previews/WB0881879/#" data-original-title=""> Components</a></li>
+                      <li><a href="http://wbpreview.com/previews/WB0881879/#" data-original-title=""> Plugins</a></li>
+                      <li class="divider"></li>
+                      <li class="active"><a href="http://wbpreview.com/previews/WB0881879/#" data-original-title=""> Show All </a></li>
+                  </ul>
+                </li>
+            </ul>
+            <form action="http://wbpreview.com/previews/WB0881879/#" class="navbar-search pull-right">
+                  <input type="text" placeholder="Search" class="search-query span2">
+            </form>
+            
+
           </div> 
         </div> <!-- container -->
       </div> <!-- navbar-inner -->
     </div> <!-- navbar -->
 
-    <div class="container">
-      fdgfdsgdfsgdfsgdfsfdgdfsgfd
+   <!-- only for desktop
+  =============================== -->
+    <div id="maincontainer" class="left-sb-fluid">
+      <div id="contentwrapper">
+        <div id="contentcolumn">
 
-    </div> <!-- /container -->
+          <!-- ** blue top navbar ** -->
+          <div class="blue navbar navbar-static nomargin">
+            <div class="navbar-inner">
+              <div class="container" style="width: auto;">
+                <a class="brand" href="#"><img src="#"></a>
+                <ul class="nav pull-left">
+                  <li><a href="http://wbpreview.com/previews/WB0LRK4D0/#"><i class="icon-xlarge icon-cog"></i></a></li>
+                  <li class="divider-vertical"></li>
+                  <li><a href="http://wbpreview.com/previews/WB0LRK4D0/#"><i class="icon-xlarge icon-wrench"></i></a></li>
+                  <li class="divider-vertical"></li>
+                  <li><a href="http://wbpreview.com/previews/WB0LRK4D0/#"><i class="icon-xlarge icon-globe"></i></a></li>
+                </ul>
 
+                <!-- top navbar search -->
+                <form id="formSearch" class="navbar-search pull-left" action="">
+                  <div class="input-prepend input-append">
+                    <span class="add-on"><i class="icon-large icon-search"></i></span><input id="appendedPrependedSearch" class="span3" size="16" type="text"><div class="add-on add-on-custom add-on-primary">
+                      <div class="btn-group btn-group-prep">
+                        <button class="btn btn-inverse">Search</button>
+                        <button class="btn btn-inverse dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+                        <ul class="dropdown-menu">
+                          <li><a href="http://wbpreview.com/previews/WB0LRK4D0/#"><i class="icon-th-large"></i> Templates</a></li>
+                          <li><a href="http://wbpreview.com/previews/WB0LRK4D0/#"><i class="icon-th-large"></i> Gigs</a></li>
+                          <li><a href="http://wbpreview.com/previews/WB0LRK4D0/#"><i class="icon-th-large"></i> Projects</a></li>
+                          <li><a href="http://wbpreview.com/previews/WB0LRK4D0/#"><i class="icon-th-large"></i> Forum Topics</a></li>
+                          <li><a href="http://wbpreview.com/previews/WB0LRK4D0/#"><i class="icon-th-large"></i> Blog Posts</a></li>
+                          <li><a href="http://wbpreview.com/previews/WB0LRK4D0/#"><i class="icon-th-large"></i> Users</a></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+                <!-- ./top navbar search -->
+                
+                
+
+              </div>
+            </div>
+          </div>
+          <!-- ** ./ blue top navbar ** -->
+
+          <div class="container-fluid">
+            <div class="row-fluid wrapper">
+
+              <!-- ** left sidebar ** -->
+              <div class="span3 leftsidebar">
+
+                <!-- ** sidebar chart ** -->
+                <div class="sidebarChart">
+                  <div class="navbar navbar-heading">
+                    <div class="navbar-inner">
+                      <div class="container" style="width: auto;">
+                        <a class="brand" href="http://wbpreview.com/previews/WB0LRK4D0/#">Sidebar Chart</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="horizontal-bar-div" style="height: 250px; width: 100%; position: relative; " class="jqplot-target"><canvas width="267" height="250" style="position: absolute; left: 0px; top: 0px; " class="jqplot-base-canvas"></canvas><div class="jqplot-title" style="height: 0px; width: 0px; "></div><div class="jqplot-axis jqplot-xaxis" style="position: absolute; width: 267px; height: 21px; left: 0px; bottom: 0px; "><div class="jqplot-xaxis-tick" style="position: absolute; left: 13.5px; ">0</div><div class="jqplot-xaxis-tick" style="position: absolute; left: 73.5px; ">2</div><div class="jqplot-xaxis-tick" style="position: absolute; left: 133.5px; ">4</div><div class="jqplot-xaxis-tick" style="position: absolute; left: 193.5px; ">6</div><div class="jqplot-xaxis-tick" style="position: absolute; left: 253.5px; ">8</div></div><div class="jqplot-axis jqplot-yaxis" style="position: absolute; height: 250px; width: 7px; left: 0px; top: 0px; "><div class="jqplot-yaxis-tick" style="position: absolute; top: 182.375px; ">1</div><div class="jqplot-yaxis-tick" style="position: absolute; top: 130.125px; ">2</div><div class="jqplot-yaxis-tick" style="position: absolute; top: 77.875px; ">3</div><div class="jqplot-yaxis-tick" style="position: absolute; top: 25.625px; ">4</div></div><canvas width="267" height="250" class="jqplot-grid-canvas" style="position: absolute; left: 0px; top: 0px; "></canvas><canvas width="240" height="209" style="position: absolute; left: 17px; top: 10px; " class="jqplot-series-shadowCanvas"></canvas><canvas width="240" height="209" style="position: absolute; left: 17px; top: 10px; " class="jqplot-series-shadowCanvas"></canvas><canvas width="240" height="209" style="position: absolute; left: 17px; top: 10px; " class="jqplot-series-shadowCanvas"></canvas><canvas width="240" height="209" style="position: absolute; left: 17px; top: 10px; " class="jqplot-series-canvas"></canvas><div class="jqplot-point-label jqplot-series-0 jqplot-point-3" style="position: absolute; left: 113px; top: 36.375px; ">3</div><div class="jqplot-point-label jqplot-series-0 jqplot-point-2" style="position: absolute; left: 203px; top: 88.625px; ">6</div><div class="jqplot-point-label jqplot-series-0 jqplot-point-1" style="position: absolute; left: 143px; top: 140.875px; ">4</div><div class="jqplot-point-label jqplot-series-0 jqplot-point-0" style="position: absolute; left: 83px; top: 193.125px; ">2</div><canvas width="240" height="209" style="position: absolute; left: 17px; top: 10px; " class="jqplot-series-canvas"></canvas><div class="jqplot-point-label jqplot-series-1 jqplot-point-3" style="position: absolute; left: 143px; top: 25.625px; ">4</div><div class="jqplot-point-label jqplot-series-1 jqplot-point-2" style="position: absolute; left: 113px; top: 77.875px; ">3</div><div class="jqplot-point-label jqplot-series-1 jqplot-point-1" style="position: absolute; left: 53px; top: 130.125px; ">1</div><div class="jqplot-point-label jqplot-series-1 jqplot-point-0" style="position: absolute; left: 173px; top: 182.375px; ">5</div><canvas width="240" height="209" style="position: absolute; left: 17px; top: 10px; " class="jqplot-series-canvas"></canvas><table class="jqplot-table-legend" style="right: 10px; top: 10px; "><tbody><tr class="jqplot-table-legend"><td class="jqplot-table-legend jqplot-table-legend-swatch" style="text-align: center; padding-top: 0px; "><div class="jqplot-table-legend-swatch-outline"><div class="jqplot-table-legend-swatch" style="background-color: rgb(165, 87, 87); border-color: rgb(165, 87, 87); "></div></div></td><td class="jqplot-table-legend jqplot-table-legend-label" style="padding-top: 0px; ">Label 1</td></tr><tr class="jqplot-table-legend"><td class="jqplot-table-legend jqplot-table-legend-swatch" style="text-align: center; "><div class="jqplot-table-legend-swatch-outline"><div class="jqplot-table-legend-swatch" style="background-color: rgb(155, 130, 80); border-color: rgb(155, 130, 80); "></div></div></td><td class="jqplot-table-legend jqplot-table-legend-label">Label 2</td></tr><tr class="jqplot-table-legend"><td class="jqplot-table-legend jqplot-table-legend-swatch" style="text-align: center; "><div class="jqplot-table-legend-swatch-outline"><div class="jqplot-table-legend-swatch" style="background-color: rgb(133, 147, 75); border-color: rgb(133, 147, 75); "></div></div></td><td class="jqplot-table-legend jqplot-table-legend-label">Label 3</td></tr></tbody></table><div class="jqplot-point-label jqplot-series-2 jqplot-point-3" style="position: absolute; left: 83px; top: 14.875px; ">2</div><div class="jqplot-point-label jqplot-series-2 jqplot-point-2" style="position: absolute; left: 53px; top: 67.125px; ">1</div><div class="jqplot-point-label jqplot-series-2 jqplot-point-1" style="position: absolute; left: 233px; top: 119.375px; ">7</div><div class="jqplot-point-label jqplot-series-2 jqplot-point-0" style="position: absolute; left: 143px; top: 171.625px; ">4</div><div class="jqplot-cursor-tooltip" style="position: absolute; display: none; "></div><canvas width="240" height="209" style="position: absolute; left: 17px; top: 10px; " class="jqplot-barRenderer-highlight-canvas"></canvas><canvas width="240" height="209" style="position: absolute; left: 17px; top: 10px; " class="jqplot-barRenderer-highlight-canvas"></canvas><canvas width="240" height="209" style="position: absolute; left: 17px; top: 10px; " class="jqplot-barRenderer-highlight-canvas"></canvas><canvas width="240" height="209" style="position: absolute; left: 17px; top: 10px; " class="jqplot-event-canvas"></canvas></div>
+                </div>
+                <!-- ** ./ sidebar chart ** -->
+
+                <!-- custom button -->
+                <div class="button-action">
+                  <a class="btn btn-large btn-f" href="http://wbpreview.com/previews/WB0LRK4D0/#"><span class="left_tooltip" data-original-title="tooltip for left icon"><i class="icon-large icon-picture"></i></span> Contents <span class="right right_tooltip" data-original-title="tooltip for right icon"><i class="icon-large icon-ok"></i></span></a>
+                  <a class="btn btn-large btn-g" href="http://wbpreview.com/previews/WB0LRK4D0/#"><span class="left_tooltip" data-original-title="tooltip for left icon"><i class="icon-large icon-file"></i></span> Projects <span class="right right_tooltip" data-original-title="tooltip for right icon"><i class="icon-large icon-info-sign"></i></span></a>
+                  <a class="btn btn-large btn-h" href="http://wbpreview.com/previews/WB0LRK4D0/#"><span class="left_tooltip" data-original-title="tooltip for left icon"><i class="icon-large icon-sitemap"></i></span> Network <span class="right right_tooltip" data-original-title="tooltip for right icon"><i class="icon-large icon-info-sign"></i></span></a>
+                </div>              
+                <!-- ./ custom button -->
+
+                <!-- ** widget ** -->
+                <div class="well">
+
+                  <!-- ** widget header ** -->
+                  <div class="navbar navbar-heading">
+                    <div class="navbar-inner">
+                      <div class="container" style="width: auto;">
+                        <a class="brand" href="http://wbpreview.com/previews/WB0LRK4D0/#">Vertical Slider</a>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- ** ./ widget header ** -->
+
+                  <!-- ** vertical slider ** -->
+                  <div class="examplex" style="height:200px;">
+                    <div id="eq2" class="multi-vs">
+                      <span class="slider-info ui-slider ui-slider-vertical ui-widget ui-widget-content ui-corner-all"><div class="ui-slider-range ui-widget-header ui-slider-range-min" style="height: 88%; "></div><a class="ui-slider-handle ui-state-default ui-corner-all" href="http://wbpreview.com/previews/WB0LRK4D0/#" style="bottom: 88%; "></a></span>
+                      <span class="slider-success ui-slider ui-slider-vertical ui-widget ui-widget-content ui-corner-all"><div class="ui-slider-range ui-widget-header ui-slider-range-min" style="height: 55.00000000000001%; "></div><a class="ui-slider-handle ui-state-default ui-corner-all" href="http://wbpreview.com/previews/WB0LRK4D0/#" style="bottom: 55.00000000000001%; "></a></span>
+                      <span class="slider-warning ui-slider ui-slider-vertical ui-widget ui-widget-content ui-corner-all"><div class="ui-slider-range ui-widget-header ui-slider-range-min" style="height: 40%; "></div><a class="ui-slider-handle ui-state-default ui-corner-all" href="http://wbpreview.com/previews/WB0LRK4D0/#" style="bottom: 40%; "></a></span>
+                      <span class="slider-warning ui-slider ui-slider-vertical ui-widget ui-widget-content ui-corner-all"><div class="ui-slider-range ui-widget-header ui-slider-range-min" style="height: 45%; "></div><a class="ui-slider-handle ui-state-default ui-corner-all" href="http://wbpreview.com/previews/WB0LRK4D0/#" style="bottom: 45%; "></a></span>
+                      <span class="slider-danger ui-slider ui-slider-vertical ui-widget ui-widget-content ui-corner-all"><div class="ui-slider-range ui-widget-header ui-slider-range-min" style="height: 70%; "></div><a class="ui-slider-handle ui-state-default ui-corner-all" href="http://wbpreview.com/previews/WB0LRK4D0/#" style="bottom: 70%; "></a></span>
+                    </div>
+                  </div>
+                  <!-- ** ./ vertical slider ** -->
+
+                </div>
+                <!-- ** ./ widget ** -->
+
+                <!-- ** widget ** -->
+                <div class="well">
+
+                  <!-- ** widget header ** -->
+                  <div class="navbar navbar-heading">
+                    <div class="navbar-inner">
+                      <div class="container" style="width: auto;">
+                        <a class="brand" href="http://wbpreview.com/previews/WB0LRK4D0/#">Friends Online</a>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- ** ./ widget header ** -->
+
+                  <div id="online_users">
+
+                    <div class="row-fluid user-list">
+                      <div class="span4">
+                        <img class="avatar" src="./static/js/01.png">
+                      </div>
+                      <div class="span8">
+                        <a class="uname" href="http://wbpreview.com/previews/WB0LRK4D0/#">Nadia</a>
+                        <div class="btn-group">
+                          <a class="btn btn-small bottom_tooltip" data-original-title="view profile"><i class="icon-user"></i></a>
+                          <a class="btn btn-small bottom_tooltip" data-original-title="subscribe"><i class="icon-plus"></i></a>
+                          <a class="btn btn-small bottom_tooltip" data-original-title="send message"><i class="icon-envelope"></i></a>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row-fluid user-list">
+                      <div class="span4">
+                        <img class="avatar" src="./static/js/02.png">
+                      </div>
+                      <div class="span8">
+                        <a class="uname" href="http://wbpreview.com/previews/WB0LRK4D0/#">Daniel</a>
+                        <div class="btn-group">
+                          <a class="btn btn-small bottom_tooltip" data-original-title="view profile"><i class="icon-user"></i></a>
+                          <a class="btn btn-small bottom_tooltip" data-original-title="subscribe"><i class="icon-plus"></i></a>
+                          <a class="btn btn-small bottom_tooltip" data-original-title="send message"><i class="icon-envelope"></i></a>
+                        </div>
+                      </div>
+                    </div>            
+
+                    <div class="row-fluid user-list">
+                      <div class="span4">
+                        <img class="avatar" src="./static/js/03.png">
+                      </div>
+                      <div class="span8">
+                        <a class="uname" href="http://wbpreview.com/previews/WB0LRK4D0/#">Dida</a>
+                        <div class="btn-group">
+                          <a class="btn btn-small bottom_tooltip" data-original-title="view profile"><i class="icon-user"></i></a>
+                          <a class="btn btn-small bottom_tooltip" data-original-title="subscribe"><i class="icon-plus"></i></a>
+                          <a class="btn btn-small bottom_tooltip" data-original-title="send message"><i class="icon-envelope"></i></a>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row-fluid user-list">
+                      <div class="span4">
+                        <img class="avatar" src="./static/js/04.png">
+                      </div>
+                      <div class="span8">
+                        <a class="uname" href="http://wbpreview.com/previews/WB0LRK4D0/#">Simeon</a>
+                        <div class="btn-group">
+                          <a class="btn btn-small bottom_tooltip" data-original-title="view profile"><i class="icon-user"></i></a>
+                          <a class="btn btn-small bottom_tooltip" data-original-title="unsubscribe"><i class="icon-minus"></i></a>
+                          <a class="btn btn-small bottom_tooltip" data-original-title="send message"><i class="icon-envelope"></i></a>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row-fluid user-list">
+                      <div class="span4">
+                        <img class="avatar" src="./static/js/08.png">
+                      </div>
+                      <div class="span8">
+                        <a class="uname" href="http://wbpreview.com/previews/WB0LRK4D0/#">Pande KY</a>
+                        <div class="btn-group">
+                          <a class="btn btn-small bottom_tooltip" data-original-title="view profile"><i class="icon-user"></i></a>
+                          <a class="btn btn-small bottom_tooltip" data-original-title="unsubscribe"><i class="icon-minus"></i></a>
+                          <a class="btn btn-small bottom_tooltip" data-original-title="send message"><i class="icon-envelope"></i></a>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row-fluid user-list">
+                      <div class="span4">
+                        <img class="avatar" src="./static/js/06.png">
+                      </div>
+                      <div class="span8">
+                        <a class="uname" href="http://wbpreview.com/previews/WB0LRK4D0/#">Ocha</a>
+                        <div class="btn-group">
+                          <a class="btn btn-small bottom_tooltip" data-original-title="view profile"><i class="icon-user"></i></a>
+                          <a class="btn btn-small bottom_tooltip" data-original-title="unsubscribe"><i class="icon-minus"></i></a>
+                          <a class="btn btn-small bottom_tooltip" data-original-title="send message"><i class="icon-envelope"></i></a>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row-fluid user-list">
+                      <div class="span4">
+                        <img class="avatar" src="./static/js/07(1).png">
+                      </div>
+                      <div class="span8">
+                        <a class="uname" href="http://wbpreview.com/previews/WB0LRK4D0/#">Gwen</a>
+                        <div class="btn-group">
+                          <a class="btn btn-small bottom_tooltip" data-original-title="view profile"><i class="icon-user"></i></a>
+                          <a class="btn btn-small bottom_tooltip" data-original-title="subscribe"><i class="icon-plus"></i></a>
+                          <a class="btn btn-small bottom_tooltip" data-original-title="send message"><i class="icon-envelope"></i></a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- ** ./ widget ** -->              
+
+              </div>
+              <!-- ** ./ left sidebar ** -->
+
+              <!-- ** main content ** -->
+              <div class="span9 contentcolumn">
+
+                <div class="row-fluid">
+                  <div class="span12">
+
+                    <!-- ** widget ** -->
+                    <div class="well">
+
+                      <!-- ** widget header ** -->
+                      <div class="navbar navbar-heading">
+                        <div class="navbar-inner">
+                          <div class="container" style="width: auto;">
+                            <a class="brand" href="http://wbpreview.com/previews/WB0LRK4D0/#">Notifications</a>
+                            <ul class="nav pull-right">
+                              <li><a href="http://wbpreview.com/previews/WB0LRK4D0/#"><i class="icon-large icon-cog"></i></a></li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- ** ./ widget header ** -->
+
+                      <!-- ** circle buttons ** -->
+                      <div class="btn-circle-panel large">
+                        <ul class="btn-circle">
+                          <li><a href="http://wbpreview.com/previews/WB0LRK4D0/#" class="bottom_tooltip" data-original-title="Collaboration requests"><img src="./static/js/collab.png"></a><span class="badge badge-important">24</span></li>
+                          <li class="info"><a href="http://wbpreview.com/previews/WB0LRK4D0/#" class="bottom_tooltip" data-original-title="Item sold"><img src="./static/js/money.png"></a><span class="badge badge-important">10</span></li>
+                          <li class="important"><a href="http://wbpreview.com/previews/WB0LRK4D0/#" class="bottom_tooltip" data-original-title="Friend requests"><img src="./static/js/add-user.png"></a><span class="badge badge-important">15</span></li>
+                          <li class="success"><a href="http://wbpreview.com/previews/WB0LRK4D0/#" class="bottom_tooltip" data-original-title="Personal messages"><img src="./static/js/personal-messages.png"></a><span class="badge badge-important">30</span></li>
+                        </ul>
+                      </div>
+                      <!-- ** ./ circle buttons ** -->
+
+                    </div>
+                    <!-- ** ./ widget ** -->
+
+                  </div>
+                </div>
+
+                <!-- ** alert message ** -->
+                <div class="c-alert pillow-emboss">
+                  <div class="alert-message danger">
+                    <a class="close" href="http://wbpreview.com/previews/WB0LRK4D0/#"><i class="icon-large icon-remove-circle"></i></a>
+                    <p><strong>Hello Gwen!</strong> Alert Message... Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam <a href="http://wbpreview.com/previews/WB0LRK4D0/#">mollit anim id est laborum</a>.</p>
+                  </div>
+                </div>
+                <!-- ** ./ alert message ** -->
+
+                <div class="row-fluid">
+                  <div class="span6">
+
+                    <!-- ** widget ** -->
+                    <div class="well">
+
+                      <!-- ** widget header ** -->
+                      <div class="navbar navbar-heading">
+                        <div class="navbar-inner">
+                          <div class="container" style="width: auto;">
+                            <a class="brand" href="http://wbpreview.com/previews/WB0LRK4D0/#">Stats By Category</a>
+                            <ul class="nav pull-right">
+                              <li><a href="http://wbpreview.com/previews/WB0LRK4D0/#"><i class="icon-large icon-cog"></i></a></li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- ** ./ widget header ** -->
+
+                      <!-- ** vertical bar chart ** -->
+                      <div id="vertical-bar-div" style="width: 100%; height: 300px; position: relative; " class="jqplot-target"><canvas width="421" height="300" style="position: absolute; left: 0px; top: 0px; " class="jqplot-base-canvas"></canvas><div class="jqplot-title" style="height: 0px; width: 0px; "></div><div class="jqplot-axis jqplot-xaxis" style="position: absolute; width: 421px; height: 21px; left: 0px; bottom: 0px; "><div class="jqplot-xaxis-tick" style="position: absolute; left: 78.75px; ">May</div><div class="jqplot-xaxis-tick" style="position: absolute; left: 166.75px; ">June</div><div class="jqplot-xaxis-tick" style="position: absolute; left: 260.75px; ">July</div><div class="jqplot-xaxis-tick" style="position: absolute; left: 343.75px; ">August</div></div><div class="jqplot-axis jqplot-yaxis" style="position: absolute; height: 300px; width: 35px; left: 0px; top: 0px; "><div class="jqplot-yaxis-tick" style="position: absolute; top: 258.5px; ">$0</div><div class="jqplot-yaxis-tick" style="position: absolute; top: 215.33333333333334px; ">$200</div><div class="jqplot-yaxis-tick" style="position: absolute; top: 172.16666666666669px; ">$400</div><div class="jqplot-yaxis-tick" style="position: absolute; top: 129px; ">$600</div><div class="jqplot-yaxis-tick" style="position: absolute; top: 85.83333333333334px; ">$800</div><div class="jqplot-yaxis-tick" style="position: absolute; top: 42.66666666666666px; ">$1000</div><div class="jqplot-yaxis-tick" style="position: absolute; top: -0.5px; ">$1200</div></div><canvas width="421" height="300" class="jqplot-grid-canvas" style="position: absolute; left: 0px; top: 0px; "></canvas><canvas width="366" height="259" style="position: absolute; left: 45px; top: 10px; " class="jqplot-series-shadowCanvas"></canvas><canvas width="366" height="259" style="position: absolute; left: 45px; top: 10px; " class="jqplot-series-shadowCanvas"></canvas><canvas width="366" height="259" style="position: absolute; left: 45px; top: 10px; " class="jqplot-series-shadowCanvas"></canvas><canvas width="366" height="259" style="position: absolute; left: 45px; top: 10px; " class="jqplot-series-canvas"></canvas><canvas width="366" height="259" style="position: absolute; left: 45px; top: 10px; " class="jqplot-series-canvas"></canvas><canvas width="366" height="259" style="position: absolute; left: 45px; top: 10px; " class="jqplot-series-canvas"></canvas><table class="jqplot-table-legend" style="left: 45px; top: 10px; "><tbody><tr class="jqplot-table-legend"><td class="jqplot-table-legend jqplot-table-legend-swatch" style="text-align: center; padding-top: 0px; "><div class="jqplot-table-legend-swatch-outline"><div class="jqplot-table-legend-swatch" style="background-color: rgb(165, 87, 87); border-color: rgb(165, 87, 87); "></div></div></td><td class="jqplot-table-legend jqplot-table-legend-label" style="padding-top: 0px; ">One</td></tr><tr class="jqplot-table-legend"><td class="jqplot-table-legend jqplot-table-legend-swatch" style="text-align: center; "><div class="jqplot-table-legend-swatch-outline"><div class="jqplot-table-legend-swatch" style="background-color: rgb(155, 130, 80); border-color: rgb(155, 130, 80); "></div></div></td><td class="jqplot-table-legend jqplot-table-legend-label">Two</td></tr><tr class="jqplot-table-legend"><td class="jqplot-table-legend jqplot-table-legend-swatch" style="text-align: center; "><div class="jqplot-table-legend-swatch-outline"><div class="jqplot-table-legend-swatch" style="background-color: rgb(133, 147, 75); border-color: rgb(133, 147, 75); "></div></div></td><td class="jqplot-table-legend jqplot-table-legend-label">Three</td></tr></tbody></table><div class="jqplot-cursor-tooltip" style="position: absolute; display: none; "></div><canvas width="366" height="259" style="position: absolute; left: 45px; top: 10px; " class="jqplot-barRenderer-highlight-canvas"></canvas><canvas width="366" height="259" style="position: absolute; left: 45px; top: 10px; " class="jqplot-barRenderer-highlight-canvas"></canvas><canvas width="366" height="259" style="position: absolute; left: 45px; top: 10px; " class="jqplot-barRenderer-highlight-canvas"></canvas><canvas width="366" height="259" style="position: absolute; left: 45px; top: 10px; " class="jqplot-event-canvas"></canvas></div>
+                      <!-- ** ./ vertical bar chart ** -->
+
+                    </div>
+                    <!-- ** ./ widget ** -->
+
+                  </div>
+                  <div class="span6">
+
+                    <!-- ** widget ** -->
+                    <div class="well">
+
+                      <!-- ** widget header ** -->
+                      <div class="navbar navbar-heading">
+                        <div class="navbar-inner">
+                          <div class="container" style="width: auto;">
+                            <a class="brand" href="http://wbpreview.com/previews/WB0LRK4D0/#">Items Sold Today</a>
+                            <ul class="nav pull-right">
+                              <li><a href="http://wbpreview.com/previews/WB0LRK4D0/#"><i class="icon-large icon-cog"></i></a></li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- ** ./ widget header ** -->
+
+                      <!-- ** donut pie chart ** -->
+                      <div id="donut-pie-div" style="width: 100%; height: 300px; position: relative; " class="jqplot-target"><canvas width="421" height="300" style="position: absolute; left: 0px; top: 0px; " class="jqplot-base-canvas"></canvas><div class="jqplot-title" style="height: 0px; width: 0px; "></div><canvas width="421" height="300" class="jqplot-grid-canvas" style="position: absolute; left: 0px; top: 0px; "></canvas><canvas width="401" height="267" style="position: absolute; left: 10px; top: 10px; " class="jqplot-series-shadowCanvas"></canvas><canvas width="401" height="267" style="position: absolute; left: 10px; top: 10px; " class="jqplot-series-canvas"></canvas><canvas width="401" height="267" style="position: absolute; left: 10px; top: 10px; " class="jqplot-donutRenderer-highlight-canvas"></canvas><span class="jqplot-donut-series jqplot-data-label" style="position: absolute; left: 259px; top: 65px; ">16</span><span class="jqplot-donut-series jqplot-data-label" style="position: absolute; left: 294px; top: 143px; ">8</span><span class="jqplot-donut-series jqplot-data-label" style="position: absolute; left: 249px; top: 208px; ">14</span><span class="jqplot-donut-series jqplot-data-label" style="position: absolute; left: 148px; top: 201px; ">16</span><span class="jqplot-donut-series jqplot-data-label" style="position: absolute; left: 120px; top: 123px; ">8</span><span class="jqplot-donut-series jqplot-data-label" style="position: absolute; left: 158px; top: 58px; ">14</span><div class="jqplot-cursor-tooltip" style="position: absolute; display: none; "></div><canvas width="401" height="267" style="position: absolute; left: 10px; top: 10px; " class="jqplot-event-canvas"></canvas></div>
+                      <!-- ** ./ donut pie chart ** -->
+
+                    </div>
+                    <!-- ** ./ widget ** -->
+
+                  </div>
+                </div>
+
+                <div class="row-fluid">
+                  <div class="span12">
+
+                    <!-- ** widget ** -->
+                    <div class="well">
+
+                      <!-- ** widget header ** -->
+                      <div class="navbar navbar-heading">
+                        <div class="navbar-inner">
+                          <div class="container" style="width: auto;">
+                            <a class="brand" href="http://wbpreview.com/previews/WB0LRK4D0/#">Friends By Locations</a>
+                            <ul class="nav pull-right">
+                              <li><a href="http://wbpreview.com/previews/WB0LRK4D0/#"><i class="icon-large icon-cog"></i></a></li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- ** ./ widget header ** -->
+
+                      <!-- ** google map, marker clusterer ** -->
+                      <div id="visitors-geo" class="bs-map" style="width: 100%; height: 300px; position: relative; background-color: rgb(229, 227, 223); overflow: hidden; "><div style="position: absolute; left: 0px; top: 0px; overflow: hidden; width: 100%; height: 100%; z-index: 0; "><div style="position: absolute; left: 0px; top: 0px; overflow: hidden; width: 100%; height: 100%; z-index: 0; "><div style="position: absolute; left: 0px; top: 0px; z-index: 1; cursor: url(http://maps.gstatic.com/mapfiles/openhand_8_8.cur), default; -webkit-transform-origin: 0px 0px; -webkit-transform: matrix(1, 0, 0, 1, -0.4333324432373047, 0); "><div style="z-index: 100; position: absolute; left: 0px; top: 0px; "><div style="position: absolute; left: 0px; top: 0px; z-index: 0; "><div style="position: absolute; left: 0px; top: 0px; z-index: 1; "><div style="width: 256px; height: 256px; position: absolute; left: 298px; top: -35px; "></div><div style="width: 256px; height: 256px; position: absolute; left: 42px; top: -35px; "></div><div style="width: 256px; height: 256px; position: absolute; left: 298px; top: -291px; "></div><div style="width: 256px; height: 256px; position: absolute; left: 298px; top: 221px; "></div><div style="width: 256px; height: 256px; position: absolute; left: 554px; top: -35px; "></div><div style="width: 256px; height: 256px; position: absolute; left: 42px; top: 221px; "></div><div style="width: 256px; height: 256px; position: absolute; left: 42px; top: -291px; "></div><div style="width: 256px; height: 256px; position: absolute; left: 554px; top: -291px; "></div><div style="width: 256px; height: 256px; position: absolute; left: 554px; top: 221px; "></div><div style="width: 256px; height: 256px; position: absolute; left: 810px; top: -35px; "></div><div style="width: 256px; height: 256px; position: absolute; left: -214px; top: -35px; "></div><div style="width: 256px; height: 256px; position: absolute; left: -214px; top: -291px; "></div><div style="width: 256px; height: 256px; position: absolute; left: 810px; top: -291px; "></div><div style="width: 256px; height: 256px; position: absolute; left: -214px; top: 221px; "></div><div style="width: 256px; height: 256px; position: absolute; left: 810px; top: 221px; "></div></div></div></div><div style="z-index: 101; position: absolute; left: 0px; top: 0px; "></div><div style="z-index: 102; position: absolute; left: 0px; top: 0px; "><div style="position: absolute; left: 0px; top: 0px; z-index: 0; "><div style="position: absolute; left: 0px; top: 0px; z-index: 1; "><div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: 298px; top: -35px; "></div><div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: 42px; top: -35px; "></div><div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: 298px; top: -291px; "></div><div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: 298px; top: 221px; "></div><div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: 554px; top: -35px; "></div><div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: 42px; top: 221px; "></div><div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: 42px; top: -291px; "></div><div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: 554px; top: -291px; "></div><div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: 554px; top: 221px; "></div><div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: 810px; top: -35px; "></div><div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: -214px; top: -35px; "></div><div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: -214px; top: -291px; "></div><div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: 810px; top: -291px; "></div><div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: -214px; top: 221px; "></div><div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: 810px; top: 221px; "></div></div></div></div><div style="z-index: 103; position: absolute; left: 0px; top: 0px; "><div style="position: absolute; left: 0px; top: 0px; z-index: -1; "><div style="position: absolute; left: 0px; top: 0px; z-index: 1; "><div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: 298px; top: -35px; "></div><div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: 42px; top: -35px; "></div><div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: 298px; top: -291px; "></div><div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: 298px; top: 221px; "></div><div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: 554px; top: -35px; "></div><div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: 42px; top: 221px; "></div><div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: 42px; top: -291px; "></div><div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: 554px; top: -291px; "></div><div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: 554px; top: 221px; "></div><div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: 810px; top: -35px; "></div><div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: -214px; top: -35px; "></div><div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: -214px; top: -291px; "></div><div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: 810px; top: -291px; "></div><div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: -214px; top: 221px; "></div><div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: 810px; top: 221px; "></div></div></div></div><div style="z-index: 104; position: absolute; left: 0px; top: 0px; "></div><div style="z-index: 105; position: absolute; left: 0px; top: 0px; "><div style="background-image: url(http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/images/m3.png); height: 66px; line-height: 66px; width: 66px; text-align: center; cursor: pointer; top: 34.06794280012426px; left: 433.92525926777114px; color: black; position: absolute; font-size: 11px; font-family: Arial, sans-serif; font-weight: bold; background-position: 0px 0px; ">181</div><div style="background-image: url(http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/images/m3.png); height: 66px; line-height: 66px; width: 66px; text-align: center; cursor: pointer; top: 86.82840281821956px; left: 339.09676465447944px; color: black; position: absolute; font-size: 11px; font-family: Arial, sans-serif; font-weight: bold; background-position: 0px 0px; ">204</div><div style="background-image: url(http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/images/m3.png); height: 66px; line-height: 66px; width: 66px; text-align: center; cursor: pointer; top: 23.887428482557226px; left: 298.2478394234548px; color: black; position: absolute; font-size: 11px; font-family: Arial, sans-serif; font-weight: bold; background-position: 0px 0px; ">134</div><div style="background-image: url(http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/images/m3.png); height: 66px; line-height: 66px; width: 66px; text-align: center; cursor: pointer; top: 92.84249004297692px; left: 412.3208262169263px; color: black; position: absolute; font-size: 11px; font-family: Arial, sans-serif; font-weight: bold; background-position: 0px 0px; ">153</div><div style="background-image: url(http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/images/m3.png); height: 66px; line-height: 66px; width: 66px; text-align: center; cursor: pointer; top: 74.9538975681707px; left: 481.2609553468409px; color: black; position: absolute; font-size: 11px; font-family: Arial, sans-serif; font-weight: bold; background-position: 0px 0px; ">156</div><div style="background-image: url(http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/images/m3.png); height: 66px; line-height: 66px; width: 66px; text-align: center; cursor: pointer; top: 27.361294053762037px; left: 364.30067480504465px; color: black; position: absolute; font-size: 11px; font-family: Arial, sans-serif; font-weight: bold; background-position: 0px 0px; ">121</div><div style="background-image: url(http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/images/m2.png); height: 56px; line-height: 56px; width: 56px; text-align: center; cursor: pointer; top: 27.950370081845648px; left: 498.52511395523277px; color: black; position: absolute; font-size: 11px; font-family: Arial, sans-serif; font-weight: bold; background-position: 0px 0px; ">51</div></div><div style="z-index: 106; position: absolute; left: 0px; top: 0px; "></div><div style="position: absolute; left: 0px; top: 0px; z-index: 0; "><div style="position: absolute; left: 0px; top: 0px; z-index: 1; "><div style="width: 256px; height: 256px; position: absolute; left: 298px; top: -35px; opacity: 1; -webkit-transition: opacity 200ms ease-out; "><img style="-webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; width: 256px; height: 256px; " src="./static/js/vt"></div><div style="width: 256px; height: 256px; position: absolute; left: 42px; top: -35px; opacity: 1; -webkit-transition: opacity 200ms ease-out; "><img style="width: 256px; height: 256px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; " src="./static/js/vt"></div><div style="width: 256px; height: 256px; position: absolute; left: 554px; top: -35px; opacity: 1; -webkit-transition: opacity 200ms ease-out; "><img style="-webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; width: 256px; height: 256px; " src="./static/js/vt"></div><div style="width: 256px; height: 256px; position: absolute; left: 810px; top: -35px; opacity: 1; -webkit-transition: opacity 200ms ease-out; "><img style="width: 256px; height: 256px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; " src="./static/js/vt"></div><div style="width: 256px; height: 256px; position: absolute; left: -214px; top: -35px; opacity: 1; -webkit-transition: opacity 200ms ease-out; "><img style="width: 256px; height: 256px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; " src="./static/js/vt"></div><div style="position: absolute; left: -214px; top: -291px; opacity: 1; -webkit-transition: opacity 200ms ease-out; "><img style="-webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; " src="./static/js/transparent.png"></div><div style="position: absolute; left: 810px; top: -291px; opacity: 1; -webkit-transition: opacity 200ms ease-out; "><img style="-webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; " src="./static/js/transparent.png"></div><div style="position: absolute; left: -214px; top: 221px; opacity: 1; -webkit-transition: opacity 200ms ease-out; "><img style="-webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; " src="./static/js/transparent.png"></div><div style="position: absolute; left: 810px; top: 221px; opacity: 1; -webkit-transition: opacity 200ms ease-out; "><img style="-webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; " src="./static/js/transparent.png"></div><div style="position: absolute; left: 298px; top: -291px; opacity: 1; -webkit-transition: opacity 200ms ease-out; "><img style="-webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; " src="./static/js/transparent.png"></div><div style="position: absolute; left: 298px; top: 221px; opacity: 1; -webkit-transition: opacity 200ms ease-out; "><img style="width: 256px; height: 256px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; " src="./static/js/transparent.png"></div><div style="position: absolute; left: 42px; top: 221px; opacity: 1; -webkit-transition: opacity 200ms ease-out; "><img style="width: 256px; height: 256px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; " src="./static/js/transparent.png"></div><div style="position: absolute; left: 42px; top: -291px; opacity: 1; -webkit-transition: opacity 200ms ease-out; "><img style="-webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; " src="./static/js/transparent.png"></div><div style="position: absolute; left: 554px; top: -291px; opacity: 1; -webkit-transition: opacity 200ms ease-out; "><img style="width: 256px; height: 256px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; " src="./static/js/transparent.png"></div><div style="position: absolute; left: 554px; top: 221px; opacity: 1; -webkit-transition: opacity 200ms ease-out; "><img style="-webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; " src="./static/js/transparent.png"></div></div></div></div></div><div style="margin: 2px 5px 2px 2px; z-index: 1000000; position: absolute; left: 0px; bottom: 0px; "><a style="position: static; overflow: visible; float: none; display: inline; " target="_blank" href="http://maps.google.com/maps?ll=-62.103883,-337.148427&z=0&t=m&hl=zh-TW" title="按一下即可查看「Google 地圖」上的這個區域"><div style="width: 62px; height: 24px; cursor: pointer; "><img style="position: absolute; left: 0px; top: 0px; width: 62px; height: 24px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; " src="./static/js/google_white.png"></div></a></div><div class="gmnoprint" style="z-index: 1000001; position: absolute; right: 0px; bottom: 0px; "><div style="height: 19px; -webkit-user-select: none; line-height: 19px; padding-right: 2px; padding-left: 50px; background-image: -webkit-linear-gradient(left, rgba(255, 255, 255, 0) 0px, rgba(255, 255, 255, 0.496094) 50px); font-family: Arial, sans-serif; font-size: 10px; color: rgb(68, 68, 68); white-space: nowrap; direction: ltr; text-align: right; background-position: initial initial; background-repeat: initial initial; "><a style="color: rgb(68, 68, 68); text-decoration: underline; cursor: pointer; display: none; ">地圖資料</a><span style="display: none; "></span><span style="display: none; "> - </span><a style="color: rgb(68, 68, 68); text-decoration: underline; cursor: pointer; " href="http://www.google.com/intl/zh-TW_US/help/terms_maps.html" target="_blank">使用條款</a></div></div><div style="background-color: white; padding: 15px 21px; border: 1px solid rgb(171, 171, 171); font-family: Arial, sans-serif; color: rgb(34, 34, 34); -webkit-box-shadow: rgba(0, 0, 0, 0.199219) 0px 4px 16px; box-shadow: rgba(0, 0, 0, 0.199219) 0px 4px 16px; z-index: 10000002; display: none; width: 256px; height: 148px; position: absolute; left: 292px; top: 60px; "><div style="padding: 0px 0px 10px; font-size: 16px; ">地圖資料</div><div style="font-size: 13px; "></div><div style="width: 10px; height: 10px; overflow: hidden; position: absolute; opacity: 0.7; right: 12px; top: 12px; z-index: 10000; cursor: pointer; "><img style="position: absolute; left: -18px; top: -44px; width: 68px; height: 67px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; " src="./static/js/imgs8.png"></div></div><div class="gmnoscreen" style="position: absolute; right: 0px; bottom: 0px; "><div style="font-family: Arial, sans-serif; font-size: 10px; color: rgb(68, 68, 68); direction: ltr; text-align: right; background-color: rgb(245, 245, 245); "></div></div><div style="display: none; font-size: 10px; height: 17px; background-color: rgb(245, 245, 245); border: 1px solid rgb(220, 220, 220); line-height: 19px; position: absolute; right: 0px; bottom: 0px; " class="gmnoprint"><a target="_new" title="向 Google 回報道路地圖或圖像錯誤" style="font-family: Arial, sans-serif; font-size: 85%; font-weight: bold; padding: 1px 3px; color: rgb(68, 68, 68); text-decoration: none; position: relative; bottom: 1px; " href="http://maps.google.com/maps?ll=-62.103883,-337.148427&z=0&t=m&hl=zh-TW&skstate=action:rmi_dialog$apiref:1$location:-62.103883,-337.148427">回報地圖錯誤</a></div></div></div>
+                      <!-- ** ./ google map, marker clusterer ** -->
+
+                    </div>
+                    <!-- ** ./ widget ** -->
+
+                  </div>
+                </div>
+
+                <div class="row-fluid">
+                  <div class="span12">
+
+                    <!-- ** widget ** -->
+                    <div class="well">
+
+                      <!-- ** widget header ** -->
+                      <div class="navbar navbar-heading">
+                        <div class="navbar-inner">
+                          <div class="container" style="width: auto;">
+                            <a class="brand" href="http://wbpreview.com/previews/WB0LRK4D0/#">Interactions</a>
+                            <ul class="nav pull-right">
+                              <li><a href="http://wbpreview.com/previews/WB0LRK4D0/#"><i class="icon-large icon-cog"></i></a></li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- ** ./ widget header ** -->
+
+                      <!-- ** message feed ** -->
+                      <div class="message-feed bottom-margin">
+                        <div class="float-left">
+                          <img class="avatar" src="./static/js/10.png">
+                        </div>
+                        <div class="msg-post-right">
+                          <div class="message-wrapper right">
+                            <div class="arrow"></div>
+                            <div class="inner">
+                              <div class="content">
+                                <p><a href="http://wbpreview.com/previews/WB0LRK4D0/#">Martinus</a> published new <a href="http://wbpreview.com/previews/WB0LRK4D0/#">Forum Topic</a> on your <a href="http://wbpreview.com/previews/WB0LRK4D0/#">Web Designer</a> Group. June 20, 3:13am</p>
+                                <hr class="white">
+                                <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam...</p>
+                                <div class="clearfix"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- ** ./ message feed ** -->
+
+                      <!-- ** message feed ** -->
+                      <div class="message-feed bottom-margin">
+                        <div class="float-left">
+                          <img class="avatar" src="./static/js/01.png">
+                        </div>
+                        <div class="msg-post-right">
+                          <div class="message-wrapper right custom-widget-msg">
+                            <div class="arrow"></div>
+                            <div class="inner">
+                              <h3 class="title"><i class="icon-share-alt"></i> <a href="http://wbpreview.com/previews/WB0LRK4D0/#">Nadya</a> invited you to the group <a href="http://wbpreview.com/previews/WB0LRK4D0/#">AntiGalau</a>. June 20, 1:58pm</h3>
+                              <div class="content with-footer">
+                                <p>Hi, please join sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+                              </div>
+                            </div>
+                            <div class="msg-footer">
+                              <p><a href="http://wbpreview.com/previews/WB0LRK4D0/#" class="btn btn-small btn-success">visit group</a> <a href="http://wbpreview.com/previews/WB0LRK4D0/#" class="btn btn-small btn-primary">accept</a> <a href="http://wbpreview.com/previews/WB0LRK4D0/#" class="btn btn-small btn-danger">ignore</a> </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- ** ./ message feed ** -->
+
+                    </div>
+                    <!-- ** ./ widget ** -->
+
+                  </div>
+                </div>
+
+                <div class="row-fluid">
+                  <div class="span6">
+
+                    <!-- ** widget ** -->
+                    <div class="well">
+
+                      <!-- ** widget header ** -->
+                      <div class="navbar navbar-heading">
+                        <div class="navbar-inner">
+                          <div class="container" style="width: auto;">
+                            <a class="brand" href="http://wbpreview.com/previews/WB0LRK4D0/#">Widget Title</a>
+                            <ul class="nav pull-right">
+                              <li><a href="http://wbpreview.com/previews/WB0LRK4D0/#"><i class="icon-large icon-cog"></i></a></li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- ** ./ widget header ** -->
+
+                      <!-- ** widget content ** -->
+                      <p class="small-font">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</p>
+                      <!-- ** ./ widget content ** -->
+
+                    </div>
+                    <!-- ** ./ widget ** -->
+
+                  </div>
+                  
+                  <div class="span6">
+
+                    <!-- ** widget ** -->
+                    <div class="well">
+
+                      <!-- ** widget header ** -->
+                      <div class="navbar navbar-heading">
+                        <div class="navbar-inner">
+                          <div class="container" style="width: auto;">
+                            <a class="brand" href="http://wbpreview.com/previews/WB0LRK4D0/#">Widget Title</a>
+                            <ul class="nav pull-right">
+                              <li><a href="http://wbpreview.com/previews/WB0LRK4D0/#"><i class="icon-large icon-cog"></i></a></li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- ** ./ widget header ** -->
+
+                      <!-- ** widget content ** -->
+                      <p class="small-font">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</p>
+                      <!-- ** ./ widget content ** -->
+
+                    </div>
+                    <!-- ** ./ widget ** -->
+
+                  </div>
+                </div>
+
+              </div>
+              <!-- ** ./ main content ** -->
+
+            </div>
+          </div>        
+        </div>
+      </div>
+
+      <div id="leftcolumn">
+
+        <!-- ** left panel ** -->
+        <div id="leftpanel">
+          <div class="leftpanel-wrapper">
+            <ul class="nav nav-pills nav-stacked">
+              <li class="user-container">
+                <a href="http://wbpreview.com/previews/WB0LRK4D0/index.html">
+                  <img src="./static/js/07.png">
+                  Gwen
+                </a>
+              </li>
+              <li class="active">
+                <a href="http://wbpreview.com/previews/WB0LRK4D0/index.html">
+                  <i class="icon-large icon-home"></i>
+                  Dashboard
+                </a>
+              </li>
+              <li>
+                <a href="http://wbpreview.com/previews/WB0LRK4D0/sample-layouts.html">
+                  <i class="icon-large icon-file"></i>
+                  Sample Layouts
+                </a>
+              </li>
+              <li>
+                <a href="http://wbpreview.com/previews/WB0LRK4D0/user-interface.html">
+                  <i class="icon-large icon-random"></i>
+                  User Interface
+                </a>
+              </li>
+              <li>
+                <a href="http://wbpreview.com/previews/WB0LRK4D0/charts-maps.html">
+                  <i class="icon-large icon-bar-chart"></i>
+                  Charts &amp; Maps
+                </a>
+              </li>
+              <li>
+                <a href="http://wbpreview.com/previews/WB0LRK4D0/form-elements.html">
+                  <i class="icon-large icon-check"></i>
+                  Form Elements
+                </a>
+              </li>
+              <li>
+                <a href="http://wbpreview.com/previews/WB0LRK4D0/tables.html">
+                  <i class="icon-large icon-table"></i>
+                  Tables
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!-- ** ./ left panel ** -->
+
+      </div>
+      <div class="clearfix"></div>
+    </div>
+    <!-- ===============================
+    /.for desktop -->
+     
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
+    <!-- external api -->
+    <script src="./static/js/js"></script>
+    <script src="./static/js/{main,places}.js" type="text/javascript"></script>
+    <script src="./static/js/browserplus-min.js"></script>
+
+    <!-- Base -->
+    <script src="./static/js/jquery.js"></script>
+    <script src="./static/js/bootstrap.min.js"></script>
+
+    <!-- jQuery plugins -->
+    <script src="./static/js/map-plugins.js"></script>
+    <script src="./static/js/chart-plugins.js"></script>
+    <script src="./static/js/plupload.full.js"></script>
+    <script src="./static/js/jquery.plupload.queue.js"></script>
+    <script src="./static/js/chosen.jquery.min.js"></script>
+    <script src="./static/js/jquery-ui-slider.js"></script>
+    <script src="./static/js/jquery.dataTables.min.js"></script>
+
+    <!-- Bootstrap plugins -->    
+    <script src="./static/js/bootstrap-plugins.js"></script>
+
+    <!-- for all templates -->
+    <script src="./static/js/custom.js"></script>
+
+    <!-- =============== ******** ./ dependencies ******** =============== -->
+
+    <!-- JS for index.html -->  
+    <script src="./static/js/sliders.js"></script>
+    <script src="./static/js/chart-horizontal-bar.js"></script>
+    <script src="./static/js/chart-vertical-bar.js"></script>
+    <script src="./static/js/chart-pie-donut.js"></script>
+    <script src="./static/js/map-marker-clusterer.js"></script>
+
+    <script src="./static/js/jquery.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <script src="./static/js/bootstrap-carousel.js"></script>
     <script src="./static/js/bootstrap-modal.js"></script>
-    <script src="./static/js/bootstrap.min.js"></script>
+    <script src="./static/js/jquery.flot.js"></script>
+    <script src="./static/js/jquery.flot.resize.js"></script>
+    <script src="./static/js/jquery.flot.pie.js"></script>
+    <script src="./static/js/customcharts.js"></script>
+    <script src="./static/js/jquery-ui.min.js"></script>
+    <script type="text/javascript">
+            $(document).ready(function(){
+                $('.togglemenuleft').click(function(){
+                    $('#menu-left').toggleClass('span1');
+                    $('#menu-left').toggleClass('icons-only');
+                    $('#menu-left').toggleClass('span3');
+                    
+                    $('#content').toggleClass('span6');
+                    $('#content').toggleClass('span8');
+                    
+                    $(this).find('i').toggleClass('icon-circle-arrow-right');
+                    $(this).find('i').toggleClass('icon-circle-arrow-left');
+                    $('#menu-left').find('span').toggle();
+                    $('#menu-left').find('.dropdown').toggle();
+                });
+
+                $('#menu-left a').click(function(){
+                    $('#menu-left').find('a').removeClass('active');
+                    $(this).addClass('active');
+                });
+        // tool tip
+                $('a').tooltip('hide');
+
+        //datePciker
+                $("#datepicker").datepicker();
+// switch style 
+                $('a.style').click(function(){
+                    var style = $(this).attr('href');
+                    $('.links-css').attr('href','css/' + style);
+                    return false;
+                });
+               
+
+
+                $(".switcher").click(function(){
+                    if($(this).find('i').hasClass('icon-circle-arrow-right'))
+                    $('.theme').animate({left:'0px'},500);
+                    else
+                    $('.theme').animate({left:'-89'},500);
+
+                    $(this).find('i').toggleClass('icon-circle-arrow-right');
+                    $(this).find('i').toggleClass('icon-circle-arrow-left');
+                });
+
+            });
+        </script>
+
 
 
     <div id="tc_container" style="display: none" data="ih"></div></body></html>
