@@ -3,6 +3,7 @@
 
 import csv
 import facebookoauth as foauth
+import json
 import logging
 import models
 import os
@@ -14,7 +15,6 @@ from google.appengine.api import users
 
 from google.appengine.ext.webapp import template
 from google.appengine.ext.webapp.util import login_required
-
 
 
 def UserLoginHandler(self):
@@ -186,10 +186,10 @@ class UploadData(webapp2.RequestHandler):
 
 class DeleteData(webapp2.RequestHandler):
     def get(self):
-        # ancestor_key = ndb.Key("SideEffect", "sideeffect")
-        # all_side_effect = models.SideEffect.query_sideeffect(ancestor_key).fetch()
-        ancestor_key = ndb.Key("Medicine", "medicine")
-        all_side_effect = models.Medicine.query_medicine(ancestor_key).fetch()
+        ancestor_key = ndb.Key("SideEffect", "sideeffect")
+        all_side_effect = models.SideEffect.query_sideeffect(ancestor_key).fetch()
+        #ancestor_key = ndb.Key("Medicine", "medicine")
+        #all_side_effect = models.Medicine.query_medicine(ancestor_key).fetch()
 
         for i in all_side_effect:
             entity_key = i.key  # Key, looks like: Key('SideEffect', 'sideeffect', 'SideEffect', 5633)
@@ -204,7 +204,34 @@ class MyRecord(webapp2.RequestHandler):
         template_dict = {}
         path = os.path.join(os.path.dirname(__file__), 'myrecord.html')
         self.response.out.write(template.render(path, template_dict))
-        
+
+
+class SearchMedicine(webapp2.RequestHandler):
+    def get(self):
+        medicine_result = []
+        search_word = self.request.get('term')
+        all_medicine = models.Medicine.query(models.Medicine.medicine_name >= unicode(search_word.capitalize()))
+        result = all_medicine.fetch(10)
+
+        if result:
+            for medicine in result:
+                medicine_result.append(medicine.medicine_name)
+
+            self.response.out.write(json.dumps(medicine_result))
+
+
+class SearchSideEffect(webapp2.RequestHandler):
+    def get(self):
+        side_effect_result = []
+        search_word = self.request.get('term')
+        all_side_effect = models.SideEffect.query(models.SideEffect.name >= unicode(search_word))
+        result = all_side_effect.fetch(10)
+
+        if result:
+            for side_effect in result:
+                side_effect_result.append(side_effect.name)
+
+            self.response.out.write(json.dumps(side_effect_result))
 
 
 app = webapp2.WSGIApplication([('/', MainPage),
@@ -215,4 +242,7 @@ app = webapp2.WSGIApplication([('/', MainPage),
                                 ('/oauth/facebook_logout', foauth.LogoutHandler),
                                 ('/oauth/weibo_login', weibo_oauth_v2.LoginHandler),
                                 ('/oauth/weibo_logout', weibo_oauth_v2.LogoutHandler),
-                                ('/upload', UploadData), ])
+                                ('/search_medicine/', SearchMedicine),
+                                ('/search_side_effect/', SearchSideEffect),
+                                ('/upload', UploadData), ],
+                                debug=True)
