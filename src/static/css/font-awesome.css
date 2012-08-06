@@ -21,7 +21,7 @@
     Work: http://lemonwi.se co-founder
 */
 @font-face {
-    font-family: "Microsoft JhengHei", Arial, sans-serif;
+    font-family: 'FontAwesome';
     src: url('../font/fontawesome-webfont.eot?#iefix') format('embedded-opentype'),
     url('../font/fontawesome-webfont.woff') format('woff'),
     url('../font/fontawesome-webfont.ttf') format('truetype'),
@@ -46,7 +46,7 @@ li[class^="icon-"], li[class*=" icon-"] {
 /*  Font Awesome styles
     ------------------------------------------------------- */
 [class^="icon-"]:before, [class*=" icon-"]:before {
-    font-family: "Microsoft JhengHei", Arial, sans-serif;
+    font-family: 'FontAwesome';
     font-weight: normal;
     font-style: normal;
     display: inline-block;
@@ -88,7 +88,7 @@ li[class^="icon-"]:before, li[class*=" icon-"]:before {
     text-indent: -2em;
     text-align: center;
 }
-li[class^="icon-"].icon-large:before, li[class*=" icon-"].icon-large:before {
+li[class^="icon-"].icon-large, li[class*=" icon-"].icon-large {
     text-indent: -1.3333333333333333em;
 }
 /*  Font Awesome uses the Unicode Private Use Area (PUA) to ensure screen
