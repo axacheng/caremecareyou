@@ -3423,6 +3423,7 @@ input[type="submit"].btn.btn-mini {
 
 .nav-tabs .active .dropdown-toggle .caret,
 .nav-pills .active .dropdown-toggle .caret {
+  margin-top: 9px;
   border-top-color: #333333;
   border-bottom-color: #333333;
 }
@@ -3696,18 +3697,18 @@ input[type="submit"].btn.btn-mini {
 .navbar-search {
   position: relative;
   float: left;
-  margin-top: 6px;
+  margin-top: 10px;
   margin-bottom: 0;
 }
 
 .navbar-search .search-query {
-  padding: 4px 9px;
+  padding: 5px 9px;
   font-family: "Microsoft JhengHei", Arial, sans-serif;
   font-size: 13px;
   font-weight: normal;
   line-height: 1;
   color: #ffffff;
-  background-color: #626262;
+  background-color: #ffffff;
   border: 1px solid #151515;
   -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1), 0 1px 0 rgba(255, 255, 255, 0.15);
      -moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1), 0 1px 0 rgba(255, 255, 255, 0.15);
@@ -3731,7 +3732,7 @@ input[type="submit"].btn.btn-mini {
   color: #cccccc;
 }
 
-.navbar-search .search-query:focus,
+.navbar-search .search-bavquery:focus,
 .navbar-search .search-query.focused {
   padding: 5px 10px;
   color: #333333;
@@ -3794,7 +3795,7 @@ input[type="submit"].btn.btn-mini {
 
 .navbar .nav > li > a {
   float: none;
-  padding: 9px 10px 11px;
+  padding: 5px 10px 11px;
   line-height: 19px;
   color: #999999;
   text-decoration: none;
@@ -3821,6 +3822,7 @@ input[type="submit"].btn.btn-mini {
 
 .navbar .nav .active > a,
 .navbar .nav .active > a:hover {
+  padding: 5px 5px 6px; 
   color: #ffffff;
   text-decoration: none;
   background-color: #3D368B;

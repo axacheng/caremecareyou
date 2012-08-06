@@ -218,7 +218,7 @@ class SearchDisease(webapp2.RequestHandler):
                 disease_result.append(disease.name)
 
             self.response.out.write(json.dumps(disease_result))
-            
+
 
 class SearchMedicine(webapp2.RequestHandler):
     def get(self):
