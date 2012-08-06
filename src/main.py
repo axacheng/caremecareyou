@@ -202,7 +202,7 @@ class MyRecord(webapp2.RequestHandler):
     """docstring for MyRecord"""
     def get(self):
         template_dict = {}
-        path = os.path.join(os.path.dirname(__file__), 'myrecord.html')
+        path = os.path.join(os.path.dirname(__file__), 'myrecord-beta.html')
         self.response.out.write(template.render(path, template_dict))
 
 

@@ -57,13 +57,12 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a> 
-          <a class="brand bar-root" href="#"> 永保安康 </a>
+          <a class="brand bar-root" href="/"> 永保安康 </a>
           <div class="nav-collapse">
             <ul class="nav pull-left bar-root">
-              <li class="active"><a href="#">首頁</a></li>
-              <li><a href="use.html">如何使用</a></li>
-              <li><a href="myrecord.html">我的紀錄</a></li>
-              <li><a href="more.html">更多統計</a></li>
+              <li><a href="/use">如何使用</a></li>
+              <li><a href="/myrecord">我的紀錄</a></li>
+              <li><a href="/more">更多統計</a></li>
             </ul>
             <!-- user dropdown -->
             {% if not login_status %}
@@ -92,7 +91,7 @@
                         <img class="thumb account-img" src="#">
                        </li>
                        <li class="account-info">
-                         <h3>王大華</h3>
+                         <h3>{{ username }}</h3>
                          <p>
                          <a href="#">編輯</a> 
                          |
@@ -206,7 +205,7 @@
           </div>
           <div class="item active">
             <a href="http://hubblesite.org/gallery/album/entire/pr2007016e/xlarge_web/npp/128/">
-              <img src="static/img/carousel/05.jpeg" alt="easy to track">
+              <img src="static/img/carousel/01.jpeg" alt="easy to track">
             </a>
             <div class="carousel-caption">
               <p>圖表式呈現，溝通病情清楚明瞭<a class="btn btn-large btn-success pull-right" data-toggle="modal" href="#myModal" >立即使用 Free!</a></p></p>

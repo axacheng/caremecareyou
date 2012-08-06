@@ -5,6 +5,10 @@
     <style type="text/css">@media print {  .gmnoprint {    display:none  }}@media screen {  .gmnoscreen {    display:none  }}</style>
     <meta charset="utf-8">
     <title> 我的紀錄 </title>
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js"></script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -24,6 +28,11 @@
         padding: 9px 0;
       }
     </style>
+
+    <style>
+    .ui-autocomplete-loading { background: white url('http://jqueryui.com/demos/autocomplete/images/ui-anim_basic_16x16.gif') right center no-repeat; }
+    </style>
+
     <!-- datepicker css -->
     <link href="static/css/datepicker.css" rel="stylesheet">
       <!-- responsive css -->
@@ -42,6 +51,68 @@
        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="static/ico/apple-touch-icon-114-precomposed.png">
        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="static/ico/apple-touch-icon-72-precomposed.png">
        <link rel="apple-touch-icon-precomposed" href="static/ico/apple-touch-icon-57-precomposed.png">
+
+  <script>
+    $(function() {
+      $( "#search_disease" ).autocomplete({
+          source: "/search_disease/?"
+      }); //autocomplete
+    });
+
+    $(function() {
+      $( "#search_medicine" ).autocomplete({
+          source: "/search_medicine/?"
+      }); //autocomplete
+    });
+
+    $(function() {
+      function split( val ) {
+        return val.split( /,\s*/ );
+      }
+      function extractLast( term ) {
+        return split( term ).pop();
+      }
+
+      $( "#search_side_effect" )
+        // don't navigate away from the field on tab when selecting an item
+        .bind( "keydown", function( event ) {
+          if ( event.keyCode === $.ui.keyCode.TAB &&
+              $( this ).data( "autocomplete" ).menu.active ) {
+            event.preventDefault();
+          }
+        })
+        .autocomplete({
+          source: function( request, response ) {
+            $.getJSON( "/search_side_effect/?", {
+              term: extractLast( request.term )
+            }, response );
+          },
+          search: function() {
+            // custom minLength
+            var term = extractLast( this.value );
+            if ( term.length < 1 ) {
+              return false;
+            }
+          },
+          focus: function() {
+            // prevent value inserted on focus
+            return false;
+          },
+          select: function( event, ui ) {
+            var terms = split( this.value );
+            // remove the current input
+            terms.pop();
+            // add the selected item
+            terms.push( ui.item.value );
+            // add placeholder to get the comma-and-space at the end
+            terms.push( "" );
+            this.value = terms.join( ", " );
+            return false;
+          }
+        }); //end autocomplete
+    });
+  </script>
+
   </head>
 
   <body>
@@ -58,13 +129,12 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a> 
-          <a class="brand bar-root" href="#" data-original-title=""> 永保安康 </a>
+          <a class="brand bar-root" href="/" data-original-title=""> 永保安康 </a>
           <div class="nav-collapse">
             <ul class="nav pull-left bar-root">
-              <li><a href="#">首頁</a></li>
-              <li><a href="use.html">如何使用</a></li>
-              <li  class="active"><a href="myrecord.html">我的紀錄</a></li>
-              <li><a href="more.html">更多統計</a></li>
+              <li><a href="/use">如何使用</a></li>
+              <li  class="active"><a href="/myrecord">我的記錄</a></li>
+              <li><a href="/more">更多統計</a></li>
             </ul>
             <!-- user dropdown -->
             <ul class="nav pull-right bar-root">
@@ -79,7 +149,7 @@
                       <img class="thumb account-img" src="#">
                   </li>
                   <li class="account-info">
-                    <h3>王大華</h3>
+                    <h3>{{ username }}</h3>
                     <p>
                     <a href="#">編輯</a> 
                     |
@@ -189,7 +259,7 @@
               <li class="user-container">
                 <a href="#">
                   <img src="#">
-                  王大華
+                  {{ username }} 
                 </a>
               </li>
               <li class="active">
@@ -205,7 +275,7 @@
                 </a>
               </li>
               <li>
-                <a href="http://wbpreview.com/previews/WB0LRK4D0/charts-maps.html">
+                <a data-toggle="modal" href="#service">
                   <i class="icon-large icon-bar-chart"></i>
                   用藥記錄
                 </a>
@@ -670,6 +740,24 @@
                 </div>
               </div>
             </div>
+             <!-- 用藥記錄 modal -->
+            <div class="modal hide" id="service">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h2><font color= "#600000">請輸入你的用藥記錄：</font></h2>
+              </div>
+              <div class="modal-body">
+                <form action="/search/?" name="favorite" id="search_form" method="POST">
+                  疾病名稱: <input id="search_disease" type="text" name="term" /> <br>
+                  藥名: <input id="search_medicine"    type="text" name="term" /> <br>
+                  副作用: <input id="search_side_effect" type="text" name="term" />
+                  <input id="search_input" type="submit" value="送出" />
+                </form>
+              </div>
+              <div class="modal-footer">
+                <a href="#" class="btn" data-dismiss="modal">Close</a>
+              </div>
+            </div>
 
       </div>
       <div class="clearfix"></div>
@@ -685,9 +773,9 @@
    
     <!-- Base -->
     <script src="./static/js/jquery.js"></script>
+     <script src="./static/js/bootstrap-modal.js"></script>
     <script src="./static/js/jquery.min.js"></script>
     <script src="./static/js/bootstrap.min.js"></script>
-    <script src="./static/js/bootstrap-modal.js"></script>
     <script src="./static/js/jquery.flot.js"></script>
     <script src="./static/js/jquery.flot.resize.js"></script>
     <script src="./static/js/jquery.flot.pie.js"></script>
