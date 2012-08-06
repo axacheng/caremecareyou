@@ -43,6 +43,10 @@ class Report(polymodel.PolyModel):
     data = ndb.IntegerProperty()
 
 
+class Disease(ndb.Model):
+    name = ndb.StringProperty()
+
+
 class SideEffect(ndb.Model):
     name = ndb.StringProperty()
 
