@@ -176,8 +176,8 @@ class UploadData(webapp2.RequestHandler):
         uploaded_file = csv.reader(self.request.get('csv'))
         for side_effect_name in uploaded_file:
             if side_effect_name:
-                side_effect = models.SideEffect(parent=ndb.Key('SideEffect', 'sideeffect'),
-                name=''.join(side_effect_name),)
+                side_effect = models.Disease(parent=ndb.Key('Disease', 'disease_name'),
+                                             name=''.join(side_effect_name),)
                 #side_effect = models.Medicine(parent=ndb.Key('Medicine', 'medicine'),
                 #                              medicine_name=''.join(side_effect_name),)
                 side_effect.put()
@@ -205,6 +205,20 @@ class MyRecord(webapp2.RequestHandler):
         path = os.path.join(os.path.dirname(__file__), 'myrecord.html')
         self.response.out.write(template.render(path, template_dict))
 
+
+class SearchDisease(webapp2.RequestHandler):
+    def get(self):
+        disease_result = []
+        search_word = self.request.get('term')
+        all_disease = models.Disease.query(models.Disease.name >= unicode(search_word.capitalize()))
+        result = all_disease.fetch(50)
+
+        if result:
+            for disease in result:
+                disease_result.append(disease.name)
+
+            self.response.out.write(json.dumps(disease_result))
+            
 
 class SearchMedicine(webapp2.RequestHandler):
     def get(self):
@@ -234,6 +248,7 @@ class SearchSideEffect(webapp2.RequestHandler):
             self.response.out.write(json.dumps(side_effect_result))
 
 
+
 app = webapp2.WSGIApplication([('/', MainPage),
                                 ('/backend_data', ShowNdbKinds),
                                 ('/delete', DeleteData),
@@ -242,6 +257,7 @@ app = webapp2.WSGIApplication([('/', MainPage),
                                 ('/oauth/facebook_logout', foauth.LogoutHandler),
                                 ('/oauth/weibo_login', weibo_oauth_v2.LoginHandler),
                                 ('/oauth/weibo_logout', weibo_oauth_v2.LogoutHandler),
+                                ('/search_disease/', SearchDisease),
                                 ('/search_medicine/', SearchMedicine),
                                 ('/search_side_effect/', SearchSideEffect),
                                 ('/upload', UploadData), ],
