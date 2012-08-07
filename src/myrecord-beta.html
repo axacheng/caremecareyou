@@ -5,14 +5,12 @@
     <style type="text/css">@media print {  .gmnoprint {    display:none  }}@media screen {  .gmnoscreen {    display:none  }}</style>
     <meta charset="utf-8">
     <title> 我的紀錄 </title>
-    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js"></script>
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-    <!-- bootstrap css -->
+    <!-- for instant search of record form-->
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css"> 
+    <!-- style css -->
     <link href="static/css/bootstrap.css" rel="stylesheet">
     <link href="static/css/style.css" rel="stylesheet">
     <!-- base css -->
@@ -21,7 +19,7 @@
     <link href="static/css/home-page.css" rel="stylesheet">
     <style type="text/css">
       body {
-        padding-top: 30px;
+        padding-top: 30px; /*between header and banner or container*/
         padding-bottom: 40px;
       }
       .sidebar-nav {
@@ -29,98 +27,34 @@
       }
     </style>
 
-    <style>
+    <style> /*show in loading progress*/
     .ui-autocomplete-loading { background: white url('http://jqueryui.com/demos/autocomplete/images/ui-anim_basic_16x16.gif') right center no-repeat; }
     </style>
 
     <!-- datepicker css -->
     <link href="static/css/datepicker.css" rel="stylesheet">
-      <!-- responsive css -->
-      <link href="static/css/bootstrap-responsive.css" rel="stylesheet">
-      <!-- media query css -->
-      <link href="static/css/media-fluid.css" rel="stylesheet">
+    <!-- responsive css -->
+    <link href="static/css/bootstrap-responsive.css" rel="stylesheet">
+    <!-- media query css -->
+    <link href="static/css/media-fluid.css" rel="stylesheet">
 
-       <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-       <!--[if lt IE 9]>
-       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-       <![endif]-->
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
 
-       <!-- Le fav and touch icons -->
-       <link rel="shortcut icon" href="static/ico/favicon.ico">
-       <link rel="apple-touch-icon-precomposed" sizes="144x144" href="static/ico/apple-touch-icon-144-precomposed.png">
-       <link rel="apple-touch-icon-precomposed" sizes="114x114" href="static/ico/apple-touch-icon-114-precomposed.png">
-       <link rel="apple-touch-icon-precomposed" sizes="72x72" href="static/ico/apple-touch-icon-72-precomposed.png">
-       <link rel="apple-touch-icon-precomposed" href="static/ico/apple-touch-icon-57-precomposed.png">
-
-  <script>
-    $(function() {
-      $( "#search_disease" ).autocomplete({
-          source: "/search_disease/?"
-      }); //autocomplete
-    });
-
-    $(function() {
-      $( "#search_medicine" ).autocomplete({
-          source: "/search_medicine/?"
-      }); //autocomplete
-    });
-
-    $(function() {
-      function split( val ) {
-        return val.split( /,\s*/ );
-      }
-      function extractLast( term ) {
-        return split( term ).pop();
-      }
-
-      $( "#search_side_effect" )
-        // don't navigate away from the field on tab when selecting an item
-        .bind( "keydown", function( event ) {
-          if ( event.keyCode === $.ui.keyCode.TAB &&
-              $( this ).data( "autocomplete" ).menu.active ) {
-            event.preventDefault();
-          }
-        })
-        .autocomplete({
-          source: function( request, response ) {
-            $.getJSON( "/search_side_effect/?", {
-              term: extractLast( request.term )
-            }, response );
-          },
-          search: function() {
-            // custom minLength
-            var term = extractLast( this.value );
-            if ( term.length < 1 ) {
-              return false;
-            }
-          },
-          focus: function() {
-            // prevent value inserted on focus
-            return false;
-          },
-          select: function( event, ui ) {
-            var terms = split( this.value );
-            // remove the current input
-            terms.pop();
-            // add the selected item
-            terms.push( ui.item.value );
-            // add placeholder to get the comma-and-space at the end
-            terms.push( "" );
-            this.value = terms.join( ", " );
-            return false;
-          }
-        }); //end autocomplete
-    });
-  </script>
-
+    <!-- Le fav and touch icons, need to be modified to ours style-->
+    <link rel="shortcut icon" href="static/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="static/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="static/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="static/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="static/ico/apple-touch-icon-57-precomposed.png">
   </head>
-
+  <!-- TOP Nav bar -->
   <body>
     {{ username }}
     {{ url_text }}
     {{ login_status }}
-
-
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container-fluid">
@@ -131,12 +65,13 @@
           </a> 
           <a class="brand bar-root" href="/" data-original-title=""> 永保安康 </a>
           <div class="nav-collapse">
+            <!-- normal menu-->
             <ul class="nav pull-left bar-root">
               <li><a href="/use">如何使用</a></li>
               <li  class="active"><a href="/myrecord">我的記錄</a></li>
               <li><a href="/more">更多統計</a></li>
             </ul>
-            <!-- user dropdown -->
+            <!-- account menu after login-->
             <ul class="nav pull-right bar-root">
               <li class="divider-vertical"></li>
               <li class="dropdown">
@@ -169,20 +104,23 @@
                 </ul>
               </li>
             </ul>
-                <!-- ./ user dropdown -->
+            <!-- msg / mail / notification -->
             <ul class="nav pull-right bar-root">
-              <li class="divider-vertical"></li>
-              <li>
+              <li class="divider-vertical"></li> 
+              <!-- msg -->
+              <li> 
                 <a href="chat.html" data-original-title="">
                 <i class="icon-large icon-comment icon-white"></i>
                 <span class="label label-important">6</span></a> 
               </li>
+              <!-- mail -->
               <li class="dropdown">
                 <a href="#" data-toggle="dropdown" data-original-title=""> 
                 <i class="icon-large icon-envelope icon-white"></i>
                 <span class="label label-important">5 new</span></a> 
                   <ul class="dropdown-menu">
-                     <li>
+                    <!-- mail 1-->
+                    <li>
                       <a href="http://wbpreview.com/previews/WB0881879/inbox.html" data-original-title="">
                         <img src="#" alt=""> Subject : Project
                         <p class="help-block">
@@ -190,65 +128,70 @@
                         </p>
                           <span class="label">23/09/2012</span>
                       </a>
-                     </li>
-                     <li class="divider"></li>
-                     <li>
+                    </li>
+                    <!-- mail 2-->
+                    <li class="divider"></li>
+                    <li>
                       <a href="#" data-original-title="">
                         <img src="#" alt=""> Subject : Film 
                         <p class="help-block">
                           <small>From: ab.alhyane@gmail.com</small>
                         </p>
                         <span class="label">21/04/2012</span> 
-                       </a>
-                      </li>
-                      <li class="divider"></li>
-                      <li>
+                      </a>
+                    </li>
+                    <!-- mail 3-->
+                    <li class="divider"></li>
+                    <li>
                       <a href="#" data-original-title="">
                         <img src="#" alt=""> Subject : Film 
                         <p class="help-block">
                           <small>From: ab.alhyane@gmail.com</small>
                         </p>
                         <span class="label">21/04/2012</span> 
-                       </a>
-                      </li>
-                      <li class="divider"></li>
-                      <li>
+                      </a>
+                    </li>
+                    <!-- mail 4 -->
+                    <li class="divider"></li>
+                    <li>
                       <a href="#" data-original-title="">
                         <img src="#" alt=""> Subject : Film 
                         <p class="help-block">
                           <small>From: ab.alhyane@gmail.com</small>
                         </p>
                         <span class="label">21/04/2012</span> 
-                       </a>
-                      </li>
-                      <li class="divider"></li>
-                      <li class="active"><a href="#" data-original-title=""> 顯示全部 </a></li>
+                      </a>
+                    </li>
+                    <li class="divider"></li>
+                    <li class="active">
+                      <a href="#" data-original-title=""> 顯示全部 </a>
+                    </li>
                   </ul>
-                </li>
-                <li class="dropdown">
-                  <a href="#" data-toggle="dropdown" data-original-title=""> 
-                  <i class="icon-large icon-refresh icon-white"></i>
-                  <span class="label label-info">3 Updates</span></a> 
-                  <ul class="dropdown-menu">
-                      <li><a href="#" data-original-title=""> xxx </a></li>
-                      <li><a href="#" data-original-title=""> xxx</a></li>
-                      <li><a href="#" data-original-title=""> xxx</a></li>
-                      <li class="divider"></li>
-                      <li class="active"><a href="#" data-original-title=""> 顯示全部 </a></li>
-                  </ul>
-                </li>
+              </li>
+              <!-- notification -->
+              <li class="dropdown">
+                <a href="#" data-toggle="dropdown" data-original-title=""> 
+                <i class="icon-large icon-refresh icon-white"></i>
+                <span class="label label-info">3 Updates</span></a> 
+                <ul class="dropdown-menu">
+                  <li><a href="#" data-original-title=""> xxx </a></li>
+                  <li><a href="#" data-original-title=""> xxx</a></li>
+                  <li><a href="#" data-original-title=""> xxx</a></li>
+                  <li class="divider"></li>
+                  <li class="active"><a href="#" data-original-title=""> 顯示全部 </a></li>
+                </ul>
+              </li>
             </ul>
+            <!-- search -->
             <form action="#" class="navbar-search pull-right">
-            <input type="text" placeholder="搜尋" class="search-query span2">
+              <input type="text" placeholder="搜尋" class="search-query span2">
             </form>
-            
-
           </div> 
         </div> <!-- container -->
       </div> <!-- navbar-inner -->
     </div> <!-- navbar -->
 
-   <!-- only for desktop
+   <!-- main content
   =============================== -->
     <div id="maincontainer" class="left-sb-fluid">
       <div id="contentwrapper">
@@ -263,13 +206,13 @@
                 </a>
               </li>
               <li class="active">
-                <a href="http://wbpreview.com/previews/WB0LRK4D0/index.html">
+                <a href="#">
                   <i class="icon-large icon-home"></i>
                   總覽
                 </a>
               </li>
               <li>
-                <a href="http://wbpreview.com/previews/WB0LRK4D0/sample-layouts.html">
+                <a data-toggle="modal" href="#instant">
                   <i class="icon-large icon-check"></i>
                   快速記錄
                 </a>
@@ -281,21 +224,21 @@
                 </a>
               </li>
               <li>
-                <a href="http://wbpreview.com/previews/WB0LRK4D0/form-elements.html">
+                <a data-toggle="modal" href="#check">
                   <i class="icon-large icon-file"></i>
                   檢查記錄
                 </a>
               </li>
               <li>
-                <a href="http://wbpreview.com/previews/WB0LRK4D0/tables.html">
+                <a data-toggle="modal" href="#add">
                   <i class="icon-large icon-table"></i>
                   新增症狀
                 </a>
               </li>
             </ul>
           </div>
-        </div>
-        <!-- ** ./ left panel ** -->
+        </div><!-- ** left panel ** -->
+        <!-- ** middle panel ** -->
         <div id="content" class="span9 section-body">
           <div id="section-body" class="tabbable">
             <ul class="nav nav-tabs">
@@ -304,27 +247,28 @@
               </li>
             </ul>
             <div class="tab-content">
+              <!--Tabs1-->
               <div class="tab-pane active" id="tab1">
+                <!--graphic for medicine-->
                 <div class="row-fluid">
-                <!--Tabs1-->
+                  <!--Tabs1-->
                   <div class="span12">
-                      <div id="accordion1" class="accordion">
-                        <div class="accordion-group">
-                          <div class="accordion-heading">
-                            <a href="#" data-toggle="collapse" class="accordion-toggle in" data-original-title="">
-                              <i class="icon-signal icon-white"></i> 
-                              <span class="divider-vertical"></span> 記錄 
-                              <i class="icon-chevron-down icon-white pull-right"></i>
-                            </a>
-                          </div>
-                          <div class="accordion-body collapse in" id="graph">
-                            <div class="accordion-inner paddind">
-                              <!--圖表 -->
-                              <div id="placeholder" class="span12" style="height: 300px; padding: 0px; position: relative;">
-                                <div class="tickLabels" style="font-size:smaller">
-                                  <div class="xAxis x1Axis" style="color:#545454"></div>
-                                  <div class="yAxis y1Axis" style="color:#545454"></div>
-                                </div>
+                    <div id="accordion1" class="accordion">
+                      <div class="accordion-group">
+                        <div class="accordion-heading">
+                          <a href="#graph" data-toggle="collapse" class="accordion-toggle in" data-original-title="">
+                            <i class="icon-signal icon-white"></i> 
+                            <span class="divider-vertical"></span> 
+                            記錄<i class="icon-chevron-down icon-white pull-right"></i>
+                          </a>
+                        </div>
+                        <div class="accordion-body collapse in" id="graph">
+                          <div class="accordion-inner paddind">
+                            <!--圖表 -->
+                            <div id="placeholder" class="span12" style="height: 300px; padding: 0px; position: relative;">
+                              <div class="tickLabels" style="font-size:smaller">
+                                <div class="xAxis x1Axis" style="color:#545454"></div>
+                                <div class="yAxis y1Axis" style="color:#545454"></div>
                               </div>
                             </div>
                           </div>
@@ -332,28 +276,27 @@
                       </div>
                     </div>
                   </div>
-                  <!--/Tabs1-->
                 </div>
+                <!--graphic for check-->
                 <div class="row-fluid">
-                <!--Tabs1-->
+                  <!--Tabs1-->
                   <div class="span12">
-                      <div id="accordion1" class="accordion">
-                        <div class="accordion-group">
-                          <div class="accordion-heading">
-                            <a href="#" data-toggle="collapse" class="accordion-toggle in" data-original-title="">
-                              <i class="icon-signal icon-white"></i> 
-                              <span class="divider-vertical"></span> 記錄 
-                              <i class="icon-chevron-down icon-white pull-right"></i>
-                            </a>
-                          </div>
-                          <div class="accordion-body collapse in" id="graph">
-                            <div class="accordion-inner paddind">
-                              <!--圖表 -->
-                              <div id="placeholder" class="span12" style="height: 300px; padding: 0px; position: relative;">
-                                <div class="tickLabels" style="font-size:smaller">
-                                  <div class="xAxis x1Axis" style="color:#545454"></div>
-                                  <div class="yAxis y1Axis" style="color:#545454"></div>
-                                </div>
+                    <div id="accordion1" class="accordion">
+                      <div class="accordion-group">
+                        <div class="accordion-heading">
+                          <a href="#graph2" data-toggle="collapse" class="accordion-toggle in" data-original-title="">
+                            <i class="icon-signal icon-white"></i> 
+                            <span class="divider-vertical"></span> 
+                            記錄<i class="icon-chevron-down icon-white pull-right"></i>
+                          </a>
+                        </div>
+                        <div class="accordion-body collapse in" id="graph2">
+                          <div class="accordion-inner paddind">
+                            <!--圖表 -->
+                            <div id="placeholder" class="span12" style="height: 300px; padding: 0px; position: relative;">
+                              <div class="tickLabels" style="font-size:smaller">
+                                <div class="xAxis x1Axis" style="color:#545454"></div>
+                                <div class="yAxis y1Axis" style="color:#545454"></div>
                               </div>
                             </div>
                           </div>
@@ -361,17 +304,18 @@
                       </div>
                     </div>
                   </div>
-                  <!--/Tabs1-->
                 </div>
-                <!--/Row fluid-->
+                <!--span6-->
                 <div class="row-fluid">
-                  <!--Tabs2-->
+                  <!--span6-1-->
                   <div class="span6">
                     <div id="accordion2" class="accordion">
                       <div class="accordion-group">
                         <div class="accordion-heading">
                           <a href="#widget-tabs" data-toggle="collapse" class="accordion-toggle in" data-original-title="">
-                            <i class="icon-bullhorn icon-white"></i> <span class="divider-vertical"></span> Order <i class="icon-chevron-down icon-white pull-right"></i>
+                            <i class="icon-bullhorn icon-white"></i> 
+                            <span class="divider-vertical"></span> 
+                            Order <i class="icon-chevron-down icon-white pull-right"></i>
                           </a>
                         </div>
                         <div class="accordion-body collapse in" id="widget-tabs">
@@ -385,9 +329,9 @@
                                   <th>Actions</th>
                                 </tr>
                               </thead>
-                            <tbody>
-                              <tr>
-                                <td>1</td>
+                              <tbody>
+                                <tr>
+                                  <td>1</td>
                                   <td>$11.00</td>
                                   <td>$99.00</td>
                                   <td>
@@ -405,7 +349,7 @@
                                   <td>$3344.00</td>
                                   <td>
                                     <a data-original-title="Validate" class="btn btn-small" href="javascript:;">
-                                      <i class="icon-ok"></i> 
+                                      <i class="icon-ok"></i>
                                     </a>
                                     <a data-original-title="Remove" class="btn btn-small btn-danger" onclick="return confirm(&#39;Are you sure  ?&#39;);" href="javascript:;">
                                       <i class="icon-white icon-remove"></i>
@@ -432,12 +376,13 @@
                       </div>
                     </div>
                   </div>
+                  <!--span6-2-->
                   <div class="span6">
                     <div id="accordion3" class="accordion">
                       <div class="accordion-group">
                         <div class="accordion-heading">
                           <a href="#annoncement" data-toggle="collapse" class="accordion-toggle in" data-original-title="">
-                            <i class="icon-calendar icon-white"></i> 
+                            <i class="icon-calendar icon-white"></i>
                             <span class="divider-vertical"></span> 
                             Calendar <i class="icon-chevron-down icon-white pull-right"></i>
                           </a>
@@ -602,41 +547,49 @@
                       </div>
                     </div>
                   </div>
-                </div>
+                </div>  
               </div>
             </div>
-            <div class="span3" id="widget">
-              <div id="accordion4" class="accordion">
-                <div class="accordion-group">
-                  <div class="accordion-heading">
-                    <a href="#event" data-toggle="collapse" class="accordion-toggle" data-original-title="">
-                      <i class="icon-bookmark icon-white"></i> 
-                      <span class="divider-vertical"></span> 
-                      Earning <i class="icon-chevron-down icon-white pull-right"></i>
-                    </a>
-                </div>
-                <div class="accordion-body collapse in" id="event">
-                  <div class="accordion-inner">
+          </div>
+        </div><!-- ** middle panel ** -->
+        <!-- ** right panel ** -->
+        <div class="span3" id="widget">
+          <div id="accordion4" class="accordion">
+            <div class="accordion-group">
+              <div class="accordion-heading">
+                <a href="#event" data-toggle="collapse" class="accordion-toggle" data-original-title="">
+                  <i class="icon-bookmark icon-white"></i>
+                  <span class="divider-vertical"></span> 
+                  Earning <i class="icon-chevron-down icon-white pull-right"></i>
+                </a>
+              </div>
+              <div class="accordion-body collapse in" id="event">
+                <div class="accordion-inner">
                   <div id="earning" class="graph" style="height: 250px; width: 100%; padding: 0px; position: relative; ">
                     <span class="pieLabel" id="pieLabel0" style="position: absolute; top: 27px; left: 151px; ">
-                      <div style="font-size:8pt;text-align:center;padding:2px;color:white;">Project 1<br>12%</div>
+                      <div style="font-size:8pt;text-align:center;padding:2px;color:white;">Project 1<br>12%
+                      </div>
                     </span>
                     <span class="pieLabel" id="pieLabel2" style="position: absolute; top: 126px; left: 202px; ">
-                      <div style="font-size:8pt;text-align:center;padding:2px;color:white;">Project 3<br>21%</div>
+                      <div style="font-size:8pt;text-align:center;padding:2px;color:white;">Project 3<br>21%
+                      </div>
                     </span>
                     <span class="pieLabel" id="pieLabel3" style="position: absolute; top: 187px; left: 133px; ">
-                      <div style="font-size:8pt;text-align:center;padding:2px;color:white;">Project 4<br>16%</div>
+                      <div style="font-size:8pt;text-align:center;padding:2px;color:white;">Project 4<br>16%
+                      </div>
                     </span>
                     <span class="pieLabel" id="pieLabel4" style="position: absolute; top: 153px; left: 53px; ">
-                      <div style="font-size:8pt;text-align:center;padding:2px;color:white;">Project 5<br>19%</div>
+                      <div style="font-size:8pt;text-align:center;padding:2px;color:white;">Project 5<br>19%
+                      </div>
                     </span>
                     <span class="pieLabel" id="pieLabel5" style="position: absolute; top: 47px; left: 61px; ">
-                      <div style="font-size:8pt;text-align:center;padding:2px;color:white;">Project 6<br>26%</div>
+                      <div style="font-size:8pt;text-align:center;padding:2px;color:white;">Project 6<br>26%
+                      </div>
                     </span>
                   </div>
                 </div>
               </div>
-            </div>
+            </div> <!-- ** accordion-group1 end ** -->
             <div class="accordion-group">
               <div class="accordion-heading">
                 <a href="#statements" data-toggle="collapse" class="accordion-toggle" data-original-title="">
@@ -646,130 +599,263 @@
                 </a>
               </div>
               <div class="accordion-body collapse in" id="statements">
-               <div class="accordion-inner">
-                <table class="table table-striped">
-                  <tbody>
-                    <tr>
-                      <td>
-                        <i class="icon-user"></i>
-                      </td>
-                                                <td><a href="" data-original-title=""><strong>Hanafi ALMOJRIM</strong> added <strong>23 users</strong> </a><em>4 hours ago</em></td>
-                                            </tr>
-                                            <tr>
-                                                <td><i class="icon-envelope"></i></td>
-                                                <td><a href="" data-original-title=""><strong>Abderrahim NIBET</strong> sent you  <strong>message</strong> </a><em>Yesterday</em></td>
-                                            </tr>
-                                            <tr>
-                                                <td><i class="icon-tag"></i></td>
-                                                <td><a href="" data-original-title=""><strong>Youssef BASSIR</strong> invite you to  <strong>dinner</strong> </a><em>2 days ago</em></td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td><a class="pull-right" href="" data-original-title="">Show all</a></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-group">
-                            <div class="accordion-heading">
-                                <a href="#latest" data-toggle="collapse" class="accordion-toggle" data-original-title="">
-                                    <i class="icon-th icon-white"></i> <span class="divider-vertical"></span> Tabbed Container <i class="icon-chevron-down icon-white pull-right"></i>
-                                </a>
-                            </div>
-                            <div class="accordion-body collapse in" id="latest">
-                                <div class="accordion-inner">
-                                    <div class="tabbable"> <!-- Only required for left/right tabs -->
-                                        <ul class="nav nav-tabs">
-                                            <li><a href="#t1" data-toggle="tab" data-original-title="">Products</a></li>
-                                            <li class="active"><a href="#t2" data-toggle="tab" data-original-title="">Posts</a></li>
-                                            <li><a href="#t3" data-toggle="tab" data-original-title="">Media</a></li>
-                                        </ul>
-                                        <div class="tab-content">
-                                            <div class="tab-pane" id="t1">
-                                                <ul>
-                                                    <li><a href="" data-original-title="">Proin elit arcu, rutrum commodo</a></li>
-                                                    <li><a href="" data-original-title="">Aenean tempor ullamcorper leo</a></li>
-                                                    <li><a href="" data-original-title="">Vehicula tempus, commodo a, risus</a></li>
-                                                    <li><a href="" data-original-title="">Donec sollicitudin mi sit amet mauris</a></li>
-                                                    <li><a href="" data-original-title="">Curabitur nec arcu</a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="tab-pane active" id="t2">
-                                                <ul class="nav nav-list">
-                                                    <li><a href="#" data-original-title=""><img src="./Maniadmin_files/thumb1.png" alt=""> button groups for a toolbar, navigation</a></li>
-                                                    <li><a href="#" data-original-title=""><img src="./Maniadmin_files/thumb2.png" alt=""> Use them in buttons, button groups for a toolbar, navigation</a></li>
-                                                    <li><a href="#" data-original-title=""><img src="./Maniadmin_files/thumb3.png" alt=""> button groups for a toolbar, navigation</a></li>
-                                                    <li><a href="#" data-original-title=""><img src="./Maniadmin_files/thumb4.png" alt=""> Use them in buttons, button groups for a toolbar, navigation</a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="tab-pane" id="t3">
-                                                <ul class="unstyled flickr">
-                                                    <li><a href="http://farm8.staticflickr.com/7153/6839672369_687f2c49e8_b.jpg" data-original-title="Down the rabbit hole [Framed]"><img src="./Maniadmin_files/6839672369_687f2c49e8_s.jpg" alt="" class="img_nofade"></a></li>
-                                                    <li><a href="http://farm6.staticflickr.com/5235/7156342506_3180179c4d_b.jpg" data-original-title="Looking Up"><img src="./Maniadmin_files/7156342506_3180179c4d_s.jpg" alt="" class="img_nofade"></a></li><li><a href="http://farm8.staticflickr.com/7248/6894937942_475bce7076_b.jpg" data-original-title="Your eyes are open"><img src="./Maniadmin_files/6894937942_475bce7076_s.jpg" alt="" class="img_nofade"></a></li><li><a href="http://farm8.staticflickr.com/7280/7023103445_62489017a0_b.jpg" data-original-title="Mel McGowan"><img src="./Maniadmin_files/7023103445_62489017a0_s.jpg" alt="" class="img_nofade"></a></li><li><a href="http://farm8.staticflickr.com/7243/6853027310_00cdd402ee_b.jpg" data-original-title="We will be forever calm"><img src="./Maniadmin_files/6853027310_00cdd402ee_s.jpg" alt="" class="img_nofade"></a></li><li><a href="http://farm8.staticflickr.com/7196/6837771770_6d771aa7cf_b.jpg" data-original-title="Videographer"><img src="./Maniadmin_files/6837771770_6d771aa7cf_s.jpg" alt="" class="img_nofade"></a></li><li><a href="http://farm8.staticflickr.com/7200/6829158646_d4f32ea229_b.jpg" data-original-title="Daylight Reveals Colors"><img src="./Maniadmin_files/6829158646_d4f32ea229_s.jpg" alt="" class="img_nofade"></a></li><li><a href="http://farm8.staticflickr.com/7200/6950787615_65517ec924_b.jpg" data-original-title="Jennifer Ziliotto x3"><img src="./Maniadmin_files/6950787615_65517ec924_s.jpg" alt="" class="img_nofade"></a></li><li><a href="http://farm8.staticflickr.com/7186/6937410907_234f15a111_b.jpg" data-original-title="Broadway St. Santa Monica"><img src="./Maniadmin_files/6937410907_234f15a111_s.jpg" alt="" class="img_nofade"></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-group">
-                            <div class="accordion-heading">
-                                <a href="#elements" data-toggle="collapse" class="accordion-toggle" data-original-title="">
-                                    <i class="icon-star-empty icon-white"></i> <span class="divider-vertical"></span> Events <i class="icon-chevron-down icon-white pull-right"></i>
-                                </a>
-                            </div>
-                            <div class="accordion-body collapse in" id="elements">
-                                <div class="accordion-inner paddind">
-                                    <span class="label">23/12/2012</span>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
-
-
-                                    <span class="label label-warning">23/02/2012</span>
-                                    <p>Lorem ipsum dolor sit amet dolore.</p>
-
-                                    <span class="label label-important">13/02/2012</span> 
-                                    <p>Lorem ipsum dolor sit amet dolore.</p>
-                                    <br>   
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="accordion-inner">
+                  <table class="table table-striped">
+                    <tbody>
+                      <tr>
+                        <td>
+                          <i class="icon-user"></i>
+                        </td>
+                        <td>
+                          <a href="" data-original-title="">
+                            <strong>Hanafi ALMOJRIM</strong> added 
+                            <strong>23 users</strong> 
+                          </a>
+                          <em>4 hours ago</em>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <i class="icon-envelope"></i>
+                        </td>
+                        <td>
+                          <a href="" data-original-title="">
+                            <strong>Abderrahim NIBET</strong> sent you  
+                            <strong>message</strong>
+                          </a>
+                          <em>Yesterday</em>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <i class="icon-tag"></i>
+                        </td>
+                        <td>
+                          <a href="" data-original-title="">
+                            <strong>Youssef BASSIR</strong> invite you to  
+                            <strong>dinner</strong> 
+                          </a>
+                          <em>2 days ago</em>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td>
+                          <a class="pull-right" href="" data-original-title="">Show all
+                          </a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
               </div>
-            </div>
-             <!-- 用藥記錄 modal -->
-            <div class="modal hide" id="service">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">×</button>
-                <h2><font color= "#600000">請輸入你的用藥記錄：</font></h2>
+            </div><!-- ** accordion-group2 end ** -->
+            <div class="accordion-group">
+              <div class="accordion-heading">
+                <a href="#latest" data-toggle="collapse" class="accordion-toggle" data-original-title="">
+                  <i class="icon-th icon-white"></i> 
+                  <span class="divider-vertical"></span> 
+                  Tabbed Container <i class="icon-chevron-down icon-white pull-right"></i>
+                </a>
               </div>
-              <div class="modal-body">
-                <form action="/search/?" name="favorite" id="search_form" method="POST">
-                  疾病名稱: <input id="search_disease" type="text" name="term" /> <br>
-                  藥名: <input id="search_medicine"    type="text" name="term" /> <br>
-                  副作用: <input id="search_side_effect" type="text" name="term" />
-                  <input id="search_input" type="submit" value="送出" />
-                </form>
+              <div class="accordion-body collapse in" id="latest">
+                <div class="accordion-inner">
+                  <div class="tabbable"> <!-- Only required for left/right tabs -->
+                    <ul class="nav nav-tabs">
+                      <li>
+                        <a href="#t1" data-toggle="tab" data-original-title="">Products
+                        </a>
+                      </li>
+                      <li class="active">
+                        <a href="#t2" data-toggle="tab" data-original-title="">Posts</a>
+                      </li>
+                      <li>
+                        <a href="#t3" data-toggle="tab" data-original-title="">Media</a>
+                      </li>
+                    </ul>
+                    <div class="tab-content">
+                      <div class="tab-pane" id="t1">
+                        <ul>
+                          <li>
+                            <a href="" data-original-title="">Proin elit arcu, rutrum commodo</a>
+                          </li>
+                          <li>
+                            <a href="" data-original-title="">Aenean tempor ullamcorper leo</a>
+                          </li>
+                          <li>
+                            <a href="" data-original-title="">Vehicula tempus, commodo a, risus</a>
+                          </li>
+                          <li><a href="" data-original-title="">Donec sollicitudin mi sit amet mauris</a>
+                          </li>
+                          <li><a href="" data-original-title="">Curabitur nec arcu</a>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="tab-pane active" id="t2">
+                        <ul class="nav nav-list">
+                          <li>
+                            <a href="#" data-original-title=""><img src="./Maniadmin_files/thumb1.png" alt=""> button groups for a toolbar, navigation</a>
+                          </li>
+                          <li>
+                            <a href="#" data-original-title=""><img src="./Maniadmin_files/thumb2.png" alt=""> Use them in buttons, button groups for a toolbar, navigation</a>
+                          </li>
+                          <li>
+                            <a href="#" data-original-title=""><img src="./Maniadmin_files/thumb3.png" alt=""> button groups for a toolbar, navigation</a>
+                          </li>
+                          <li><a href="#" data-original-title=""><img src="./Maniadmin_files/thumb4.png" alt=""> Use them in buttons, button groups for a toolbar, navigation</a>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="tab-pane" id="t3">
+                        <ul class="unstyled flickr">
+                          <li>
+                            <a href="http://farm8.staticflickr.com/7153/6839672369_687f2c49e8_b.jpg" data-original-title="Down the rabbit hole [Framed]"><img src="./Maniadmin_files/6839672369_687f2c49e8_s.jpg" alt="" class="img_nofade"></a>
+                          </li>
+                          <li>
+                            <a href="http://farm6.staticflickr.com/5235/7156342506_3180179c4d_b.jpg" data-original-title="Looking Up"><img src="./Maniadmin_files/7156342506_3180179c4d_s.jpg" alt="" class="img_nofade"></a>
+                          </li>
+                          <li>
+                            <a href="http://farm8.staticflickr.com/7248/6894937942_475bce7076_b.jpg" data-original-title="Your eyes are open"><img src="./Maniadmin_files/6894937942_475bce7076_s.jpg" alt="" class="img_nofade"></a>
+                          </li>
+                          <li>
+                            <a href="http://farm8.staticflickr.com/7280/7023103445_62489017a0_b.jpg" data-original-title="Mel McGowan"><img src="./Maniadmin_files/7023103445_62489017a0_s.jpg" alt="" class="img_nofade"></a>
+                          </li>
+                          <li>
+                            <a href="http://farm8.staticflickr.com/7243/6853027310_00cdd402ee_b.jpg" data-original-title="We will be forever calm"><img src="./Maniadmin_files/6853027310_00cdd402ee_s.jpg" alt="" class="img_nofade"></a>
+                          </li>
+                          <li>
+                            <a href="http://farm8.staticflickr.com/7196/6837771770_6d771aa7cf_b.jpg" data-original-title="Videographer"><img src="./Maniadmin_files/6837771770_6d771aa7cf_s.jpg" alt="" class="img_nofade"></a>
+                          </li>
+                          <li>
+                            <a href="http://farm8.staticflickr.com/7200/6829158646_d4f32ea229_b.jpg" data-original-title="Daylight Reveals Colors"><img src="./Maniadmin_files/6829158646_d4f32ea229_s.jpg" alt="" class="img_nofade"></a>
+                          </li>
+                          <li>
+                            <a href="http://farm8.staticflickr.com/7200/6950787615_65517ec924_b.jpg" data-original-title="Jennifer Ziliotto x3"><img src="./Maniadmin_files/6950787615_65517ec924_s.jpg" alt="" class="img_nofade"></a>
+                          </li>
+                          <li>
+                            <a href="http://farm8.staticflickr.com/7186/6937410907_234f15a111_b.jpg" data-original-title="Broadway St. Santa Monica"><img src="./Maniadmin_files/6937410907_234f15a111_s.jpg" alt="" class="img_nofade"></a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div class="modal-footer">
-                <a href="#" class="btn" data-dismiss="modal">Close</a>
+            </div><!-- ** accordion-group3 end ** -->
+            <div class="accordion-group">
+              <div class="accordion-heading">
+                <a href="#elements" data-toggle="collapse" class="accordion-toggle" data-original-title="">
+                  <i class="icon-star-empty icon-white"></i> 
+                  <span class="divider-vertical"></span> 
+                  Events <i class="icon-chevron-down icon-white pull-right"></i>
+                </a>
               </div>
-            </div>
-
+              <div class="accordion-body collapse in" id="elements">
+                <div class="accordion-inner paddind">
+                  <span class="label">23/12/2012</span>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
+                  <span class="label label-warning">23/02/2012</span>
+                  <p>Lorem ipsum dolor sit amet dolore.</p>
+                  <span class="label label-important">13/02/2012</span>
+                  <p>Lorem ipsum dolor sit amet dolore.</p>
+                  <br>
+                </div>
+              </div>
+            </div><!-- ** accordion-group4 end ** -->
+          </div>
+        </div>
+        <!-- 用藥記錄 modal -->
+        <div class="modal hide" id="service">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">×</button>
+            <h2><font color= "#600000">請輸入你的用藥記錄：</font></h2>
+          </div>
+          <div class="modal-body">
+            <form action="/search/?" name="favorite" id="search_form" method="POST">
+              疾病名稱: <input id="search_disease" type="text" name="term" /> <br>
+              藥名: <input id="search_medicine"    type="text" name="term" /> <br>
+              副作用: <input id="search_side_effect" type="text" name="term" />
+              <input id="search_input" type="submit" value="送出" />
+            </form>
+          </div>
+          <div class="modal-footer">
+            <a href="#" class="btn" data-dismiss="modal">Close</a>
+          </div>
+        </div><!-- modal end -->
       </div>
-      <div class="clearfix"></div>
+      <div class="clearfix">
+      </div>
     </div>
     <!-- ===============================
-    /.for desktop -->
+    /main content end->
      
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
+    <!-- for instant search -->
+    <script>
+    $(function() {
+      $( "#search_disease" ).autocomplete({
+          source: "/search_disease/?"
+      }); //autocomplete
+    });
+
+    $(function() {
+      $( "#search_medicine" ).autocomplete({
+          source: "/search_medicine/?"
+      }); //autocomplete
+    });
+
+    $(function() {
+      function split( val ) {
+        return val.split( /,\s*/ );
+      }
+      function extractLast( term ) {
+        return split( term ).pop();
+      }
+
+      $( "#search_side_effect" )
+        // don't navigate away from the field on tab when selecting an item
+        .bind( "keydown", function( event ) {
+          if ( event.keyCode === $.ui.keyCode.TAB &&
+              $( this ).data( "autocomplete" ).menu.active ) {
+            event.preventDefault();
+          }
+        })
+        .autocomplete({
+          source: function( request, response ) {
+            $.getJSON( "/search_side_effect/?", {
+              term: extractLast( request.term )
+            }, response );
+          },
+          search: function() {
+            // custom minLength
+            var term = extractLast( this.value );
+            if ( term.length < 1 ) {
+              return false;
+            }
+          },
+          focus: function() {
+            // prevent value inserted on focus
+            return false;
+          },
+          select: function( event, ui ) {
+            var terms = split( this.value );
+            // remove the current input
+            terms.pop();
+            // add the selected item
+            terms.push( ui.item.value );
+            // add placeholder to get the comma-and-space at the end
+            terms.push( "" );
+            this.value = terms.join( ", " );
+            return false;
+          }
+        }); //end autocomplete
+    });
+    </script>
     <!-- external api -->
-    <script src="./static/js/js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js"></script>
    
     <!-- Base -->
     <script src="./static/js/jquery.js"></script>
@@ -801,10 +887,10 @@
                     $('#menu-left').find('a').removeClass('active');
                     $(this).addClass('active');
                 });
-        // tool tip
+                 // tool tip
                 $('a').tooltip('hide');
 
-        //datePciker
+                 //datePciker
                 $("#datepicker").datepicker();
 // switch style 
                 $('a.style').click(function(){
@@ -812,8 +898,6 @@
                     $('.links-css').attr('href','css/' + style);
                     return false;
                 });
-               
-
 
                 $(".switcher").click(function(){
                     if($(this).find('i').hasClass('icon-circle-arrow-right'))
@@ -824,9 +908,8 @@
                     $(this).find('i').toggleClass('icon-circle-arrow-right');
                     $(this).find('i').toggleClass('icon-circle-arrow-left');
                 });
-
             });
-        </script>
+    </script>
 
 
 
