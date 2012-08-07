@@ -30,17 +30,18 @@ class Profile(ndb.Model):
 class Report(polymodel.PolyModel):
     """docstring for Profile"""
 
-    report_name = ndb.StringProperty()
+    disease_name = ndb.StringProperty()
     report_type = ndb.StringProperty()
     source = ndb.StringProperty()
     date_created = ndb.DateTimeProperty(auto_now_add=True)
     date_last_updated = ndb.DateTimeProperty(auto_now=True)
     side_effect = ndb.StringProperty(repeated=True)  # One pill may cause multiple side-effect
-    overall_condition = ndb.StringProperty()
+    medicine = ndb.StringProperty() 
+    minding = ndb.StringProperty()
     target = ndb.StringProperty()
     dosage = ndb.StringProperty()
     tool_strength = ndb.StringProperty()
-    data = ndb.IntegerProperty()
+    data = ndb.StringProperty()
 
 
 class Disease(ndb.Model):

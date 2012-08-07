@@ -202,6 +202,7 @@ class MyRecord(webapp2.RequestHandler):
     """docstring for MyRecord"""
     def get(self):
         template_dict = {}
+        #path = os.path.join(os.path.dirname(__file__), 'myrecord.html')
         path = os.path.join(os.path.dirname(__file__), 'myrecord-beta.html')
         self.response.out.write(template.render(path, template_dict))
 
@@ -248,8 +249,38 @@ class SearchSideEffect(webapp2.RequestHandler):
             self.response.out.write(json.dumps(side_effect_result))
 
 
+class AddReport(webapp2.RequestHandler):
+    def get(self):
+        self.response.out.write('This is GET')
+
+    def post(self):
+        # (TODO)  Figure out a way to fetch username from UserLoginHandler() return.
+        # Then, we can use username to compile Report entity id as key_name
+        populate_data = {'disease_name': '', 'medicine': '', 'side_effect': ''}
+        terms = self.request.get_all('term')
+        populate_data['disease_name'] = terms[0]
+        populate_data['medicine'] = terms[1]
+        populate_data['side_effect'] = terms[2]
+        logging.info('Adding one report: %s' % populate_data)
+
+        report = models.Report(id='logged_in_username_with_report', # Axa@faceboo_report
+                                disease_name = populate_data['disease_name'],
+                                report_type = 'TBD',
+                                source = 'TBD',
+                                side_effect = map(lambda x: x.strip(), populate_data['side_effect'].split(',')), 
+                                medicine = populate_data['medicine'],
+                                minding = 'TBD',
+                                target = 'TBD',
+                                dosage = 'TBD',
+                                tool_strength = 'TBD',
+                                data = 'TBD')
+        report.put()
+        self.redirect('/myrecord')
+
+
 
 app = webapp2.WSGIApplication([('/', MainPage),
+                                ('/add_report', AddReport),
                                 ('/backend_data', ShowNdbKinds),
                                 ('/delete', DeleteData),
                                 ('/myrecord', MyRecord),
