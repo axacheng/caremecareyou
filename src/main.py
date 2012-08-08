@@ -11,6 +11,7 @@ import webapp2
 import weibo_oauth_v2
 
 from google.appengine.ext import ndb
+from google.appengine.api import urlfetch
 from google.appengine.api import users
 
 from google.appengine.ext.webapp import template
@@ -201,7 +202,19 @@ class DeleteData(webapp2.RequestHandler):
 class MyRecord(webapp2.RequestHandler):
     """docstring for MyRecord"""
     def get(self):
-        template_dict = {}
+
+        
+        url = "https://fbcdn-profile-a.akamaihd.net/hprofile-ak-snc4/274596_692733281_1832233132_q.jpg"
+        result = urlfetch.fetch(url)
+        if result.status_code == 200:
+          ccc = result.content
+
+        logging.info('My photo %s:   ' % ccc)
+      
+        username = ''.join(UserLoginHandler(self).keys())
+        logging.info("My Name is: %s" % username)
+
+        template_dict = {'username': username}
         #path = os.path.join(os.path.dirname(__file__), 'myrecord.html')
         path = os.path.join(os.path.dirname(__file__), 'myrecord-beta.html')
         self.response.out.write(template.render(path, template_dict))

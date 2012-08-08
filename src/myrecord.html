@@ -13,7 +13,11 @@
   </style>
 
   <script>
-
+    //datepicker for calendar
+    $(function() {
+      $( "#date_report" ).datepicker();
+    });
+    
   $(function() {
     $( "#search_disease" ).autocomplete({
         source: "/search_disease/?"
@@ -77,11 +81,14 @@
 
 
 <body>
-<form action="/search/?" name="favorite" id="search_form" method="POST">
+<form action="/add_report" name="add" id="report" method="POST">
   疾病名稱: <input id="search_disease" type="text" name="term" /> <br>
+  Date: <input id="date_report" type="text"> <br>
   藥名: <input id="search_medicine"    type="text" name="term" /> <br>
   副作用: <input id="search_side_effect" type="text" name="term" />
   <input id="search_input" type="submit" value="送出" />
 </form>
 </body>
 </html>
+
+
