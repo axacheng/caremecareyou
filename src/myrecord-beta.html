@@ -3,22 +3,39 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <style type="text/css">@media print {  .gmnoprint {    display:none  }}@media screen {  .gmnoscreen {    display:none  }}</style>
-    <meta charset="utf-8">
-    <title> 我的紀錄 </title>
-    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js"></script>
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
+    <title> 我的紀錄 </title>
+    <script src="static/js/jquery.js"></script>
+    <script src="static/js/bootstrap-modal.js"></script>
+    <script src="static/js/jquery.min.js"></script>
+    <script src="static/js/bootstrap.min.js"></script>
+    <script src="static/js/jquery.flot.js"></script>
+    <script src="static/js/jquery.flot.resize.js"></script>
+    <script src="static/js/jquery.flot.pie.js"></script>
+    <script src="static/js/customcharts.js"></script>
+    <script src="static/js/jquery-ui.min.js"></script>
+    <script src="static/js/bootstrap-datepicker.js"></script>
+<!-- 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js"></script>
+ -->
+
+    <!-- jquery-ui -->
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css">
+
     <!-- bootstrap css -->
     <link href="static/css/bootstrap.css" rel="stylesheet">
     <link href="static/css/style.css" rel="stylesheet">
+    <link href="static/css/datepicker.css" rel="stylesheet">
+
     <!-- base css -->
     <link class="links-css" href="static/css/base.css" rel="stylesheet">
+
     <!-- home page css -->
     <link href="static/css/home-page.css" rel="stylesheet">
+    
     <style type="text/css">
       body {
         padding-top: 30px;
@@ -33,26 +50,29 @@
     .ui-autocomplete-loading { background: white url('http://jqueryui.com/demos/autocomplete/images/ui-anim_basic_16x16.gif') right center no-repeat; }
     </style>
 
-    <!-- datepicker css -->
-    <link href="static/css/datepicker.css" rel="stylesheet">
-      <!-- responsive css -->
-      <link href="static/css/bootstrap-responsive.css" rel="stylesheet">
-      <!-- media query css -->
-      <link href="static/css/media-fluid.css" rel="stylesheet">
+    <!-- responsive css -->
+    <link href="static/css/bootstrap-responsive.css" rel="stylesheet">
+    <!-- media query css -->
+    <link href="static/css/media-fluid.css" rel="stylesheet">
 
-       <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-       <!--[if lt IE 9]>
-       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-       <![endif]-->
+     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+     <!--[if lt IE 9]>
+     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+     <![endif]-->
 
-       <!-- Le fav and touch icons -->
-       <link rel="shortcut icon" href="static/ico/favicon.ico">
-       <link rel="apple-touch-icon-precomposed" sizes="144x144" href="static/ico/apple-touch-icon-144-precomposed.png">
-       <link rel="apple-touch-icon-precomposed" sizes="114x114" href="static/ico/apple-touch-icon-114-precomposed.png">
-       <link rel="apple-touch-icon-precomposed" sizes="72x72" href="static/ico/apple-touch-icon-72-precomposed.png">
-       <link rel="apple-touch-icon-precomposed" href="static/ico/apple-touch-icon-57-precomposed.png">
+     <!-- Le fav and touch icons -->
+     <link rel="shortcut icon" href="static/ico/favicon.ico">
+     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="static/ico/apple-touch-icon-144-precomposed.png">
+     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="static/ico/apple-touch-icon-114-precomposed.png">
+     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="static/ico/apple-touch-icon-72-precomposed.png">
+     <link rel="apple-touch-icon-precomposed" href="static/ico/apple-touch-icon-57-precomposed.png">
 
   <script>
+    //datepicker for calendar
+     $(function() {
+       $( "#date_report" ).datepicker();
+     });
+
     $(function() {
       $( "#search_disease" ).autocomplete({
           source: "/search_disease/?"
@@ -112,7 +132,6 @@
         }); //end autocomplete
     });
   </script>
-
   </head>
 
   <body>
@@ -258,8 +277,7 @@
             <ul class="nav nav-pills nav-stacked">
               <li class="user-container">
                 <a href="#">
-                  <img src="#">
-                  {{ username }} 
+                  <img src="https://graph.facebook.com/axa.cheng/picture">
                 </a>
               </li>
               <li class="active">
@@ -300,7 +318,7 @@
           <div id="section-body" class="tabbable">
             <ul class="nav nav-tabs">
               <li class="active">
-                <a href="#tab1" data-toggle="tab" data-original-title="">總覽 Overview</a>
+                <a href="#tab1" data-toggle="tab" data-original-title="">{{ username }} 的紀錄</a>
               </li>
             </ul>
             <div class="tab-content">
@@ -441,163 +459,6 @@
                             <span class="divider-vertical"></span> 
                             Calendar <i class="icon-chevron-down icon-white pull-right"></i>
                           </a>
-                        </div>
-                        <div class="accordion-body collapse in" id="annoncement">
-                          <div class="accordion-inner">
-                            <div id="datepicker" class="hasDatepicker">
-                              <div class="ui-datepicker-inline ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" style="display: block; ">
-                                <div class="ui-datepicker-header ui-widget-header ui-helper-clearfix ui-corner-all">
-                                  <a class="ui-datepicker-prev ui-corner-all" onclick="DP_jQuery_1344161843660.datepicker._adjustDate(&#39;#datepicker&#39;, -1, &#39;M&#39;);" title="Prev">
-                                    <span class="ui-icon ui-icon-circle-triangle-w">Prev</span>
-                                  </a>
-                                  <a class="ui-datepicker-next ui-corner-all" onclick="DP_jQuery_1344161843660.datepicker._adjustDate(&#39;#datepicker&#39;, +1, &#39;M&#39;);" title="Next">
-                                    <span class="ui-icon ui-icon-circle-triangle-e">Next</span>
-                                  </a>
-                                  <div class="ui-datepicker-title">
-                                    <span class="ui-datepicker-month">August</span>&nbsp;
-                                    <span class="ui-datepicker-year">2012</span>
-                                  </div>
-                                </div>
-                                <table class="ui-datepicker-calendar">
-                                  <thead>
-                                    <tr>
-                                      <th class="ui-datepicker-week-end">
-                                        <span title="Sunday">Su</span>
-                                      </th>
-                                      <th>
-                                        <span title="Monday">Mo</span>
-                                      </th>
-                                      <th>
-                                        <span title="Tuesday">Tu</span>
-                                      </th>
-                                      <th>
-                                        <span title="Wednesday">We</span>
-                                      </th>
-                                      <th>
-                                        <span title="Thursday">Th</span>
-                                      </th>
-                                      <th>
-                                        <span title="Friday">Fr</span>
-                                      </th>
-                                      <th class="ui-datepicker-week-end">
-                                        <span title="Saturday">Sa</span>
-                                      </th>
-                                    </tr>
-                                  </thead>
-                                  <tbody>
-                                    <tr>
-                                      <td class=" ui-datepicker-week-end ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td>
-                                      <td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td>
-                                      <td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td>
-                                      <td class=" " onclick="DP_jQuery_1344161843660.datepicker._selectDay(&#39;#datepicker&#39;,7,2012, this);return false;">
-                                        <a class="ui-state-default" href="#">1</a>
-                                      </td>
-                                      <td class=" " onclick="DP_jQuery_1344161843660.datepicker._selectDay(&#39;#datepicker&#39;,7,2012, this);return false;">
-                                        <a class="ui-state-default" href="#">2</a>
-                                      </td>
-                                      <td class=" " onclick="DP_jQuery_1344161843660.datepicker._selectDay(&#39;#datepicker&#39;,7,2012, this);return false;">
-                                        <a class="ui-state-default" href="#">3</a>
-                                      </td>
-                                      <td class=" ui-datepicker-week-end " onclick="DP_jQuery_1344161843660.datepicker._selectDay(&#39;#datepicker&#39;,7,2012, this);return false;">
-                                        <a class="ui-state-default" href="#">4</a>
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <td class=" ui-datepicker-week-end ui-datepicker-days-cell-over  ui-datepicker-current-day ui-datepicker-today" onclick="DP_jQuery_1344161843660.datepicker._selectDay(&#39;#datepicker&#39;,7,2012, this);return false;">
-                                        <a class="ui-state-default ui-state-highlight ui-state-active ui-state-hover" href="#">5</a>
-                                      </td>
-                                      <td class=" " onclick="DP_jQuery_1344161843660.datepicker._selectDay(&#39;#datepicker&#39;,7,2012, this);return false;">
-                                        <a class="ui-state-default" href="#">6</a>
-                                      </td>
-                                      <td class=" " onclick="DP_jQuery_1344161843660.datepicker._selectDay(&#39;#datepicker&#39;,7,2012, this);return false;">
-                                        <a class="ui-state-default" href="#">7</a>
-                                      </td>
-                                      <td class=" " onclick="DP_jQuery_1344161843660.datepicker._selectDay(&#39;#datepicker&#39;,7,2012, this);return false;">
-                                        <a class="ui-state-default" href="#">8</a>
-                                      </td>
-                                      <td class=" " onclick="DP_jQuery_1344161843660.datepicker._selectDay(&#39;#datepicker&#39;,7,2012, this);return false;">
-                                        <a class="ui-state-default" href="#">9</a>
-                                      </td>
-                                      <td class=" " onclick="DP_jQuery_1344161843660.datepicker._selectDay(&#39;#datepicker&#39;,7,2012, this);return false;">
-                                        <a class="ui-state-default" href="#">10</a>
-                                      </td>
-                                      <td class=" ui-datepicker-week-end " onclick="DP_jQuery_1344161843660.datepicker._selectDay(&#39;#datepicker&#39;,7,2012, this);return false;">
-                                        <a class="ui-state-default" href="#">11</a>
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <td class=" ui-datepicker-week-end " onclick="DP_jQuery_1344161843660.datepicker._selectDay(&#39;#datepicker&#39;,7,2012, this);return false;">
-                                        <a class="ui-state-default" href="#">12</a>
-                                      </td>
-                                      <td class=" " onclick="DP_jQuery_1344161843660.datepicker._selectDay(&#39;#datepicker&#39;,7,2012, this);return false;">
-                                        <a class="ui-state-default" href="#">13</a>
-                                      </td>
-                                      <td class=" " onclick="DP_jQuery_1344161843660.datepicker._selectDay(&#39;#datepicker&#39;,7,2012, this);return false;">
-                                        <a class="ui-state-default" href="#">14</a>
-                                      </td>
-                                      <td class=" " onclick="DP_jQuery_1344161843660.datepicker._selectDay(&#39;#datepicker&#39;,7,2012, this);return false;">
-                                        <a class="ui-state-default" href="#">15</a>
-                                      </td>
-                                      <td class=" " onclick="DP_jQuery_1344161843660.datepicker._selectDay(&#39;#datepicker&#39;,7,2012, this);return false;">
-                                        <a class="ui-state-default" href="#">16</a>
-                                      </td>
-                                      <td class=" " onclick="DP_jQuery_1344161843660.datepicker._selectDay(&#39;#datepicker&#39;,7,2012, this);return false;">
-                                        <a class="ui-state-default" href="#">17</a>
-                                      </td>
-                                      <td class=" ui-datepicker-week-end " onclick="DP_jQuery_1344161843660.datepicker._selectDay(&#39;#datepicker&#39;,7,2012, this);return false;">
-                                        <a class="ui-state-default" href="#">18</a>
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <td class=" ui-datepicker-week-end " onclick="DP_jQuery_1344161843660.datepicker._selectDay(&#39;#datepicker&#39;,7,2012, this);return false;">
-                                        <a class="ui-state-default" href="#">19</a>
-                                      </td>
-                                      <td class=" " onclick="DP_jQuery_1344161843660.datepicker._selectDay(&#39;#datepicker&#39;,7,2012, this);return false;">
-                                        <a class="ui-state-default" href="#">20</a>
-                                      </td>
-                                      <td class=" " onclick="DP_jQuery_1344161843660.datepicker._selectDay(&#39;#datepicker&#39;,7,2012, this);return false;">
-                                        <a class="ui-state-default" href="#">21</a>
-                                      </td>
-                                      <td class=" " onclick="DP_jQuery_1344161843660.datepicker._selectDay(&#39;#datepicker&#39;,7,2012, this);return false;">
-                                        <a class="ui-state-default" href="#">22</a>
-                                      </td>
-                                      <td class=" " onclick="DP_jQuery_1344161843660.datepicker._selectDay(&#39;#datepicker&#39;,7,2012, this);return false;">
-                                        <a class="ui-state-default" href="#">23</a>
-                                      </td>
-                                      <td class=" " onclick="DP_jQuery_1344161843660.datepicker._selectDay(&#39;#datepicker&#39;,7,2012, this);return false;">
-                                        <a class="ui-state-default" href="#">24</a>
-                                      </td>
-                                      <td class=" ui-datepicker-week-end " onclick="DP_jQuery_1344161843660.datepicker._selectDay(&#39;#datepicker&#39;,7,2012, this);return false;">
-                                        <a class="ui-state-default" href="#">25</a>
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <td class=" ui-datepicker-week-end " onclick="DP_jQuery_1344161843660.datepicker._selectDay(&#39;#datepicker&#39;,7,2012, this);return false;">
-                                        <a class="ui-state-default" href="#">26</a>
-                                      </td>
-                                      <td class=" " onclick="DP_jQuery_1344161843660.datepicker._selectDay(&#39;#datepicker&#39;,7,2012, this);return false;">
-                                        <a class="ui-state-default" href="#">27</a>
-                                      </td>
-                                      <td class=" " onclick="DP_jQuery_1344161843660.datepicker._selectDay(&#39;#datepicker&#39;,7,2012, this);return false;">
-                                        <a class="ui-state-default" href="#">28</a>
-                                      </td>
-                                      <td class=" " onclick="DP_jQuery_1344161843660.datepicker._selectDay(&#39;#datepicker&#39;,7,2012, this);return false;">
-                                        <a class="ui-state-default" href="#">29</a>
-                                      </td>
-                                      <td class=" " onclick="DP_jQuery_1344161843660.datepicker._selectDay(&#39;#datepicker&#39;,7,2012, this);return false;">
-                                        <a class="ui-state-default" href="#">30</a>
-                                      </td>
-                                      <td class=" " onclick="DP_jQuery_1344161843660.datepicker._selectDay(&#39;#datepicker&#39;,7,2012, this);return false;">
-                                        <a class="ui-state-default" href="#">31</a>
-                                      </td>
-                                      <td class=" ui-datepicker-week-end ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;
-                                      </td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </div>
-                            </div>
-                          </div>
                         </div>
                       </div>
                     </div>
@@ -749,38 +610,26 @@
               <div class="modal-body">
                 <form action="/add_report" name="add_report" id="report" method="POST">
                   疾病名稱: <input id="search_disease" type="text" name="term" /> <br>
+                  <div class="input-append date" id="date_report" data-date="2012-12-25" data-date-format="yyyy-mm-dd">
+                  時間:  <input class="span2" size="16" type="text" value="2012-12-25" >
+                        <span class="add-on"><i class="icon-th"></i></span>
+                  </div>
                   藥名: <input id="search_medicine"    type="text" name="term" /> <br>
                   副作用: <input id="search_side_effect" type="text" name="term" />
-                  <input id="search_input" type="submit" value="送出" />
-                </form>
-              </div>
-              <div class="modal-footer">
-                <a href="#" class="btn" data-dismiss="modal">Close</a>
-              </div>
-            </div>
+                  <div class="modal-footer">
+                    <input id="search_input" class="btn btn-primary" type="submit" value="按我新增記錄" />
+                    <a href="#" class="btn" data-dismiss="modal">Close</a>
+                  </div>
+                </form> <!-- add_report end -->
+              </div> <!-- modal-body end -->
+            </div> <!-- modal hide end -->
 
       </div>
       <div class="clearfix"></div>
     </div>
     <!-- ===============================
-    /.for desktop -->
-     
-    <!-- Le javascript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <!-- external api -->
-    <script src="./static/js/js"></script>
-   
-    <!-- Base -->
-    <script src="./static/js/jquery.js"></script>
-     <script src="./static/js/bootstrap-modal.js"></script>
-    <script src="./static/js/jquery.min.js"></script>
-    <script src="./static/js/bootstrap.min.js"></script>
-    <script src="./static/js/jquery.flot.js"></script>
-    <script src="./static/js/jquery.flot.resize.js"></script>
-    <script src="./static/js/jquery.flot.pie.js"></script>
-    <script src="./static/js/customcharts.js"></script>
-    <script src="./static/js/jquery-ui.min.js"></script>
+    /.for desktop -->   
+
     <script type="text/javascript">
             $(document).ready(function(){
                 $('.togglemenuleft').click(function(){
