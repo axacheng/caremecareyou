@@ -11,7 +11,6 @@ import webapp2
 import weibo_oauth_v2
 
 from google.appengine.ext import ndb
-from google.appengine.api import urlfetch
 from google.appengine.api import users
 
 from google.appengine.ext.webapp import template
@@ -203,18 +202,15 @@ class MyRecord(webapp2.RequestHandler):
     """docstring for MyRecord"""
     def get(self):
 
-        
-        url = "https://fbcdn-profile-a.akamaihd.net/hprofile-ak-snc4/274596_692733281_1832233132_q.jpg"
-        result = urlfetch.fetch(url)
-        if result.status_code == 200:
-          ccc = result.content
-
-        logging.info('My photo %s:   ' % ccc)
-      
         username = ''.join(UserLoginHandler(self).keys())
-        logging.info("My Name is: %s" % username)
+        ancestor_key = ndb.Key("Report", username)
+        my_reports = models.Report.query_personal_report(ancestor_key).fetch()
+        template_dict = {'username': username, 'my_report': my_reports}
+        # for i in my_reports:
+        #     for j in i.side_effect:
+        #         logging.info('xxxxxxxxx %s' % j.encode('utf-8'))
 
-        template_dict = {'username': username}
+
         #path = os.path.join(os.path.dirname(__file__), 'myrecord.html')
         path = os.path.join(os.path.dirname(__file__), 'myrecord-beta.html')
         self.response.out.write(template.render(path, template_dict))
@@ -226,6 +222,9 @@ class SearchDisease(webapp2.RequestHandler):
         search_word = self.request.get('term')
         all_disease = models.Disease.query(models.Disease.name >= unicode(search_word.capitalize()))
         result = all_disease.fetch(50)
+        # query.filter("Display", True)
+        # query.filter("Word >=", unicode(search_word))
+        # query.filter("Word <", unicode(search_word) + u'\ufffd')
 
         if result:
             for disease in result:
@@ -267,26 +266,24 @@ class AddReport(webapp2.RequestHandler):
         self.response.out.write('This is GET')
 
     def post(self):
-        # (TODO)  Figure out a way to fetch username from UserLoginHandler() return.
-        # Then, we can use username to compile Report entity id as key_name
+        username = ''.join(UserLoginHandler(self).keys())
         populate_data = {'disease_name': '', 'medicine': '', 'side_effect': ''}
         terms = self.request.get_all('term')
         populate_data['disease_name'] = terms[0]
         populate_data['medicine'] = terms[1]
         populate_data['side_effect'] = terms[2]
         logging.info('Adding one report: %s' % populate_data)
-
-        report = models.Report(id='logged_in_username_with_report', # Axa@faceboo_report
-                                disease_name = populate_data['disease_name'],
-                                report_type = 'TBD',
-                                source = 'TBD',
-                                side_effect = map(lambda x: x.strip(), populate_data['side_effect'].split(',')), 
-                                medicine = populate_data['medicine'],
-                                minding = 'TBD',
-                                target = 'TBD',
-                                dosage = 'TBD',
-                                tool_strength = 'TBD',
-                                data = 'TBD')
+        report = models.Report(parent = ndb.Key('Report', username),  # Axa@faceboo_report
+                               disease_name = populate_data['disease_name'],
+                               report_type = 'TBD',
+                               source = 'TBD',
+                               side_effect = map(lambda x: x.strip().encode('utf8'), populate_data['side_effect'].split(',')),
+                               medicine = populate_data['medicine'],
+                               minding = 'TBD',
+                               target = 'TBD',
+                               dosage = 'TBD',
+                               tool_strength = 'TBD',
+                               data = 'TBD')
         report.put()
         self.redirect('/myrecord')
 
