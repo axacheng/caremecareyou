@@ -124,6 +124,8 @@ class User(ndb.Model):
     @classmethod
     def AddFacebookUser(cls, fb_user_profile, fb_user_protray, access_token, user_key_name):
         logging.info('Adding new facebook user.')
+
+        #https://graph.facebook.com/tsungmin.lo/picture
         user_profile = Profile()
         user_profile.account_type = 'facebook'
         user_profile.account_id = str(fb_user_profile["id"])
@@ -133,7 +135,8 @@ class User(ndb.Model):
         user_profile.birthday = datetime.datetime.strptime(fb_user_profile["birthday"], '%m/%d/%Y')
         user_profile.email = fb_user_profile["email"]
         user_profile.gender = fb_user_profile["gender"]
-        user_profile.protray = fb_user_protray["picture"]["data"]["url"]
+#        user_profile.protray = fb_user_protray["picture"]["data"]["url"]
+        user_profile.protray = 'https://graph.facebook.com/' + fb_user_profile["link"].split('/')[3] + '/picture'
         user_profile.url = fb_user_profile["link"]
 
         user = User(id=user_key_name)

@@ -130,6 +130,49 @@
             return false;
           }
         }); //end autocomplete
+
+
+      $( "#search_medicine" )
+        // don't navigate away from the field on tab when selecting an item
+        .bind( "keydown", function( event ) {
+          if ( event.keyCode === $.ui.keyCode.TAB &&
+              $( this ).data( "autocomplete" ).menu.active ) {
+            event.preventDefault();
+          }
+        })
+        .autocomplete({
+          source: function( request, response ) {
+            $.getJSON( "/search_medicine/?", {
+              term: extractLast( request.term )
+            }, response );
+          },
+          search: function() {
+            // custom minLength
+            var term = extractLast( this.value );
+            if ( term.length < 1 ) {
+              return false;
+            }
+          },
+          focus: function() {
+            // prevent value inserted on focus
+            return false;
+          },
+          select: function( event, ui ) {
+            var terms = split( this.value );
+            // remove the current input
+            terms.pop();
+            // add the selected item
+            terms.push( ui.item.value );
+            // add placeholder to get the comma-and-space at the end
+            terms.push( "" );
+            this.value = terms.join( ", " );
+            return false;
+          }
+        }); //end autocomplete
+
+
+
+
     });
   </script>
   </head>
@@ -152,7 +195,7 @@
           <div class="nav-collapse">
             <ul class="nav pull-left bar-root">
               <li><a href="/use">如何使用</a></li>
-              <li  class="active"><a href="/myrecord">我的記錄</a></li>
+              <li class="active"><a href="/myrecord">我的記錄</a></li>
               <li><a href="/more">更多統計</a></li>
             </ul>
             <!-- user dropdown -->
@@ -589,8 +632,8 @@
               <div class="modal-body">
                 <form action="/add_report" name="add_report" id="report" method="POST" accept-charset="UTF-8">
                   疾病名稱: <input id="search_disease" type="text" name="term" /> <br>
-                  <div class="input-append date" id="date_report" data-date="2012-12-25" data-date-format="yyyy-mm-dd">
-                  時間:  <input class="span2" size="16" type="text" value="2012-12-25" >
+                  <div class="input-append date" id="date_report" data-date="{{ today }}" data-date-format="yyyy-mm-dd">
+                  時間:  <input class="span2" name="report_date" size="16" type="text" value="{{ today }}" >
                         <span class="add-on"><i class="icon-th"></i></span>
                   </div>
                   藥名: <input id="search_medicine"    type="text" name="term" /> <br>

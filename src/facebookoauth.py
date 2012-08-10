@@ -104,7 +104,7 @@ class LoginHandler(BaseHandler):
                 urllib.urlencode(dict(access_token=access_token))))
 
             logging.info('FB profile resful result: %s' % fb_user_profile)
-            user_key_name = 'facebook_' + str(fb_user_profile["id"])
+            user_key_name = str(fb_user_profile["id"] + '_facebook')
             verify_user = models.User.get_by_id(user_key_name)
             logging.info('Verify user %s' % verify_user)
 

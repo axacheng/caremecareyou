@@ -8,6 +8,7 @@ import json
 import logging
 import models
 import os
+import time
 import webapp2
 import weibo_oauth_v2
 
@@ -96,7 +97,7 @@ def UserLoginHandler(self):
         return {openid_username: logout_link}
 
     elif facebook_user:
-        facebook_user = facebook_user.profile.account_id + ':' + facebook_user.profile.account_name + '@facebook'
+        facebook_user = facebook_user.profile.account_id + ':' + facebook_user.profile.account_name + ':facebook'
         logging.info("%s logged in." % facebook_user)
         logout_link = '/oauth/facebook_logout'
         return {facebook_user: logout_link}
@@ -209,7 +210,21 @@ class MyRecord(webapp2.RequestHandler):
 
     def get(self):
 
+            # user_key_name = 'facebook_' + str(fb_user_profile["id"])
+            # verify_user = models.User.get_by_id(user_key_name)
+            #         692733281:Axa Cheng@facebook
+
         username = ''.join(UserLoginHandler(self).keys())
+        user_id = username.split(':')[2] + '_' + username.split(':')[0]
+
+
+        user_entity = models.User.get_by_id(user_id)
+        logging.info('xxxxxxxxxxxxx %s' % user_entity)
+        user_protray = user_entity.get().profile.protray
+        logging.info('ooooooooooooo %s' % user_protray)
+
+
+        today = datetime.datetime.today().strftime('%Y-%m-%d')
         ancestor_key = ndb.Key("Report", username)
         my_reports = models.Report.query_personal_report(ancestor_key)
 
@@ -217,7 +232,7 @@ class MyRecord(webapp2.RequestHandler):
         #my_key = my_reports.get()
         #logging.info('099999999 %s ' % my_key.key.parent())
 
-        template_dict = {'username': username, 'my_reports': my_reports}
+        template_dict = {'username': username, 'my_reports': my_reports, 'today': today}
         #path = os.path.join(os.path.dirname(__file__), 'myrecord.html')
         path = os.path.join(os.path.dirname(__file__), 'myrecord-beta.html')
         self.response.out.write(template.render(path, template_dict))
@@ -277,6 +292,9 @@ class AddReport(webapp2.RequestHandler):
         username = ''.join(UserLoginHandler(self).keys())
         populate_data = {'disease_name': '', 'medicine': '', 'side_effect': ''}
         terms = self.request.get_all('term')
+        fetched_report_date = self.request.get_all('report_date')  # [u'2012-08-31']
+        recorded_date = datetime.datetime(*time.strptime(''.join(fetched_report_date).encode('utf-8'), "%Y-%m-%d")[0:5])
+
         populate_data['disease_name'] = terms[0]
         populate_data['medicine'] = terms[1]
         populate_data['side_effect'] = terms[2]
@@ -285,6 +303,7 @@ class AddReport(webapp2.RequestHandler):
                                disease_name = populate_data['disease_name'],
                                report_type = 'TBD',
                                source = 'TBD',
+                               date_created = recorded_date,
                                side_effect = map(lambda x: x.strip(), populate_data['side_effect'].split(',')),
                                medicine = map(lambda x: x.strip(), populate_data['medicine'].split(',')),
                                minding = 'TBD',

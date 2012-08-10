@@ -61,8 +61,10 @@
           <div class="nav-collapse">
             <ul class="nav pull-left bar-root">
               <li><a href="/use">如何使用</a></li>
-              <li><a href="/myrecord">我的紀錄</a></li>
-              <li><a href="/more">更多統計</a></li>
+              {% if login_status %}
+                <li><a href="/myrecord">我的紀錄</a></li>
+                <li><a href="/more">更多統計</a></li>
+              {% endif %}
             </ul>
             <!-- user dropdown -->
             {% if not login_status %}
