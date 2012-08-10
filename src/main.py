@@ -2,6 +2,7 @@
 
 
 import csv
+import datetime
 import facebookoauth as foauth
 import json
 import logging
@@ -176,8 +177,10 @@ class UploadData(webapp2.RequestHandler):
         uploaded_file = csv.reader(self.request.get('csv'))
         for side_effect_name in uploaded_file:
             if side_effect_name:
-                side_effect = models.Disease(parent=ndb.Key('Disease', 'disease_name'),
-                                             name=''.join(side_effect_name),)
+                side_effect = models.SideEffect(parent=ndb.Key('SideEffect', 'sideeffect'),
+                                                name=''.join(side_effect_name),)
+                #side_effect = models.Disease(parent=ndb.Key('Disease', 'disease_name'),
+                #                             name=''.join(side_effect_name),)
                 #side_effect = models.Medicine(parent=ndb.Key('Medicine', 'medicine'),
                 #                              medicine_name=''.join(side_effect_name),)
                 side_effect.put()
@@ -200,20 +203,25 @@ class DeleteData(webapp2.RequestHandler):
 
 class MyRecord(webapp2.RequestHandler):
     """docstring for MyRecord"""
+    # def to_dict(self):
+    #   """Covert datastore entities from python object to python dictionary"""
+    #    return dict([(p, unicode(getattr(self, p))) for p in self.properties()])
+
     def get(self):
 
         username = ''.join(UserLoginHandler(self).keys())
         ancestor_key = ndb.Key("Report", username)
-        my_reports = models.Report.query_personal_report(ancestor_key).fetch()
-        template_dict = {'username': username, 'my_report': my_reports}
-        # for i in my_reports:
-        #     for j in i.side_effect:
-        #         logging.info('xxxxxxxxx %s' % j.encode('utf-8'))
+        my_reports = models.Report.query_personal_report(ancestor_key)
 
+        #https://developers.google.com/appengine/docs/python/ndb/keyclass?hl=zh-tw
+        #my_key = my_reports.get()
+        #logging.info('099999999 %s ' % my_key.key.parent())
 
+        template_dict = {'username': username, 'my_reports': my_reports}
         #path = os.path.join(os.path.dirname(__file__), 'myrecord.html')
         path = os.path.join(os.path.dirname(__file__), 'myrecord-beta.html')
         self.response.out.write(template.render(path, template_dict))
+
 
 
 class SearchDisease(webapp2.RequestHandler):
@@ -263,7 +271,7 @@ class SearchSideEffect(webapp2.RequestHandler):
 
 class AddReport(webapp2.RequestHandler):
     def get(self):
-        self.response.out.write('This is GET')
+        self.response.out.write('Oops ~ you can not do it.')
 
     def post(self):
         username = ''.join(UserLoginHandler(self).keys())
@@ -272,20 +280,22 @@ class AddReport(webapp2.RequestHandler):
         populate_data['disease_name'] = terms[0]
         populate_data['medicine'] = terms[1]
         populate_data['side_effect'] = terms[2]
-        logging.info('Adding one report: %s' % populate_data)
+        #logging.info('Adding one report: %s' % populate_data)
         report = models.Report(parent = ndb.Key('Report', username),  # Axa@faceboo_report
                                disease_name = populate_data['disease_name'],
                                report_type = 'TBD',
                                source = 'TBD',
-                               side_effect = map(lambda x: x.strip().encode('utf8'), populate_data['side_effect'].split(',')),
-                               medicine = populate_data['medicine'],
+                               side_effect = map(lambda x: x.strip(), populate_data['side_effect'].split(',')),
+                               medicine = map(lambda x: x.strip(), populate_data['medicine'].split(',')),
                                minding = 'TBD',
                                target = 'TBD',
                                dosage = 'TBD',
                                tool_strength = 'TBD',
                                data = 'TBD')
-        report.put()
+        this_key = report.put()
+        logging.info('User:[ %s ] added one report - %s' % (username, this_key))
         self.redirect('/myrecord')
+
 
 
 

@@ -19,7 +19,6 @@ class Profile(ndb.Model):
     account_name = ndb.StringProperty()
     access_token = ndb.StringProperty()
     country = ndb.StringProperty()
-    #protray = ndb.BlobProperty()
     protray = ndb.StringProperty()
     email = ndb.StringProperty()
     birthday = ndb.DateProperty()
@@ -36,12 +35,26 @@ class Report(polymodel.PolyModel):
     date_created = ndb.DateTimeProperty(auto_now_add=True)
     date_last_updated = ndb.DateTimeProperty(auto_now=True)
     side_effect = ndb.StringProperty(repeated=True)  # One pill may cause multiple side-effect
-    medicine = ndb.StringProperty() 
+    medicine = ndb.StringProperty(repeated=True)
     minding = ndb.StringProperty()
     target = ndb.StringProperty()
     dosage = ndb.StringProperty()
     tool_strength = ndb.StringProperty()
     data = ndb.StringProperty()
+
+
+    @classmethod
+    def query_personal_report(cls, ancestor_key):
+        return cls.query(ancestor=ancestor_key).order(-cls.date_last_updated)
+
+
+# Example for projection query 
+#     @classmethod
+#     def query_personal_report(cls, ancestor_key):
+#         qo = ndb.QueryOptions(projection=['disease_name', 'side_effect'])
+# #        qo = ndb.QueryOptions(keys_only=True)
+#         return cls.query(ancestor=ancestor_key, default_options=qo)
+
 
 
 class Disease(ndb.Model):
