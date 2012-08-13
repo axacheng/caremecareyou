@@ -4,6 +4,7 @@
 import csv
 import datetime
 import facebookoauth as foauth
+import gviz_api
 import json
 import logging
 import models
@@ -83,7 +84,7 @@ def UserLoginHandler(self):
         for name in query.fetch(1):
             weibo_screen_name = name.screen_name
 
-        weibo_username = weibo_user_id + ':' + weibo_screen_name + '@weibo'
+        weibo_username = weibo_user_id + ':' + weibo_screen_name + ':weibo'
 
     else:
         weibo_username = None
@@ -178,12 +179,12 @@ class UploadData(webapp2.RequestHandler):
         uploaded_file = csv.reader(self.request.get('csv'))
         for side_effect_name in uploaded_file:
             if side_effect_name:
-                side_effect = models.SideEffect(parent=ndb.Key('SideEffect', 'sideeffect'),
-                                                name=''.join(side_effect_name),)
+                #side_effect = models.SideEffect(parent=ndb.Key('SideEffect', 'sideeffect'),
+                #                                name=''.join(side_effect_name),)
                 #side_effect = models.Disease(parent=ndb.Key('Disease', 'disease_name'),
                 #                             name=''.join(side_effect_name),)
-                #side_effect = models.Medicine(parent=ndb.Key('Medicine', 'medicine'),
-                #                              medicine_name=''.join(side_effect_name),)
+                side_effect = models.Medicine(parent=ndb.Key('Medicine', 'medicine'),
+                                              medicine_name=''.join(side_effect_name),)
                 side_effect.put()
         self.redirect('/upload')
 
@@ -201,6 +202,21 @@ class DeleteData(webapp2.RequestHandler):
 
         self.response.out.write(entity_key)
 
+class MockData(webapp2.RequestHandler):
+    """docstring for MockData"""
+    def get(self):
+        fb_user_profile = {'id': '123456', 'name': 'Axa', 'email': 'axa.cheng@gmail.com',
+                            'gender': 'Male', 'birthday': '06/07/1980',
+                            'link': 'https://graph.facebook.com/axa.cheng/picture'}
+        fb_user_protray = ''
+        access_token = ['this is access_token']
+        user_key_name = str(fb_user_profile["id"] + '_facebook')
+
+        models.User.AddFacebookUser(fb_user_profile, fb_user_protray,
+                                    access_token, user_key_name)
+        self.redirect('/myrecord')
+
+
 
 class MyRecord(webapp2.RequestHandler):
     """docstring for MyRecord"""
@@ -209,30 +225,57 @@ class MyRecord(webapp2.RequestHandler):
     #    return dict([(p, unicode(getattr(self, p))) for p in self.properties()])
 
     def get(self):
-
-            # user_key_name = 'facebook_' + str(fb_user_profile["id"])
-            # verify_user = models.User.get_by_id(user_key_name)
-            #         692733281:Axa Cheng@facebook
-
         username = ''.join(UserLoginHandler(self).keys())
-        user_id = username.split(':')[2] + '_' + username.split(':')[0]
+        username = '123456:[[[[[[[[[ TEST ]]]]]]]]:facebook'  # Mocks
+        user_id = username.split(':')[0] + '_' + username.split(':')[2]
 
 
-        user_entity = models.User.get_by_id(user_id)
-        logging.info('xxxxxxxxxxxxx %s' % user_entity)
-        user_protray = user_entity.get().profile.protray
-        logging.info('ooooooooooooo %s' % user_protray)
+        #user_entity = models.User.get_by_id(user_id).to_dict()
+        user_entity = models.User.get_by_id(user_id).query().fetch()
 
-
-        today = datetime.datetime.today().strftime('%Y-%m-%d')
+        logging.info('eeeee%s' % user_entity)
+        # This user_entity returns format as below:
+        """ User(key=Key('User', '692733281_facebook'), name=u'Axa Cheng',
+            profile=Profile(access_token=u'AAACAOZBeeoLWxqkE3qkAadezcqWVANRdegZDZD',
+            account_id=u'692733281', account_name=u'Axa Cheng', account_type=u'facebook',
+            birthday=datetime.date(1980, 6, 7), country=None,
+            date_joined=datetime.datetime(2012, 8, 10, 17, 28, 8, 671160),
+            date_last_updated=datetime.datetime(2012, 8, 10, 17, 28, 8, 670910),
+            email=u'axa.cheng@gmail.com', gender=u'male',
+            protray=u'https://graph.facebook.com/axa.cheng/picture', status=None,
+            url=u'http://www.facebook.com/axa.cheng'), report=None, social=None)
+        """
+        #user_protray = user_entity.profile.protray
+        user_protray = ''  # Mock up, PLEASE delete this line before deploy.
         ancestor_key = ndb.Key("Report", username)
         my_reports = models.Report.query_personal_report(ancestor_key)
+        logging.info('xxxxxxx %s' % my_reports)
 
         #https://developers.google.com/appengine/docs/python/ndb/keyclass?hl=zh-tw
         #my_key = my_reports.get()
         #logging.info('099999999 %s ' % my_key.key.parent())
+        today = datetime.datetime.today().strftime('%Y-%m-%d')
 
-        template_dict = {'username': username, 'my_reports': my_reports, 'today': today}
+        # datatable = {'disease_name': ['高血脂'],
+        #              'side_effect_pie_chart': [['Name', 'Percentage'],
+        #                                    ['a', 6],
+        #                                    ['b', 10]]}
+
+        #             {'disease_name': ['急性咽喉炎'],
+        #              'side_effect_pie_chart': [['Name', 'Percentage'],
+        #                                     ['咳嗽', 40],
+        #                                     ['流鼻涕', 3]]}
+        
+        datatable = [['Name', 'Percentage'], ['腹瀉', 6], ['頭暈', 10]]
+
+        mock = json.dumps(datatable)
+        logging.info('JJJJJJJJ %s' % mock)
+
+
+        template_dict = {'username': username,
+                         'my_report_summary': mock, 'my_reports': my_reports,
+                         'today': today, 'user_protray': user_protray}
+
         #path = os.path.join(os.path.dirname(__file__), 'myrecord.html')
         path = os.path.join(os.path.dirname(__file__), 'myrecord-beta.html')
         self.response.out.write(template.render(path, template_dict))
@@ -290,12 +333,14 @@ class AddReport(webapp2.RequestHandler):
 
     def post(self):
         username = ''.join(UserLoginHandler(self).keys())
+        username = '123456:[[[[[[[[[ TEST ]]]]]]]]:facebook'  # Mocks
         populate_data = {'disease_name': '', 'medicine': '', 'side_effect': ''}
-        terms = self.request.get_all('term')
-        fetched_report_date = self.request.get_all('report_date')  # [u'2012-08-31']
-        recorded_date = datetime.datetime(*time.strptime(''.join(fetched_report_date).encode('utf-8'), "%Y-%m-%d")[0:5])
+        for i in 1,2,3:
+            terms = self.request.get_all('term' + i)
+            fetched_report_date = self.request.get_all('report_date')  # [u'2012-08-31']
+            recorded_date = datetime.datetime(*time.strptime(''.join(fetched_report_date).encode('utf-8'), "%Y-%m-%d")[0:5])
 
-        populate_data['disease_name'] = terms[0]
+            populate_data['disease_name'] = terms[0]
         populate_data['medicine'] = terms[1]
         populate_data['side_effect'] = terms[2]
         #logging.info('Adding one report: %s' % populate_data)
@@ -305,7 +350,7 @@ class AddReport(webapp2.RequestHandler):
                                source = 'TBD',
                                date_created = recorded_date,
                                side_effect = map(lambda x: x.strip(), populate_data['side_effect'].split(',')),
-                               medicine = map(lambda x: x.strip(), populate_data['medicine'].split(',')),
+                               user_medicine_name = map(lambda x: x.strip(), populate_data['medicine'].split(',')),
                                minding = 'TBD',
                                target = 'TBD',
                                dosage = 'TBD',
@@ -317,11 +362,44 @@ class AddReport(webapp2.RequestHandler):
 
 
 
+########## Testing code ############
+class testShowChartJson(webapp2.RequestHandler):
+    def get(self):
+
+        data = [ { 'time': datetime.datetime(2012, 06, 10, 12, 31, 0), '67638': 3, '774': 5}, 
+                 { 'time': datetime.datetime(2012, 06, 20, 12, 32, 0), '67638': 3, '774': 5, '8273223': 10 }, 
+                 { 'time': datetime.datetime(2012, 07, 15, 12, 33, 0), '774': 10, '8273223': 10 },
+                 { 'time': datetime.datetime(2012, 07, 16, 12, 33, 0), '67638': 5, '8273223': 10 },
+                 { 'time': datetime.datetime(2012, 07, 20, 12, 33, 0), '67638': 5, '8273223': 10 },
+                 { 'time': datetime.datetime(2012, 07, 22, 12, 33, 0), '8273223': 10 },
+                 { 'time': datetime.datetime(2012, 07, 26, 12, 33, 0), '8273223': 10 },
+               ]
+
+        schema = { 'time': ("datetime", "Time"),
+                   '67638': ("number", 'A medicine'),
+                   '774': ("number", 'B medicine'),
+                   '8273223': ("number", 'C medicine') }
+
+
+        data_table = gviz_api.DataTable(schema)
+        data_table.LoadData(data)
+        response = data_table.ToJSonResponse(columns_order=("time", "67638", "774", "8273223"),
+                                             order_by="time")
+        self.response.out.write(response)
+
+
+class testShowChart(webapp2.RequestHandler):
+    def get(self):
+
+        path = os.path.join(os.path.dirname(__file__), 'test/showchart.html')
+        self.response.out.write(template.render(path, ''))
+
 
 app = webapp2.WSGIApplication([('/', MainPage),
                                 ('/add_report', AddReport),
                                 ('/backend_data', ShowNdbKinds),
                                 ('/delete', DeleteData),
+                                ('/mockdata', MockData),
                                 ('/myrecord', MyRecord),
                                 ('/oauth/facebook_login', foauth.LoginHandler),
                                 ('/oauth/facebook_logout', foauth.LogoutHandler),
@@ -330,5 +408,9 @@ app = webapp2.WSGIApplication([('/', MainPage),
                                 ('/search_disease/', SearchDisease),
                                 ('/search_medicine/', SearchMedicine),
                                 ('/search_side_effect/', SearchSideEffect),
-                                ('/upload', UploadData), ],
+                                ('/upload', UploadData),
+                                ########### Test handlers in below ###########
+                                ('/showchartjson', testShowChartJson),
+                                ('/showchart', testShowChart),
+                               ],
                                 debug=True)
