@@ -264,38 +264,24 @@ class MyRecord(webapp2.RequestHandler):
             # http://stackoverflow.com/questions/38987/how-can-i-merge-union-two-python-dictionaries-in-a-single-expression
             chart_data_template.append( dict(chart_data, **(dict(medicine_and_dosage_data))) )
 
-            # Schema 
-            chart_schema = {'time': ("datetime", "Time")}
-
-
-
         logging.info('Oooooooout %s' % chart_data_template)
 
-        for j in data.medicine:
-            chart_schema[j] = ("number", j)
 
-        logging.info('sssssss %s' % chart_schema)
+        # schema = { 'time': ("datetime", "Time"),
+        #            '67638': ("number", 'A medicine'),
+        #            '774': ("number", 'B medicine')}
+        #chart_schema = {'time': ("datetime", "Time")}
+
+        # for j in data.medicine:
+        #     chart_schema[j] = ("number", j)
+
+        # logging.info('sssssss %s' % chart_schema)
 
 
         #https://developers.google.com/appengine/docs/python/ndb/keyclass?hl=zh-tw
         #my_key = my_reports.get()
         #logging.info('099999999 %s ' % my_key.key.parent())
         today = datetime.datetime.today().strftime('%Y-%m-%d')
-
-
-
-        data = [ { 'time': datetime.datetime(2012, 06, 10, 12, 31, 0), '67638': 3, '774': 5} ]
-
-#        data = [ { 'time': datetime.datetime(2012, 06, 10, 12, 31, 0), '67638': 3, '774': 5} ]
-
-
-
-        schema = { 'time': ("datetime", "Time"),
-                   '67638': ("number", 'A medicine'),
-                   '774': ("number", 'B medicine')}
-
-
-
         template_dict = {'username': username,
                          'my_reports': my_reports,
                          'today': today, 'user_protray': user_protray}
