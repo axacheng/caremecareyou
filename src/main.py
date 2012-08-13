@@ -270,7 +270,6 @@ class MyRecord(webapp2.RequestHandler):
 
 
         logging.info('Oooooooout %s' % chart_data_template)
-        logging.info('Data medicine %s' % data.medicine)
 
         for j in data.medicine:
             chart_schema[j] = ("number", j)
