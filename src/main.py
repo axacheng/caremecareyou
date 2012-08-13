@@ -226,12 +226,12 @@ class MyRecord(webapp2.RequestHandler):
 
     def get(self):
         username = ''.join(UserLoginHandler(self).keys())
-        #username = '123456:[[[[[[[[[ TEST ]]]]]]]]:facebook'  # Mocks
+        #username = '123456:[[[[[[[[[ TEST ]]]]]]]]:facebook'  # Mocks/please remove after testing
         user_id = username.split(':')[0] + '_' + username.split(':')[2]
 
 
         #user_entity = models.User.get_by_id(user_id).to_dict()
-        user_entity = models.User.get_by_id(user_id).query().fetch()
+        user_entity = models.User.get_by_id(user_id)
 
         # This user_entity returns format as below:
         """ User(key=Key('User', '692733281_facebook'), name=u'Axa Cheng',
@@ -244,7 +244,7 @@ class MyRecord(webapp2.RequestHandler):
             protray=u'https://graph.facebook.com/axa.cheng/picture', status=None,
             url=u'http://www.facebook.com/axa.cheng'), report=None, social=None)
         """
-        #user_protray = user_entity.profile.protray
+        user_protray = user_entity.profile.protray
         #user_protray = ''  # Mock up, PLEASE delete this line before deploy.
         ancestor_key = ndb.Key("Report", username)
         my_reports = models.Report.query_personal_report(ancestor_key)
