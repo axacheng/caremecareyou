@@ -226,14 +226,13 @@ class MyRecord(webapp2.RequestHandler):
 
     def get(self):
         username = ''.join(UserLoginHandler(self).keys())
-        username = '123456:[[[[[[[[[ TEST ]]]]]]]]:facebook'  # Mocks
+        #username = '123456:[[[[[[[[[ TEST ]]]]]]]]:facebook'  # Mocks
         user_id = username.split(':')[0] + '_' + username.split(':')[2]
 
 
         #user_entity = models.User.get_by_id(user_id).to_dict()
         user_entity = models.User.get_by_id(user_id).query().fetch()
 
-        logging.info('eeeee%s' % user_entity)
         # This user_entity returns format as below:
         """ User(key=Key('User', '692733281_facebook'), name=u'Axa Cheng',
             profile=Profile(access_token=u'AAACAOZBeeoLWxqkE3qkAadezcqWVANRdegZDZD',
@@ -246,26 +245,14 @@ class MyRecord(webapp2.RequestHandler):
             url=u'http://www.facebook.com/axa.cheng'), report=None, social=None)
         """
         #user_protray = user_entity.profile.protray
-        user_protray = ''  # Mock up, PLEASE delete this line before deploy.
+        #user_protray = ''  # Mock up, PLEASE delete this line before deploy.
         ancestor_key = ndb.Key("Report", username)
         my_reports = models.Report.query_personal_report(ancestor_key)
-        logging.info('xxxxxxx %s' % my_reports)
 
         #https://developers.google.com/appengine/docs/python/ndb/keyclass?hl=zh-tw
         #my_key = my_reports.get()
         #logging.info('099999999 %s ' % my_key.key.parent())
         today = datetime.datetime.today().strftime('%Y-%m-%d')
-
-        # datatable = {'disease_name': ['高血脂'],
-        #              'side_effect_pie_chart': [['Name', 'Percentage'],
-        #                                    ['a', 6],
-        #                                    ['b', 10]]}
-
-        #             {'disease_name': ['急性咽喉炎'],
-        #              'side_effect_pie_chart': [['Name', 'Percentage'],
-        #                                     ['咳嗽', 40],
-        #                                     ['流鼻涕', 3]]}
-        
         datatable = [['Name', 'Percentage'], ['腹瀉', 6], ['頭暈', 10]]
 
         mock = json.dumps(datatable)
@@ -276,7 +263,6 @@ class MyRecord(webapp2.RequestHandler):
                          'my_report_summary': mock, 'my_reports': my_reports,
                          'today': today, 'user_protray': user_protray}
 
-        #path = os.path.join(os.path.dirname(__file__), 'myrecord.html')
         path = os.path.join(os.path.dirname(__file__), 'myrecord-beta.html')
         self.response.out.write(template.render(path, template_dict))
 
