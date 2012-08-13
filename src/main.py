@@ -61,6 +61,8 @@ def UserLoginHandler(self):
         fetch its value(aka: Weibo username) from screen_name column.
         Finally, we use screen_name to determine user login or not.
 
+    Arg: xxxxx: string - fdsafdsafdsfdsafd
+    Raise: 
     Return: dict: {logged in username:logout URL link}
     """
     # Check OpenID/Federated user logged in or not.
@@ -85,6 +87,8 @@ def UserLoginHandler(self):
             weibo_screen_name = name.screen_name
 
         weibo_username = weibo_user_id + ':' + weibo_screen_name + ':weibo'
+
+
 
     else:
         weibo_username = None
@@ -179,12 +183,12 @@ class UploadData(webapp2.RequestHandler):
         uploaded_file = csv.reader(self.request.get('csv'))
         for side_effect_name in uploaded_file:
             if side_effect_name:
-                #side_effect = models.SideEffect(parent=ndb.Key('SideEffect', 'sideeffect'),
-                #                                name=''.join(side_effect_name),)
+                side_effect = models.SideEffect(parent=ndb.Key('SideEffect', 'sideeffect'),
+                                                name=''.join(side_effect_name),)
                 #side_effect = models.Disease(parent=ndb.Key('Disease', 'disease_name'),
                 #                             name=''.join(side_effect_name),)
-                side_effect = models.Medicine(parent=ndb.Key('Medicine', 'medicine'),
-                                              medicine_name=''.join(side_effect_name),)
+                #side_effect = models.Medicine(parent=ndb.Key('Medicine', 'medicine'),
+                #                              medicine_name=''.join(side_effect_name),)
                 side_effect.put()
         self.redirect('/upload')
 
@@ -225,10 +229,9 @@ class MyRecord(webapp2.RequestHandler):
     #    return dict([(p, unicode(getattr(self, p))) for p in self.properties()])
 
     def get(self):
-        username = ''.join(UserLoginHandler(self).keys())
-        #username = '123456:[[[[[[[[[ TEST ]]]]]]]]:facebook'  # Mocks/please remove after testing
+        #username = ''.join(UserLoginHandler(self).keys())
+        username = '123456:[[[[[[[[[ TEST ]]]]]]]]:facebook'  # Mocks/please remove after testing
         user_id = username.split(':')[0] + '_' + username.split(':')[2]
-
 
         #user_entity = models.User.get_by_id(user_id).to_dict()
         user_entity = models.User.get_by_id(user_id)
@@ -244,23 +247,58 @@ class MyRecord(webapp2.RequestHandler):
             protray=u'https://graph.facebook.com/axa.cheng/picture', status=None,
             url=u'http://www.facebook.com/axa.cheng'), report=None, social=None)
         """
-        user_protray = user_entity.profile.protray
-        #user_protray = ''  # Mock up, PLEASE delete this line before deploy.
+        #user_protray = user_entity.profile.protray
+        user_protray = ''  # Mock up, PLEASE delete this line before deploy.
         ancestor_key = ndb.Key("Report", username)
         my_reports = models.Report.query_personal_report(ancestor_key)
+        logging.info('xxxx %s' % my_reports.fetch())
+
+
+        chart_data_template = []
+        for data in my_reports.fetch():
+            # Data 
+            chart_data = {}
+            chart_data['time'] = data.date_created
+            medicine_and_dosage_data = zip(data.medicine, map(int, data.dosage))
+            # Merge two dicts into chart_data, less more readable but faster.
+            # http://stackoverflow.com/questions/38987/how-can-i-merge-union-two-python-dictionaries-in-a-single-expression
+            chart_data_template.append( dict(chart_data, **(dict(medicine_and_dosage_data))) )
+
+            # Schema 
+            chart_schema = {'time': ("datetime", "Time")}
+
+
+
+        logging.info('Oooooooout %s' % chart_data_template)
+        logging.info('Data medicine %s' % data.medicine)
+
+        for j in data.medicine:
+            chart_schema[j] = ("number", j)
+
+        logging.info('sssssss %s' % chart_schema)
+
 
         #https://developers.google.com/appengine/docs/python/ndb/keyclass?hl=zh-tw
         #my_key = my_reports.get()
         #logging.info('099999999 %s ' % my_key.key.parent())
         today = datetime.datetime.today().strftime('%Y-%m-%d')
-        datatable = [['Name', 'Percentage'], ['腹瀉', 6], ['頭暈', 10]]
 
-        mock = json.dumps(datatable)
-        logging.info('JJJJJJJJ %s' % mock)
+
+
+        data = [ { 'time': datetime.datetime(2012, 06, 10, 12, 31, 0), '67638': 3, '774': 5} ]
+
+#        data = [ { 'time': datetime.datetime(2012, 06, 10, 12, 31, 0), '67638': 3, '774': 5} ]
+
+
+
+        schema = { 'time': ("datetime", "Time"),
+                   '67638': ("number", 'A medicine'),
+                   '774': ("number", 'B medicine')}
+
 
 
         template_dict = {'username': username,
-                         'my_report_summary': mock, 'my_reports': my_reports,
+                         'my_reports': my_reports,
                          'today': today, 'user_protray': user_protray}
 
         path = os.path.join(os.path.dirname(__file__), 'myrecord-beta.html')
@@ -321,12 +359,11 @@ class AddReport(webapp2.RequestHandler):
         username = ''.join(UserLoginHandler(self).keys())
         username = '123456:[[[[[[[[[ TEST ]]]]]]]]:facebook'  # Mocks
         populate_data = {'disease_name': '', 'medicine': '', 'side_effect': ''}
-        for i in 1,2,3:
-            terms = self.request.get_all('term' + i)
-            fetched_report_date = self.request.get_all('report_date')  # [u'2012-08-31']
-            recorded_date = datetime.datetime(*time.strptime(''.join(fetched_report_date).encode('utf-8'), "%Y-%m-%d")[0:5])
+        terms = self.request.get_all('term')
+        fetched_report_date = self.request.get_all('report_date')  # [u'2012-08-31']
+        recorded_date = datetime.datetime(*time.strptime(''.join(fetched_report_date).encode('utf-8'), "%Y-%m-%d")[0:5])
 
-            populate_data['disease_name'] = terms[0]
+        populate_data['disease_name'] = terms[0]
         populate_data['medicine'] = terms[1]
         populate_data['side_effect'] = terms[2]
         #logging.info('Adding one report: %s' % populate_data)
@@ -336,10 +373,10 @@ class AddReport(webapp2.RequestHandler):
                                source = 'TBD',
                                date_created = recorded_date,
                                side_effect = map(lambda x: x.strip(), populate_data['side_effect'].split(',')),
-                               user_medicine_name = map(lambda x: x.strip(), populate_data['medicine'].split(',')),
+                               medicine = map(lambda x: x.strip(), populate_data['medicine'].split(',')),
                                minding = 'TBD',
                                target = 'TBD',
-                               dosage = 'TBD',
+                               dosage = ['5', '5', '10', '8', '3', '1'],
                                tool_strength = 'TBD',
                                data = 'TBD')
         this_key = report.put()
@@ -352,13 +389,11 @@ class AddReport(webapp2.RequestHandler):
 class testShowChartJson(webapp2.RequestHandler):
     def get(self):
 
-        data = [ { 'time': datetime.datetime(2012, 06, 10, 12, 31, 0), '67638': 3, '774': 5}, 
-                 { 'time': datetime.datetime(2012, 06, 20, 12, 32, 0), '67638': 3, '774': 5, '8273223': 10 }, 
+        data = [ { '67638': 3, '774': 5, 'time': datetime.datetime(2012, 06, 10, 12, 31, 0)}, 
+                 { '67638': 30, '774': 5, '8273223': 10, 'time': datetime.datetime(2012, 06, 20, 12, 32, 0)}, 
                  { 'time': datetime.datetime(2012, 07, 15, 12, 33, 0), '774': 10, '8273223': 10 },
                  { 'time': datetime.datetime(2012, 07, 16, 12, 33, 0), '67638': 5, '8273223': 10 },
-                 { 'time': datetime.datetime(2012, 07, 20, 12, 33, 0), '67638': 5, '8273223': 10 },
-                 { 'time': datetime.datetime(2012, 07, 22, 12, 33, 0), '8273223': 10 },
-                 { 'time': datetime.datetime(2012, 07, 26, 12, 33, 0), '8273223': 10 },
+
                ]
 
         schema = { 'time': ("datetime", "Time"),
