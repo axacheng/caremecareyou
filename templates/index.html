@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8">
+    <title>永保安康。保持你的健康！</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+     <link href="static/css/bootstrap.css" rel="stylesheet">
+      <link href="static/css/style.css" rel="stylesheet">
+      <!-- base css -->
+      <link class="links-css" href="static/css/base.css" rel="stylesheet">
+      <!-- home page css -->
+      <link href="static/css/home-page.css" rel="stylesheet">
+      <style type="text/css">
+        body {
+          padding-top: 40px;
+          padding-bottom: 40px;
+         }
+        .sidebar-nav {
+         padding: 9px 0;
+        }
+      </style>
+      <!-- datepicker css -->
+      <link href="static/css/datepicker.css" rel="stylesheet">
+      <!-- responsive css -->
+      <link href="static/css/bootstrap-responsive.css" rel="stylesheet">
+      <!-- media query css -->
+      <link href="static/css/media-fluid.css" rel="stylesheet">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!---- Le fav and touch icons ---->
+    <link rel="shortcut icon" href="static/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="static/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="static/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="static/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="static/ico/apple-touch-icon-57-precomposed.png">
+  </head>
+
+  <body>
+    {{ username }}
+    {{ url_text }}
+    {{ login_status }}
+
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a> 
+          <a class="brand bar-root" href="/"> 永保安康 </a>
+          <div class="nav-collapse">
+            <ul class="nav pull-left bar-root">
+              <li><a href="/use">如何使用</a></li>
+              {% if login_status %}
+                <li><a href="/myrecord">我的紀錄</a></li>
+                <li><a href="/more">更多統計</a></li>
+              {% endif %}
+            </ul>
+            <!-- user dropdown -->
+            {% if not login_status %}
+            <ul class="nav pull-right bar-root">
+              <li class="divider-vertical"></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                   <i class="icon-large icon-user icon-white"></i> 登入
+                   <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="/oauth/facebook_login"><img src="static/img/login/icon_facebook.png"> Facebook</a></li>
+                    <li><a href="http://caremecareyou.appspot.com/_ah/login_redir?claimid=google.com/accounts/o8/id&continue=http://caremecareyou.appspot.com/"><img src="static/img/login/icon_Google.png"> google</a></li>
+                    <li><a href="/oauth/weibo_login"><img src="static/img/login/icon_sina.GIF"> Sina 微博</a></li>
+                </ui>
+            {% else %}
+                <ul class="nav pull-right bar-root">
+                  <li class="divider-vertical"></li>
+                    <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                       <i class="icon-large icon-user icon-white"></i> 
+                       <b class="caret"></b>
+                     </a>
+                    <ul class="dropdown-menu dropdown-user-account">
+                       <li class="account-img-container">
+                        <img class="thumb account-img" src="#">
+                       </li>
+                       <li class="account-info">
+                         <h3>{{ username }}</h3>
+                         <p>
+                         <a href="#">編輯</a> 
+                         |
+                         <a href="#">隱私設定</a></p>
+                       </li>
+                       <li class="account-footer">
+                         <div class="row-fluid">
+                           <div class="span8">
+                             <a class="btn btn-primary btn-small" href="#">更換照片</a> 
+                             <a class="btn btn-primary btn-small" href="#">檢視檔案</a>
+                           </div>
+                           <div class="span4 align-right">
+                             <a class="btn btn-danger btn-small" href="#">登出</a>
+                           </div>
+                         </div>                  
+                       </li>
+                     </ul>
+                  </li>
+                </ul>
+                <ul class="nav pull-right bar-root">
+              <li class="divider-vertical"></li>
+              <li>
+                <a href="chat.html" data-original-title="">
+                <i class="icon-large icon-comment icon-white"></i>
+                <span class="label label-important">6</span></a> 
+              </li>
+              <li class="dropdown">
+                <a href="#" data-toggle="dropdown" data-original-title=""> 
+                <i class="icon-large icon-envelope icon-white"></i>
+                <span class="label label-important">5 new</span></a> 
+                  <ul class="dropdown-menu">
+                     <li>
+                      <a href="http://wbpreview.com/previews/WB0881879/inbox.html" data-original-title="">
+                        <img src="#" alt=""> Subject : Project
+                        <p class="help-block">
+                          <small>From: ab.alhyane@gmail.com</small>
+                        </p>
+                          <span class="label">23/09/2012</span>
+                      </a>
+                     </li>
+                     <li class="divider"></li>
+                     <li>
+                      <a href="#" data-original-title="">
+                        <img src="#" alt=""> Subject : Film 
+                        <p class="help-block">
+                          <small>From: ab.alhyane@gmail.com</small>
+                        </p>
+                        <span class="label">21/04/2012</span> 
+                       </a>
+                      </li>
+                      <li class="divider"></li>
+                      <li>
+                      <a href="#" data-original-title="">
+                        <img src="#" alt=""> Subject : Film 
+                        <p class="help-block">
+                          <small>From: ab.alhyane@gmail.com</small>
+                        </p>
+                        <span class="label">21/04/2012</span> 
+                       </a>
+                      </li>
+                      <li class="divider"></li>
+                      <li>
+                      <a href="#" data-original-title="">
+                        <img src="#" alt=""> Subject : Film 
+                        <p class="help-block">
+                          <small>From: ab.alhyane@gmail.com</small>
+                        </p>
+                        <span class="label">21/04/2012</span> 
+                       </a>
+                      </li>
+                      <li class="divider"></li>
+                      <li class="active"><a href="#" data-original-title=""> 顯示全部 </a></li>
+                  </ul>
+                </li>
+                <li class="dropdown">
+                  <a href="http://wbpreview.com/previews/WB0881879/#" data-toggle="dropdown" data-original-title=""> 
+                  <i class="icon-large icon-refresh icon-white"></i>
+                  <span class="label label-info">3 Updates</span></a> 
+                  <ul class="dropdown-menu">
+                      <li><a href="#" data-original-title=""> xxx </a></li>
+                      <li><a href="#" data-original-title=""> xxx</a></li>
+                      <li><a href="#" data-original-title=""> xxx</a></li>
+                      <li class="divider"></li>
+                      <li class="active"><a href="#" data-original-title=""> 顯示全部 </a></li>
+                  </ul>
+                </li>
+            </ul>
+            {% endif %} 
+            <form action="#" class="navbar-search pull-right">
+            <input type="text" placeholder="搜尋" class="search-query span2">
+            </form> 
+          </div>
+        </div> <!-- container -->
+      </div> <!-- navbar-inner -->
+    </div> <!-- navbar -->
+
+    <div class="container">
+
+      <!-- Main hero unit for a primary marketing message or call to action -->
+      <!--  Carousel - consult the Twitter Bootstrap docs at 
+      http://twitter.github.com/bootstrap/javascript.html#carousel -->
+      <div id="this-carousel-id" class="carousel slide">
+        <div class="carousel-inner">
+          <div class="item">
+            <a href="http://hubblesite.org/gallery/album/entire/pr2006046a/xlarge_web/npp/128/"> 
+              <img src="static/img/carousel/01.jpeg" alt="easy to manage">
+            </a>
+            <div class="carousel-caption">
+              <p>問卷式記錄，管理記錄簡單方便！<a class="btn btn-large btn-success pull-right" data-toggle="modal" href="#myModal" >立即使用 Free!</a></p>
+            </div>
+          </div>
+          <div class="item active">
+            <a href="http://hubblesite.org/gallery/album/entire/pr2007016e/xlarge_web/npp/128/">
+              <img src="static/img/carousel/01.jpeg" alt="easy to track">
+            </a>
+            <div class="carousel-caption">
+              <p>圖表式呈現，溝通病情清楚明瞭<a class="btn btn-large btn-success pull-right" data-toggle="modal" href="#myModal" >立即使用 Free!</a></p></p>
+            </div>
+          </div>
+          <div class="item">
+            <a href="http://hubblesite.org/gallery/album/entire/pr2003010i/npp/128/">
+              <img src="static/img/carousel/03.jpeg" alt="you are not alone">
+            </a>
+            <div class="carousel-caption">
+              <p>病症追蹤分享，你不再孤單！<a class="btn btn-large btn-success pull-right" data-toggle="modal" href="#myModal" >立即使用 Free!</a></p></p>
+            </div>
+          </div>
+        </div><!-- .carousel-inner -->
+        <!--  next and previous controls here
+              href values must reference the id for this carousel -->
+          <a class="carousel-control left" href="http://webdesigntutsplus.s3.amazonaws.com/tuts/342_bootstrap_carousel/Carousel-Files-COMPLETE/index.html#this-carousel-id" data-slide="prev">‹</a>
+          <a class="carousel-control right" href="http://webdesigntutsplus.s3.amazonaws.com/tuts/342_bootstrap_carousel/Carousel-Files-COMPLETE/index.html#this-carousel-id" data-slide="next">›</a>
+      </div><!-- .carousel -->
+      <!-- end carousel -->
+
+      <!-- Example row of columns -->
+      <div class="row">
+        <div class="span4 show-grid">
+          <h2><img src="https://developers.google.com/chart/interactive/images/feature_dynamic.png"> 量化</h2>
+           <p>透過問卷式的記錄，幫助您量化追蹤病症，一目了然！</p>
+          <p><a class="btn" href="#">View details &raquo;</a></p>
+        </div>
+        <div class="span4 show-grid">
+          <h2><img src="https://developers.google.com/chart/interactive/images/feature_free.png"> 免費</h2>
+           <p>生了得長期觀察的病真的很無奈，只好乖乖的追蹤。我們想到也許可以透過這樣的方式，有效的觀察自己的症狀，因此我們做了這個網站。我不希望生病，相信你也不願意。因此既然都做了，就分享出來給大家使用，不打算跟大家收錢，可以放心，大家好好養病吧！保持沒有壓力的心情，才是健康的王道。當然如果你很有錢很喜歡這個工具，也歡迎可以捐贈給我們。</p>
+          <p><a class="btn" href="#">View details &raquo;</a></p>
+       </div>
+        <div class="span4 show-grid">
+          <h2><img src="static/img/icon-shield.png"> 安全</h2>
+          <p>生病並不需要遮掩，只是有時候我們並不希望有太多"關愛的眼光"，有時候我們很重視隱私，相信你也是。因此，我們採用 Google 應用服務引擎，由全世界最優秀工程師們來進行維運，神祕的資料保護技術就交給 Google 大神去處理了，我們，專心記錄面對我們的症狀就夠了！</p>
+          <p><a class="btn" href="#">View details &raquo;</a></p>
+        </div>
+      </div>
+
+
+
+      <hr>
+
+      <footer>
+        <p>&copy; TAG Inc. 2012</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="./static/js/bootstrap-carousel.js"></script>
+    <script src="./static/js/bootstrap-modal.js"></script>
+    <script src="./static/js/bootstrap.min.js"></script>
+    <script>
+      $(document).ready(function(){
+        $('.carousel').carousel();
+        interval: 2000
+      });
+    </script>
+
+
+    <div id="tc_container" style="display: none" data="ih"></div></body></html>
+    
