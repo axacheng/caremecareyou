@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import csv
 import datetime
 import auth.facebookoauth as foauth
 import auth.weibo_oauth_v2
@@ -280,8 +279,6 @@ class AddReport(webapp2.RequestHandler):
 
 app = webapp2.WSGIApplication([('/', MainPage),
                                 ('/add_report', AddReport),
-                                ('/delete', DeleteData),
-                                ('/mockdata', MockData),
                                 ('/myrecord', MyRecord),
                                 ('/oauth/facebook_login', foauth.LoginHandler),
                                 ('/oauth/facebook_logout', foauth.LogoutHandler),
@@ -290,7 +287,6 @@ app = webapp2.WSGIApplication([('/', MainPage),
                                 ('/search_disease/', SearchDisease),
                                 ('/search_medicine/', SearchMedicine),
                                 ('/search_side_effect/', SearchSideEffect),
-                                ('/upload', UploadData),
                                 ########### Test handlers in below ###########
                                 ('/showchartjson', jsonapi.drawchart.testShowChartJson),
                                 ('/showchart', jsonapi.drawchart.testShowChart),
