@@ -62,4 +62,3 @@ class MockData(webapp2.RequestHandler):
         models.User.AddFacebookUser(fb_user_profile, fb_user_protray,
                                     access_token, user_key_name)
         self.redirect('/myrecord')
-

@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-
 import csv
 import datetime
-import facebookoauth as foauth
+import auth.facebookoauth as foauth
+import auth.weibo_oauth_v2
 import json
 import jsonapi.drawchart
 import logging
@@ -11,13 +11,10 @@ import models
 import os
 import time
 import webapp2
-import weibo_oauth_v2
 
 from google.appengine.ext import ndb
 from google.appengine.api import users
-
 from google.appengine.ext.webapp import template
-from google.appengine.ext.webapp.util import login_required
 
 
 def UserLoginHandler(self):
@@ -78,10 +75,10 @@ def UserLoginHandler(self):
     facebook_user = self._current_user  # Returns FacebookUser db entity
 
     # Check WeiBo user logged in or not.
-    weibo_cookie = weibo_oauth_v2.parse_cookie(self.request.cookies.get("weibo_user"))
+    weibo_cookie = auth.weibo_oauth_v2.parse_cookie(self.request.cookies.get("weibo_user"))
     if weibo_cookie:
         weibo_user_id = weibo_cookie
-        weibo_user_ancestor = weibo_oauth_v2.WeiboUser.get_by_key_name(weibo_user_id)
+        weibo_user_ancestor = auth.weibo_oauth_v2.WeiboUser.get_by_key_name(weibo_user_id)
         query = ndb.Query(weibo_user_ancestor)
         for name in query.fetch(1):
             weibo_screen_name = name.screen_name
@@ -139,86 +136,8 @@ class MainPage(webapp2.RequestHandler):
         template_dict = {'username': username, 'url_link': url_link, 'url_text': url_text,
                          'login_status': login_status}
 
-        path = os.path.join(os.path.dirname(__file__), 'index.html')
+        path = os.path.join(os.path.dirname(__file__), 'templates/index.html')
         self.response.out.write(template.render(path, template_dict))
-
-
-class ShowNdbKinds(webapp2.RequestHandler):
-    def get(self):
-        medicine_ancestor_key = ndb.Key("Medicine", "medicine")
-        ctx = ndb.get_context()
-        ctx_key = ctx.set_cache_policy(medicine_ancestor_key)
-
-        logging.info('Context cache: %s', ctx.get(ctx_key))
-
-        all_medicine = models.Medicine.query_medicine(medicine_ancestor_key)
-        total_medicine_count = all_medicine.count()
-
-        sideeffect_ancestor_key = ndb.Key("SideEffect", "sideeffect")
-        all_sideeffect = models.SideEffect.query_sideeffect(sideeffect_ancestor_key)
-        total_sideeffect_count = all_sideeffect.count()
-
-        template_dict = {'total_medicine_count': total_medicine_count,
-                         'total_sideeffect_count': total_sideeffect_count}
-
-        path = os.path.join(os.path.dirname(__file__), 'backend_data.html')
-        self.response.out.write(template.render(path, template_dict))
-
-
-class UploadData(webapp2.RequestHandler):
-    def get(self):
-        ancestor_key = ndb.Key("Medicine", "medicine")
-        all_side_effect = models.Medicine.query_medicine(ancestor_key)
-        total_count = all_side_effect.count()
-
-        path = os.path.join(os.path.dirname(__file__), 'upload.html')
-        if all_side_effect is None:
-            self.response.out.write('No data')
-        else:
-            self.response.out.write(template.render(
-                                    path, {'all_side_effect': all_side_effect,
-                                           'total_count': total_count}))
-
-    def post(self):
-        uploaded_file = csv.reader(self.request.get('csv'))
-        for side_effect_name in uploaded_file:
-            if side_effect_name:
-                side_effect = models.SideEffect(parent=ndb.Key('SideEffect', 'sideeffect'),
-                                                name=''.join(side_effect_name),)
-                #side_effect = models.Disease(parent=ndb.Key('Disease', 'disease_name'),
-                #                             name=''.join(side_effect_name),)
-                #side_effect = models.Medicine(parent=ndb.Key('Medicine', 'medicine'),
-                #                              medicine_name=''.join(side_effect_name),)
-                side_effect.put()
-        self.redirect('/upload')
-
-
-class DeleteData(webapp2.RequestHandler):
-    def get(self):
-        ancestor_key = ndb.Key("SideEffect", "sideeffect")
-        all_side_effect = models.SideEffect.query_sideeffect(ancestor_key).fetch()
-        #ancestor_key = ndb.Key("Medicine", "medicine")
-        #all_side_effect = models.Medicine.query_medicine(ancestor_key).fetch()
-
-        for i in all_side_effect:
-            entity_key = i.key  # Key, looks like: Key('SideEffect', 'sideeffect', 'SideEffect', 5633)
-            entity_key.delete()
-
-        self.response.out.write(entity_key)
-
-class MockData(webapp2.RequestHandler):
-    """docstring for MockData"""
-    def get(self):
-        fb_user_profile = {'id': '123456', 'name': 'Axa', 'email': 'axa.cheng@gmail.com',
-                            'gender': 'Male', 'birthday': '06/07/1980',
-                            'link': 'https://graph.facebook.com/axa.cheng/picture'}
-        fb_user_protray = ''
-        access_token = ['this is access_token']
-        user_key_name = str(fb_user_profile["id"] + '_facebook')
-
-        models.User.AddFacebookUser(fb_user_profile, fb_user_protray,
-                                    access_token, user_key_name)
-        self.redirect('/myrecord')
 
 
 
@@ -286,7 +205,7 @@ class MyRecord(webapp2.RequestHandler):
                          'my_reports': my_reports,
                          'today': today, 'user_protray': user_protray}
 
-        path = os.path.join(os.path.dirname(__file__), 'myrecord-beta.html')
+        path = os.path.join(os.path.dirname(__file__), 'templates/myrecord-beta.html')
         self.response.out.write(template.render(path, template_dict))
 
 
@@ -361,14 +280,13 @@ class AddReport(webapp2.RequestHandler):
 
 app = webapp2.WSGIApplication([('/', MainPage),
                                 ('/add_report', AddReport),
-                                ('/backend_data', ShowNdbKinds),
                                 ('/delete', DeleteData),
                                 ('/mockdata', MockData),
                                 ('/myrecord', MyRecord),
                                 ('/oauth/facebook_login', foauth.LoginHandler),
                                 ('/oauth/facebook_logout', foauth.LogoutHandler),
-                                ('/oauth/weibo_login', weibo_oauth_v2.LoginHandler),
-                                ('/oauth/weibo_logout', weibo_oauth_v2.LogoutHandler),
+                                ('/oauth/weibo_login', auth.weibo_oauth_v2.LoginHandler),
+                                ('/oauth/weibo_logout', auth.weibo_oauth_v2.LogoutHandler),
                                 ('/search_disease/', SearchDisease),
                                 ('/search_medicine/', SearchMedicine),
                                 ('/search_side_effect/', SearchSideEffect),
