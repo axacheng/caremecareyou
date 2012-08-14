@@ -38,7 +38,7 @@ class Report(polymodel.PolyModel):
     medicine = ndb.StringProperty(repeated=True)
     minding = ndb.StringProperty()
     target = ndb.StringProperty()
-    dosage = ndb.StringProperty()
+    dosage = ndb.StringProperty(repeated=True)
     tool_strength = ndb.StringProperty()
     data = ndb.StringProperty()
 
@@ -46,6 +46,25 @@ class Report(polymodel.PolyModel):
     @classmethod
     def query_personal_report(cls, ancestor_key):
         return cls.query(ancestor=ancestor_key).order(-cls.date_last_updated)
+
+    @classmethod
+    def AddMedicineReport(cls, username, populate_data, recorded_date):
+        logging.info('Adding one report: %s' % populate_data)
+        report = Report(parent = ndb.Key('Report', username),  # Axa@faceboo_report
+                        disease_name = populate_data['disease_name'],
+                        report_type = 'TBD',
+                        source = 'TBD',
+                        date_created = recorded_date,
+                        side_effect = map(lambda x: x.strip(), populate_data['side_effect'].split(',')),
+                        medicine = map(lambda x: x.strip(), populate_data['medicine'].split(',')),
+                        minding = 'TBD',
+                        target = 'TBD',
+                        dosage = ['5', '5', '10', '8', '3', '1'],
+                        tool_strength = 'TBD',
+                        data = 'TBD')
+        this_key = report.put()
+        logging.info('User:[ %s ] added one report - %s' % (username, this_key))
+
 
 
 # Example for projection query 

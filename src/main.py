@@ -4,8 +4,8 @@
 import csv
 import datetime
 import facebookoauth as foauth
-import gviz_api
 import json
+import jsonapi.drawchart
 import logging
 import models
 import os
@@ -351,54 +351,12 @@ class AddReport(webapp2.RequestHandler):
         populate_data['disease_name'] = terms[0]
         populate_data['medicine'] = terms[1]
         populate_data['side_effect'] = terms[2]
-        #logging.info('Adding one report: %s' % populate_data)
-        report = models.Report(parent = ndb.Key('Report', username),  # Axa@faceboo_report
-                               disease_name = populate_data['disease_name'],
-                               report_type = 'TBD',
-                               source = 'TBD',
-                               date_created = recorded_date,
-                               side_effect = map(lambda x: x.strip(), populate_data['side_effect'].split(',')),
-                               medicine = map(lambda x: x.strip(), populate_data['medicine'].split(',')),
-                               minding = 'TBD',
-                               target = 'TBD',
-                               dosage = ['5', '5', '10', '8', '3', '1'],
-                               tool_strength = 'TBD',
-                               data = 'TBD')
-        this_key = report.put()
-        logging.info('User:[ %s ] added one report - %s' % (username, this_key))
+
+        models.Report.AddMedicineReport(username, populate_data, recorded_date)
         self.redirect('/myrecord')
 
 
 
-########## Testing code ############
-class testShowChartJson(webapp2.RequestHandler):
-    def get(self):
-
-        data = [ { '67638': 3, '774': 5, 'time': datetime.datetime(2012, 06, 10, 12, 31, 0)}, 
-                 { '67638': 30, '774': 5, '8273223': 10, 'time': datetime.datetime(2012, 06, 20, 12, 32, 0)}, 
-                 { 'time': datetime.datetime(2012, 07, 15, 12, 33, 0), '774': 10, '8273223': 10 },
-                 { 'time': datetime.datetime(2012, 07, 16, 12, 33, 0), '67638': 5, '8273223': 10 },
-
-               ]
-
-        schema = { 'time': ("datetime", "Time"),
-                   '67638': ("number", 'A medicine'),
-                   '774': ("number", 'B medicine'),
-                   '8273223': ("number", 'C medicine') }
-
-
-        data_table = gviz_api.DataTable(schema)
-        data_table.LoadData(data)
-        response = data_table.ToJSonResponse(columns_order=("time", "67638", "774", "8273223"),
-                                             order_by="time")
-        self.response.out.write(response)
-
-
-class testShowChart(webapp2.RequestHandler):
-    def get(self):
-
-        path = os.path.join(os.path.dirname(__file__), 'test/showchart.html')
-        self.response.out.write(template.render(path, ''))
 
 
 app = webapp2.WSGIApplication([('/', MainPage),
@@ -416,7 +374,7 @@ app = webapp2.WSGIApplication([('/', MainPage),
                                 ('/search_side_effect/', SearchSideEffect),
                                 ('/upload', UploadData),
                                 ########### Test handlers in below ###########
-                                ('/showchartjson', testShowChartJson),
-                                ('/showchart', testShowChart),
+                                ('/showchartjson', jsonapi.drawchart.testShowChartJson),
+                                ('/showchart', jsonapi.drawchart.testShowChart),
                                ],
                                 debug=True)
