@@ -6,7 +6,7 @@ import auth.weibo_oauth_v2
 import json
 import jsonapi.drawchart
 import logging
-import mockup
+import mockup.generate_mockup
 import models
 import os
 import time
@@ -84,9 +84,6 @@ def UserLoginHandler(self):
             weibo_screen_name = name.screen_name
 
         weibo_username = weibo_user_id + ':' + weibo_screen_name + ':weibo'
-
-
-
     else:
         weibo_username = None
 
@@ -155,51 +152,12 @@ class MyRecord(webapp2.RequestHandler):
         #user_entity = models.User.get_by_id(user_id).to_dict()
         user_entity = models.User.get_by_id(user_id)
 
-        # This user_entity returns format as below:
-        """ User(key=Key('User', '692733281_facebook'), name=u'Axa Cheng',
-            profile=Profile(access_token=u'AAACAOZBeeoLWxqkE3qkAadezcqWVANRdegZDZD',
-            account_id=u'692733281', account_name=u'Axa Cheng', account_type=u'facebook',
-            birthday=datetime.date(1980, 6, 7), country=None,
-            date_joined=datetime.datetime(2012, 8, 10, 17, 28, 8, 671160),
-            date_last_updated=datetime.datetime(2012, 8, 10, 17, 28, 8, 670910),
-            email=u'axa.cheng@gmail.com', gender=u'male',
-            protray=u'https://graph.facebook.com/axa.cheng/picture', status=None,
-            url=u'http://www.facebook.com/axa.cheng'), report=None, social=None)
-        """
-        #user_protray = user_entity.profile.protray
-        user_protray = ''  # Mock up, PLEASE delete this line before deploy.
+        #user_protray = ''  # Mock up, PLEASE delete this line before deploy.
+        user_protray = user_entity.profile.protray
         ancestor_key = ndb.Key("Report", username)
         my_reports = models.Report.query_personal_report(ancestor_key)
-        logging.info('xxxx %s' % my_reports.fetch())
+        logging.info('All user\'s Report %s' % my_reports.fetch())
 
-
-        chart_data_template = []
-        for data in my_reports.fetch():
-            # Data 
-            chart_data = {}
-            chart_data['time'] = data.date_created
-            medicine_and_dosage_data = zip(data.medicine, map(int, data.dosage))
-            # Merge two dicts into chart_data, less more readable but faster.
-            # http://stackoverflow.com/questions/38987/how-can-i-merge-union-two-python-dictionaries-in-a-single-expression
-            chart_data_template.append( dict(chart_data, **(dict(medicine_and_dosage_data))) )
-
-        logging.info('Oooooooout %s' % chart_data_template)
-
-
-        # schema = { 'time': ("datetime", "Time"),
-        #            '67638': ("number", 'A medicine'),
-        #            '774': ("number", 'B medicine')}
-        #chart_schema = {'time': ("datetime", "Time")}
-
-        # for j in data.medicine:
-        #     chart_schema[j] = ("number", j)
-
-        # logging.info('sssssss %s' % chart_schema)
-
-
-        #https://developers.google.com/appengine/docs/python/ndb/keyclass?hl=zh-tw
-        #my_key = my_reports.get()
-        #logging.info('099999999 %s ' % my_key.key.parent())
         today = datetime.datetime.today().strftime('%Y-%m-%d')
         template_dict = {'username': username,
                          'my_reports': my_reports,
@@ -267,9 +225,10 @@ class AddReport(webapp2.RequestHandler):
         fetched_report_date = self.request.get_all('report_date')  # [u'2012-08-31']
         recorded_date = datetime.datetime(*time.strptime(''.join(fetched_report_date).encode('utf-8'), "%Y-%m-%d")[0:5])
 
+        logging.info
         populate_data['disease_name'] = terms[0]
-        populate_data['medicine'] = terms[1]
-        populate_data['side_effect'] = terms[2]
+        populate_data['medicine'] = terms[1].rstrip(', ')
+        populate_data['side_effect'] = terms[2].rstrip(', ')
 
         models.Report.AddMedicineReport(username, populate_data, recorded_date)
         self.redirect('/myrecord')
@@ -278,7 +237,6 @@ class AddReport(webapp2.RequestHandler):
 app = webapp2.WSGIApplication([('/', MainPage),
                                 ('/add_report', AddReport),
                                 ('/myrecord', MyRecord),
-                                ('/upload', mockup.generate_mockup.UploadData),
                                 ('/oauth/facebook_login', foauth.LoginHandler),
                                 ('/oauth/facebook_logout', foauth.LogoutHandler),
                                 ('/oauth/weibo_login', auth.weibo_oauth_v2.LoginHandler),
@@ -286,8 +244,11 @@ app = webapp2.WSGIApplication([('/', MainPage),
                                 ('/search_disease/', SearchDisease),
                                 ('/search_medicine/', SearchMedicine),
                                 ('/search_side_effect/', SearchSideEffect),
-                                ########### Test handlers in below ###########
-                                ('/showchartjson', jsonapi.drawchart.testShowChartJson),
-                                ('/showchart', jsonapi.drawchart.testShowChart),
+                                ('/upload', mockup.generate_mockup.UploadData),
+                                ('/delete', mockup.generate_mockup.DeleteData),
+
+                                ########### Draw Chart Handlers ###########
+                                ('/showchartjson', jsonapi.drawchart.ShowMedicineTakenChartJson),
+                                ('/showchart', jsonapi.drawchart.ShowChart),
                                ],
                                 debug=True)

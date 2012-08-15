@@ -59,7 +59,7 @@ class Report(polymodel.PolyModel):
                         medicine = map(lambda x: x.strip(), populate_data['medicine'].split(',')),
                         minding = 'TBD',
                         target = 'TBD',
-                        dosage = ['5', '5', '10', '8', '3', '1'],
+                        dosage = ['20', '10'],
                         tool_strength = 'TBD',
                         data = 'TBD')
         this_key = report.put()
@@ -110,10 +110,13 @@ class Tool(ndb.Model):
     tool_side_effect = ndb.StructuredProperty(SideEffect)
 
 
-class BioCheckList(ndb.Model):
+class BioTestList(ndb.Model):
     """docstring for Profile"""
     biocheck_name = ndb.StringProperty()
 
+    @classmethod
+    def query_biotestlist(cls, ancestor_key):
+        return cls.query(ancestor=ancestor_key)
 
 class Social(polymodel.PolyModel):
     """docstring for Profile"""
