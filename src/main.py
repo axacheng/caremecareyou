@@ -275,9 +275,6 @@ class AddReport(webapp2.RequestHandler):
         self.redirect('/myrecord')
 
 
-
-
-
 app = webapp2.WSGIApplication([('/', MainPage),
                                 ('/add_report', AddReport),
                                 ('/myrecord', MyRecord),
