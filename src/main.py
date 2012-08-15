@@ -6,7 +6,7 @@ import auth.weibo_oauth_v2
 import json
 import jsonapi.drawchart
 import logging
-import mockup
+import mockup.generate_mockup
 import models
 import os
 import time
@@ -166,8 +166,8 @@ class MyRecord(webapp2.RequestHandler):
             protray=u'https://graph.facebook.com/axa.cheng/picture', status=None,
             url=u'http://www.facebook.com/axa.cheng'), report=None, social=None)
         """
-        #user_protray = user_entity.profile.protray
-        user_protray = ''  # Mock up, PLEASE delete this line before deploy.
+        #user_protray = ''  # Mock up, PLEASE delete this line before deploy.
+        user_protray = user_entity.profile.protray
         ancestor_key = ndb.Key("Report", username)
         my_reports = models.Report.query_personal_report(ancestor_key)
         logging.info('xxxx %s' % my_reports.fetch())
@@ -186,6 +186,24 @@ class MyRecord(webapp2.RequestHandler):
         logging.info('Oooooooout %s' % chart_data_template)
 
 
+        # [{'Fecole': 5, 'Eafunin': 5, 'Well-well': 8, 'Gaba-p': 10, 'Gabapentin': 3,
+        #   'time': datetime.datetime(2012, 8, 15, 0, 0)}]
+        logging.info('TTTTTTTTT %s' % data.medicine)
+
+        chart_schema = {'time': ("datetime", "Time")}
+        for i in data.medicine:
+            chart_schema[i] = ("number", i)
+
+
+        logging.info('XXXXXXXXXXXX %s' % chart_schema)
+        # {'Fecole': ('number', 'Fecole'),
+        #  'Eafunin': ('number', 'Eafunin'),
+        #  'Well-well': ('number', 'Well-well'),
+        #  'Gaba-p': ('number', 'Gaba-p'),
+        #  'Gabapentin': ('number', 'Gabapentin')}
+
+        ccc = jsonapi.drawchart._DrawHelper()
+        ccc = 'http://localhost:8080/showchartjson'
         # schema = { 'time': ("datetime", "Time"),
         #            '67638': ("number", 'A medicine'),
         #            '774': ("number", 'B medicine')}
@@ -203,7 +221,8 @@ class MyRecord(webapp2.RequestHandler):
         today = datetime.datetime.today().strftime('%Y-%m-%d')
         template_dict = {'username': username,
                          'my_reports': my_reports,
-                         'today': today, 'user_protray': user_protray}
+                         'today': today, 'user_protray': user_protray,
+                         'ccc': ccc}
 
         path = os.path.join(os.path.dirname(__file__), 'templates/myrecord-beta.html')
         self.response.out.write(template.render(path, template_dict))
@@ -267,9 +286,10 @@ class AddReport(webapp2.RequestHandler):
         fetched_report_date = self.request.get_all('report_date')  # [u'2012-08-31']
         recorded_date = datetime.datetime(*time.strptime(''.join(fetched_report_date).encode('utf-8'), "%Y-%m-%d")[0:5])
 
+        logging.info
         populate_data['disease_name'] = terms[0]
-        populate_data['medicine'] = terms[1]
-        populate_data['side_effect'] = terms[2]
+        populate_data['medicine'] = terms[1].rstrip(', ')
+        populate_data['side_effect'] = terms[2].rstrip(', ')
 
         models.Report.AddMedicineReport(username, populate_data, recorded_date)
         self.redirect('/myrecord')
@@ -281,7 +301,6 @@ class AddReport(webapp2.RequestHandler):
 app = webapp2.WSGIApplication([('/', MainPage),
                                 ('/add_report', AddReport),
                                 ('/myrecord', MyRecord),
-                                ('/upload', mockup.generate_mockup.UploadData),
                                 ('/oauth/facebook_login', foauth.LoginHandler),
                                 ('/oauth/facebook_logout', foauth.LogoutHandler),
                                 ('/oauth/weibo_login', auth.weibo_oauth_v2.LoginHandler),
@@ -289,6 +308,9 @@ app = webapp2.WSGIApplication([('/', MainPage),
                                 ('/search_disease/', SearchDisease),
                                 ('/search_medicine/', SearchMedicine),
                                 ('/search_side_effect/', SearchSideEffect),
+                                ('/upload', mockup.generate_mockup.UploadData),
+                                ('/delete', mockup.generate_mockup.DeleteData),
+
                                 ########### Test handlers in below ###########
                                 ('/showchartjson', jsonapi.drawchart.testShowChartJson),
                                 ('/showchart', jsonapi.drawchart.testShowChart),

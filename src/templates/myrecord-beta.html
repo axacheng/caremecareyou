@@ -368,6 +368,28 @@
             </ul>
             <div class="tab-content">
               <div class="tab-pane active" id="tab1">
+                    <script type="text/javascript">
+                          google.load('visualization', '1', {packages: ['annotatedtimeline']});
+
+                          function draw_timeline() {
+                              var url = "http://localhost:8080/showchartjson";
+                              var query = new google.visualization.Query({{ ccc }});
+                              query.send(callback_draw_timeline);
+
+                              function callback_draw_timeline(response) {
+                                  if (response.isError()) {
+                                      alert("Error in query: " + response.getMessage());
+                                      return;
+                                  };
+                                  var data = response.getDataTable();
+                                  var chart = new google.visualization.AnnotatedTimeLine(document.getElementById('timeline'));
+                                  chart.draw(data, {title: 'Title'} );
+                              };
+                          };
+
+                          google.setOnLoadCallback(draw_timeline);
+                      </script>              
+                  <div id="timeline" style='height: 600px; width=100%'>Timeline</div>
 
               {% if my_reports %}
               {{ my_reports }}
