@@ -84,9 +84,6 @@ def UserLoginHandler(self):
             weibo_screen_name = name.screen_name
 
         weibo_username = weibo_user_id + ':' + weibo_screen_name + ':weibo'
-
-
-
     else:
         weibo_username = None
 
@@ -155,74 +152,16 @@ class MyRecord(webapp2.RequestHandler):
         #user_entity = models.User.get_by_id(user_id).to_dict()
         user_entity = models.User.get_by_id(user_id)
 
-        # This user_entity returns format as below:
-        """ User(key=Key('User', '692733281_facebook'), name=u'Axa Cheng',
-            profile=Profile(access_token=u'AAACAOZBeeoLWxqkE3qkAadezcqWVANRdegZDZD',
-            account_id=u'692733281', account_name=u'Axa Cheng', account_type=u'facebook',
-            birthday=datetime.date(1980, 6, 7), country=None,
-            date_joined=datetime.datetime(2012, 8, 10, 17, 28, 8, 671160),
-            date_last_updated=datetime.datetime(2012, 8, 10, 17, 28, 8, 670910),
-            email=u'axa.cheng@gmail.com', gender=u'male',
-            protray=u'https://graph.facebook.com/axa.cheng/picture', status=None,
-            url=u'http://www.facebook.com/axa.cheng'), report=None, social=None)
-        """
         #user_protray = ''  # Mock up, PLEASE delete this line before deploy.
         user_protray = user_entity.profile.protray
         ancestor_key = ndb.Key("Report", username)
         my_reports = models.Report.query_personal_report(ancestor_key)
-        logging.info('xxxx %s' % my_reports.fetch())
+        logging.info('All user\'s Report %s' % my_reports.fetch())
 
-
-        chart_data_template = []
-        for data in my_reports.fetch():
-            # Data 
-            chart_data = {}
-            chart_data['time'] = data.date_created
-            medicine_and_dosage_data = zip(data.medicine, map(int, data.dosage))
-            # Merge two dicts into chart_data, less more readable but faster.
-            # http://stackoverflow.com/questions/38987/how-can-i-merge-union-two-python-dictionaries-in-a-single-expression
-            chart_data_template.append( dict(chart_data, **(dict(medicine_and_dosage_data))) )
-
-        logging.info('Oooooooout %s' % chart_data_template)
-
-
-        # [{'Fecole': 5, 'Eafunin': 5, 'Well-well': 8, 'Gaba-p': 10, 'Gabapentin': 3,
-        #   'time': datetime.datetime(2012, 8, 15, 0, 0)}]
-        logging.info('TTTTTTTTT %s' % data.medicine)
-
-        chart_schema = {'time': ("datetime", "Time")}
-        for i in data.medicine:
-            chart_schema[i] = ("number", i)
-
-
-        logging.info('XXXXXXXXXXXX %s' % chart_schema)
-        # {'Fecole': ('number', 'Fecole'),
-        #  'Eafunin': ('number', 'Eafunin'),
-        #  'Well-well': ('number', 'Well-well'),
-        #  'Gaba-p': ('number', 'Gaba-p'),
-        #  'Gabapentin': ('number', 'Gabapentin')}
-
-        ccc = jsonapi.drawchart._DrawHelper()
-        ccc = 'http://localhost:8080/showchartjson'
-        # schema = { 'time': ("datetime", "Time"),
-        #            '67638': ("number", 'A medicine'),
-        #            '774': ("number", 'B medicine')}
-        #chart_schema = {'time': ("datetime", "Time")}
-
-        # for j in data.medicine:
-        #     chart_schema[j] = ("number", j)
-
-        # logging.info('sssssss %s' % chart_schema)
-
-
-        #https://developers.google.com/appengine/docs/python/ndb/keyclass?hl=zh-tw
-        #my_key = my_reports.get()
-        #logging.info('099999999 %s ' % my_key.key.parent())
         today = datetime.datetime.today().strftime('%Y-%m-%d')
         template_dict = {'username': username,
                          'my_reports': my_reports,
-                         'today': today, 'user_protray': user_protray,
-                         'ccc': ccc}
+                         'today': today, 'user_protray': user_protray}
 
         path = os.path.join(os.path.dirname(__file__), 'templates/myrecord-beta.html')
         self.response.out.write(template.render(path, template_dict))
@@ -295,9 +234,6 @@ class AddReport(webapp2.RequestHandler):
         self.redirect('/myrecord')
 
 
-
-
-
 app = webapp2.WSGIApplication([('/', MainPage),
                                 ('/add_report', AddReport),
                                 ('/myrecord', MyRecord),
@@ -311,8 +247,8 @@ app = webapp2.WSGIApplication([('/', MainPage),
                                 ('/upload', mockup.generate_mockup.UploadData),
                                 ('/delete', mockup.generate_mockup.DeleteData),
 
-                                ########### Test handlers in below ###########
-                                ('/showchartjson', jsonapi.drawchart.testShowChartJson),
-                                ('/showchart', jsonapi.drawchart.testShowChart),
+                                ########### Draw Chart Handlers ###########
+                                ('/showchartjson', jsonapi.drawchart.ShowMedicineTakenChartJson),
+                                ('/showchart', jsonapi.drawchart.ShowChart),
                                ],
                                 debug=True)
