@@ -26,12 +26,15 @@ class UploadData(webapp2.RequestHandler):
         uploaded_file = csv.reader(self.request.get('csv'))
         for side_effect_name in uploaded_file:
             if side_effect_name:
-                side_effect = models.SideEffect(parent=ndb.Key('SideEffect', 'sideeffect'),
-                                                name=''.join(side_effect_name),)
+                #side_effect = models.SideEffect(parent=ndb.Key('SideEffect', 'sideeffect'),
+                #                                name=''.join(side_effect_name),)
                 #side_effect = models.Disease(parent=ndb.Key('Disease', 'disease_name'),
                 #                             name=''.join(side_effect_name),)
                 #side_effect = models.Medicine(parent=ndb.Key('Medicine', 'medicine'),
                 #                              medicine_name=''.join(side_effect_name),)
+                side_effect = models.Medicine(parent=ndb.Key('Medicine', 'medicine'),
+                                              medicine_name=''.join(side_effect_name),)
+
                 side_effect.put()
         self.redirect('/upload')
 

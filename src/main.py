@@ -6,6 +6,7 @@ import auth.weibo_oauth_v2
 import json
 import jsonapi.drawchart
 import logging
+import mockup
 import models
 import os
 import time
@@ -280,6 +281,7 @@ class AddReport(webapp2.RequestHandler):
 app = webapp2.WSGIApplication([('/', MainPage),
                                 ('/add_report', AddReport),
                                 ('/myrecord', MyRecord),
+                                ('/upload', mockup.generate_mockup.UploadData),
                                 ('/oauth/facebook_login', foauth.LoginHandler),
                                 ('/oauth/facebook_logout', foauth.LogoutHandler),
                                 ('/oauth/weibo_login', auth.weibo_oauth_v2.LoginHandler),

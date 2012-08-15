@@ -110,10 +110,9 @@ class Tool(ndb.Model):
     tool_side_effect = ndb.StructuredProperty(SideEffect)
 
 
-class CheckList(ndb.Model):
+class BioCheckList(ndb.Model):
     """docstring for Profile"""
-
-    check_name = ndb.StringProperty()
+    biocheck_name = ndb.StringProperty()
 
 
 class Social(polymodel.PolyModel):
