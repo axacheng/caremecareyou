@@ -248,7 +248,8 @@ app = webapp2.WSGIApplication([('/', MainPage),
                                 ('/delete', mockup.generate_mockup.DeleteData),
 
                                 ########### Draw Chart Handlers ###########
-                                ('/showchartjson', jsonapi.drawchart.ShowMedicineTakenChartJson),
+                                # /username/disease_name/chart/medicinetakenjson
+                                ('/(.*)/(.*)/chart/(.*)', jsonapi.drawchart.MedicineTakenJson),
                                 ('/showchart', jsonapi.drawchart.ShowChart),
                                ],
                                 debug=True)

@@ -59,7 +59,7 @@ class Report(polymodel.PolyModel):
                         medicine = map(lambda x: x.strip(), populate_data['medicine'].split(',')),
                         minding = 'TBD',
                         target = 'TBD',
-                        dosage = ['20', '10'],
+                        dosage = ['40', '20'],
                         tool_strength = 'TBD',
                         data = 'TBD')
         this_key = report.put()
