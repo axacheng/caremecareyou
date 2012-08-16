@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="utf-8">
+  <head>
+    <meta charset="utf-8">
+    <title>{% block title %} 永保安康。保持你的健康！ {% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    {% block styles %}
+    <!-- jquery-ui -->
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css">
+    <!-- bootstrap css -->
+    <link href="static/css/bootstrap.css" rel="stylesheet">
+    <link href="static/css/style.css" rel="stylesheet">
+    <link href="static/css/datepicker.css" rel="stylesheet">
+    <link href="static/css/bootstrap-responsive.css" rel="stylesheet">
+    <!-- media query css -->
+    <!-- base css -->
+    <link class="links-css" href="static/css/base.css" rel="stylesheet">
+    <!-- home page css -->
+    <link href="static/css/home-page.css" rel="stylesheet">
+    <style type="text/css">@media print {  .gmnoprint {    display:none  }}@media screen {  .gmnoscreen {    display:none  }}</style>
+    <style type="text/css">
+      body {
+        padding-top: 30px;
+        padding-bottom: 40px;
+       }
+      .sidebar-nav {
+       padding: 9px 0;
+      }
+    </style>
+     <style>
+    .ui-autocomplete-loading { background: white url('http://jqueryui.com/demos/autocomplete/images/ui-anim_basic_16x16.gif') right center no-repeat; }
+    </style>
+    <link href="static/css/media-fluid.css" rel="stylesheet">
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="static/ico/favicon.ico">
+    {% endblock %}
+  </head>
+
+  <body>
+    <div id="header">
+      {% include 'header.html' %} 
+    </div>
+    <div id="content">
+      {% block content %} {% endblock %}
+    </div>
+    <div id="footer">
+      {% include 'footer.html' %} 
+    </div>
+
+    {% block scripts %}
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="static/js/jquery.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="static/js/jquery.flot.js"></script>
+    <script src="static/js/jquery.flot.resize.js"></script>
+    <script src="static/js/jquery.flot.pie.js"></script>
+    <script src="static/js/customcharts.js"></script>
+    <script src="./static/js/bootstrap-carousel.js"></script>
+    <script src="./static/js/bootstrap-modal.js"></script>
+    <script src="./static/js/bootstrap.min.js"></script>
+    <script src="static/js/jquery-ui.min.js"></script>
+    <script src="static/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi">
+    </script>
+    <script>
+      $(document).ready(function(){
+        $('.carousel').carousel();
+        interval: 2000
+      });
+    </script>
+
+    <script>
+    //datepicker for calendar
+     $(function() {
+       $( "#date_report" ).datepicker();
+     });
+
+    $(function() {
+      $( "#search_disease" ).autocomplete({
+          source: "/search_disease/?"
+      }); //autocomplete
+    });
+
+    $(function() {
+      $( "#search_medicine" ).autocomplete({
+          source: "/search_medicine/?"
+      }); //autocomplete
+    });
+
+    $(function() {
+      function split( val ) {
+        return val.split( /,\s*/ );
+      }
+      function extractLast( term ) {
+        return split( term ).pop();
+      }
+
+      $( "#search_side_effect, #search_medicine" )
+        // don't navigate away from the field on tab when selecting an item
+        .bind( "keydown", function( event ) {
+          if ( event.keyCode === $.ui.keyCode.TAB &&
+              $( this ).data( "autocomplete" ).menu.active ) {
+            event.preventDefault();
+          }
+        })
+        .autocomplete({
+          source: function( request, response ) {
+            $.getJSON( "/search_side_effect/?", {
+              term: extractLast( request.term )
+            }, response );
+          },
+          search: function() {
+            // custom minLength
+            var term = extractLast( this.value );
+            if ( term.length < 1 ) {
+              return false;
+            }
+          },
+          focus: function() {
+            // prevent value inserted on focus
+            return false;
+          },
+          select: function( event, ui ) {
+            var terms = split( this.value );
+            // remove the current input
+            terms.pop();
+            // add the selected item
+            terms.push( ui.item.value );
+            // add placeholder to get the comma-and-space at the end
+            terms.push( "" );
+            this.value = terms.join( ", " );
+            return false;
+          }
+        }); //end autocomplete
+
+
+      $( "#search_medicine" )
+        // don't navigate away from the field on tab when selecting an item
+        .bind( "keydown", function( event ) {
+          if ( event.keyCode === $.ui.keyCode.TAB &&
+              $( this ).data( "autocomplete" ).menu.active ) {
+            event.preventDefault();
+          }
+        })
+        .autocomplete({
+          source: function( request, response ) {
+            $.getJSON( "/search_medicine/?", {
+              term: extractLast( request.term )
+            }, response );
+          },
+          search: function() {
+            // custom minLength
+            var term = extractLast( this.value );
+            if ( term.length < 1 ) {
+              return false;
+            }
+          },
+          focus: function() {
+            // prevent value inserted on focus
+            return false;
+          },
+          select: function( event, ui ) {
+            var terms = split( this.value );
+            // remove the current input
+            terms.pop();
+            // add the selected item
+            terms.push( ui.item.value );
+            // add placeholder to get the comma-and-space at the end
+            terms.push( "" );
+            this.value = terms.join( ", " );
+            return false;
+          }
+        }); //end autocomplete
+
+    });
+  </script>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('.togglemenuleft').click(function(){
+          $('#menu-left').toggleClass('span1');
+          $('#menu-left').toggleClass('icons-only');
+          $('#menu-left').toggleClass('span3');
+          
+          $('#content').toggleClass('span6');
+          $('#content').toggleClass('span8');
+          
+          $(this).find('i').toggleClass('icon-circle-arrow-right');
+          $(this).find('i').toggleClass('icon-circle-arrow-left');
+          $('#menu-left').find('span').toggle();
+          $('#menu-left').find('.dropdown').toggle();
+      });
+
+      $('#menu-left a').click(function(){
+          $('#menu-left').find('a').removeClass('active');
+          $(this).addClass('active');
+      });
+// tool tip
+      $('a').tooltip('hide');
+
+//datePciker
+      $("#datepicker").datepicker();
+// switch style 
+      $('a.style').click(function(){
+          var style = $(this).attr('href');
+          $('.links-css').attr('href','css/' + style);
+          return false;
+      });
+      $(".switcher").click(function(){
+          if($(this).find('i').hasClass('icon-circle-arrow-right'))
+          $('.theme').animate({left:'0px'},500);
+          else
+          $('.theme').animate({left:'-89'},500);
+
+          $(this).find('i').toggleClass('icon-circle-arrow-right');
+          $(this).find('i').toggleClass('icon-circle-arrow-left');
+      });
+    });
+  </script>
+  {% endblock %}
+
+
+    <div id="tc_container" style="display: none" data="ih"></div>
+  </body>
+</html>
+    
