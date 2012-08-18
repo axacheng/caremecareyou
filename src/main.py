@@ -152,8 +152,8 @@ class MyRecord(webapp2.RequestHandler):
         #user_entity = models.User.get_by_id(user_id).to_dict()
         user_entity = models.User.get_by_id(user_id)
 
-        #user_protray = ''  # Mock up, PLEASE delete this line before deploy.
-        user_protray = user_entity.profile.protray
+        user_protray = ''  # Mock up, PLEASE delete this line before deploy.
+        #user_protray = user_entity.profile.protray
         ancestor_key = ndb.Key("Report", username)
         my_reports = models.Report.query_personal_report(ancestor_key)
         logging.info('All user\'s Report %s' % my_reports.fetch())
@@ -233,6 +233,27 @@ class AddReport(webapp2.RequestHandler):
         models.Report.AddMedicineReport(username, populate_data, recorded_date)
         self.redirect('/myrecord')
 
+class base(webapp2.RequestHandler):
+    # @basicAuth
+
+    def get(self):
+       path = os.path.join(os.path.dirname(__file__), 'templates/base.html')   
+       self.response.out.write(template.render(path, ''))
+
+class loginbase(webapp2.RequestHandler):
+    # @basicAuth
+
+    def get(self):
+       path = os.path.join(os.path.dirname(__file__), 'templates/loginbase.html')   
+       self.response.out.write(template.render(path, ''))
+
+class test(webapp2.RequestHandler):
+    # @basicAuth
+
+    def get(self):
+       path = os.path.join(os.path.dirname(__file__), 'templates/test.html')   
+       self.response.out.write(template.render(path, ''))
+
 
 app = webapp2.WSGIApplication([('/', MainPage),
                                 ('/add_report', AddReport),
@@ -246,9 +267,13 @@ app = webapp2.WSGIApplication([('/', MainPage),
                                 ('/search_side_effect/', SearchSideEffect),
                                 ('/upload', mockup.generate_mockup.UploadData),
                                 ('/delete', mockup.generate_mockup.DeleteData),
+                                ('/mockup', mockup.generate_mockup.MockData),
 
                                 ########### Draw Chart Handlers ###########
                                 ('/showchartjson', jsonapi.drawchart.ShowMedicineTakenChartJson),
                                 ('/showchart', jsonapi.drawchart.ShowChart),
+                                ('/base', base),
+                                ('/loginbase', loginbase),
+                                ('/test', test),
                                ],
                                 debug=True)
