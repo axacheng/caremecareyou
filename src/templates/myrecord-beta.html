@@ -25,6 +25,134 @@
           <div id="graph-sideeffect"></div>
           <div id="graph-feeling"></div>
           <div id="graph-check"></div>
+      {% if my_reports %}
+        {{ my_reports }}
+          {% for report in my_reports %}
+            <div class="row-fluid">
+            <!--Tabs1-->
+              <div class="span12">
+                <div id="accordion1" class="accordion">
+                  <div class="accordion-group">
+                    <div class="accordion-heading">
+                      <a href="#graph-{{ report.key.id }}" data-toggle="collapse" class="accordion-toggle in" data-original-title="">
+                        <i class="icon-signal icon-white"></i> 
+                        <span class="divider-vertical"></span> {{ report.disease_name }} 的記錄
+                        <span> 最後更新於 {{ report.date_last_updated|date:"Y-m-d" }}" </span> 
+                        <i class="icon-chevron-down icon-white pull-right"></i>
+                      </a>
+                    </div>
+                    <div class="accordion-body collapse in" id="graph-{{ report.key.id }}">
+                      <div class="accordion-inner paddind">
+                        <div id="placeholder" class="span12" style="height: 300px; padding: 0px; position: relative;">
+                          <!-- Here, We need to user forloop to decode unicode to ascii.-->
+                          {% for side_effect in report.side_effect %}
+                            {{ side_effect }}
+                          {% endfor %}
+                          <div class="tickLabels" style="font-size:smaller">
+                            <div class="xAxis x1Axis" style="color:#545454"></div>
+                            <div class="yAxis y1Axis" style="color:#545454"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+      {% else %}
+          {% if xxx %}
+            <!-- hide 用藥記錄 與檢查記錄 -->
+            Use javasript remove
+          {% endif %}
+
+      {% endif %}
+
+
+          <!--/Tabs1-->
+      </div>
+
+    </div>
+        <!--/Row fluid-->
+    <div class="row-fluid">
+      <!--Tabs2-->
+      <div class="span6">
+        <div id="accordion2" class="accordion">
+          <div class="accordion-group">
+            <div class="accordion-heading">
+              <a href="#widget-tabs" data-toggle="collapse" class="accordion-toggle in" data-original-title="">
+                <i class="icon-bullhorn icon-white"></i> <span class="divider-vertical"></span> Order <i class="icon-chevron-down icon-white pull-right"></i>
+              </a>
+            </div>
+            <div class="accordion-body collapse in" id="widget-tabs">
+              <div class="accordion-inner">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Last week</th>
+                      <th>This week</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                      <td>$11.00</td>
+                      <td>$99.00</td>
+                      <td>
+                        <a data-original-title="Validate" class="btn btn-small" href="javascript:;">
+                          <i class="icon-ok"></i>
+                        </a>
+                        <a data-original-title="Remove" class="btn btn-small btn-danger" onclick="return confirm(&#39;Are you sure  ?&#39;);" href="javascript:;">
+                          <i class="icon-white icon-remove"></i>
+                        </a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>2</td>
+                      <td>$56.00</td>
+                      <td>$3344.00</td>
+                      <td>
+                        <a data-original-title="Validate" class="btn btn-small" href="javascript:;">
+                          <i class="icon-ok"></i> 
+                        </a>
+                        <a data-original-title="Remove" class="btn btn-small btn-danger" onclick="return confirm(&#39;Are you sure  ?&#39;);" href="javascript:;">
+                          <i class="icon-white icon-remove"></i>
+                        </a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>3</td>
+                      <td>$76.00</td>
+                      <td>$889.00</td>
+                      <td>
+                        <a data-original-title="Validate" class="btn btn-small" href="javascript:;">
+                          <i class="icon-ok"></i>
+                        </a>
+                        <a data-original-title="Remove" class="btn btn-small btn-danger" onclick="return confirm(&#39;Are you sure  ?&#39;);" href="javascript:;">
+                          <i class="icon-white icon-remove"></i>
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="span6">
+        <div id="accordion3" class="accordion">
+          <div class="accordion-group">
+            <div class="accordion-heading">
+              <a href="#annoncement" data-toggle="collapse" class="accordion-toggle in" data-original-title="">
+                <i class="icon-calendar icon-white"></i> 
+                <span class="divider-vertical"></span> 
+                Calendar <i class="icon-chevron-down icon-white pull-right"></i>
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </div>

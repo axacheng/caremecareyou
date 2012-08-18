@@ -31,10 +31,10 @@ class UploadData(webapp2.RequestHandler):
                 #                                name=''.join(side_effect_name),)
                 #side_effect = models.Disease(parent=ndb.Key('Disease', 'disease_name'),
                 #                             name=''.join(side_effect_name),)
-                #side_effect = models.Medicine(parent=ndb.Key('Medicine', 'medicine'),
-                #                              medicine_name=''.join(side_effect_name),)
-                side_effect = models.BioTestList(parent=ndb.Key('BioTestList', 'biotestlist'),
-                                                 biocheck_name=''.join(side_effect_name),)
+                side_effect = models.Medicine(parent=ndb.Key('Medicine', 'medicine'),
+                                              medicine_name=''.join(side_effect_name),)
+                #side_effect = models.BioTestList(parent=ndb.Key('BioTestList', 'biotestlist'),
+                #                                 biocheck_name=''.join(side_effect_name),)
 
                 side_effect.put()
         self.redirect('/upload')
