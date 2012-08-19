@@ -2,7 +2,7 @@
 {% extends "loginbase.html" %}
 
 {% block content %}
-<div id="content" class="span9 section-body">
+<div id="content" class="span8 section-body">
   <div id="section-body" class="tabbable">
     <ul class="nav nav-tabs">
       <li class="active">
@@ -24,198 +24,240 @@
         <div class="row-fluid">
           <!--圖表一：用藥明細-->
           <div id="graph-medicine">
-            <span class="label label-success"><i class="icon-beaker icon-white"></i> 處方用藥 </span>
-          </div>
+            <span class="label label-success"><i class="icon-beaker icon-white"></i> 處方用藥 </span><p>
+            <div id="graph1">
+              <img src="http://placehold.it/800x240">
+            </div>
+          </div><!--圖表一：用藥明細結束-->
+          <hr>
           <!--圖表二：副作用-->
           <div id="graph-sideeffect">
-            <span class="label label-warning"><i class="icon-retweet icon-white"></i> 副作用 </span>
-          </div>
+            <span class="label label-warning"><i class="icon-retweet icon-white"></i> 副作用 </span><p>
+            <div id="graph2">
+              <img src="http://placehold.it/800x240">
+            </div>
+          </div><!--圖表二：副作用結束-->
+          <hr>
           <!--圖表三：檢查記錄-->
           <div id="graph-check">
-           <span class="label label-important"><i class="icon-check icon-white"></i> 檢查記錄 </span>
-         </div>
+            <span class="label label-important"><i class="icon-check icon-white"></i> 檢查記錄 </span><p>
+            <div id="graph3">
+              <img src="http://placehold.it/800x240">
+            </div>
+         </div> <!--圖表三：檢查記錄結束-->
+         <hr>
           <!--圖表四：圖像記錄-->
           <div id="photo-record">
-            <span class="label label-info"><i class="icon-camera icon-white"></i> 圖像記錄 </span>
+            <span class="label label-info"><i class="icon-camera icon-white"></i> 圖像記錄 </span><p>
+            <div class="row-fluid" id="photo_slider">
+              <div id="landing_carousel" class="carousel">
+                <div class="carousel-inner">
+                  <!--一排四張圖，若超過四張，則再出現下一個item-->
+                  <div class="item active">
+                    <a href="#"><img alt="YYYY-MM-DD; comment" src="http://placehold.it/198x150"></a>
+                  
+                    <a href="#"><img alt="YYYY-MM-DD; comment" src="http://placehold.it/198x150"></a>
+                  
+                    <a href="#"><img alt="YYYY-MM-DD; comment" src="http://placehold.it/198x150"></a>
+                  
+                    <a href="#"><img alt="YYYY-MM-DD; comment" src="http://placehold.it/198x150"></a>
+                  </div> <!--第一排結束-->
+                  <div class="item">
+                    <a href="#"><img alt="YYYY-MM-DD; comment" src="http://placehold.it/198x150"></a>
+                  
+                    <a href="#"><img alt="YYYY-MM-DD; comment" src="http://placehold.it/198x150"></a>
+                  
+                    <a href="#"><img alt="YYYY-MM-DD; comment" src="http://placehold.it/198x150"></a>
+                  
+                    <a href="#"><img alt="YYYY-MM-DD; comment" src="http://placehold.it/198x150"></a>
+                  </div> <!--第二排結束-->
+                  <div class="item">
+                    <a href="#"><img alt="YYYY-MM-DD; comment" src="http://placehold.it/198x150"></a>
+                  
+                    <a href="#"><img alt="YYYY-MM-DD; comment" src="http://placehold.it/198x150"></a>
+                  
+                    <a href="#"><img alt="YYYY-MM-DD; comment" src="http://placehold.it/198x150"></a>
+                  
+                    <a href="#"><img alt="YYYY-MM-DD; comment" src="http://placehold.it/198x150"></a>
+                  </div> <!--第三排結束-->
+                </div>
+                <a class="carousel-controls left" href="#landing_carousel" data-slide="prev">‹</a>
+                <a class="carousel-controls right" href="#landing_carousel" data-slide="next">›</a>
+              </div><!--圖表四：圖像記錄結束-->
+            </div>
           </div>
-
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="span3" id="widget">
-      <div id="accordion4" class="accordion">
-        <div class="accordion-group">
-          <div class="accordion-heading">
-            <a href="#event" data-toggle="collapse" class="accordion-toggle" data-original-title="">
-              <i class="icon-bookmark icon-white"></i> 
-              <span class="divider-vertical"></span> 
-              Earning <i class="icon-chevron-down icon-white pull-right"></i>
-            </a>
-        </div>
-        <div class="accordion-body collapse in" id="event">
-          <div class="accordion-inner">
-          <div id="earning" class="graph" style="height: 250px; width: 100%; padding: 0px; position: relative; ">
-            <span class="pieLabel" id="pieLabel0" style="position: absolute; top: 27px; left: 151px; ">
-              <div style="font-size:8pt;text-align:center;padding:2px;color:white;">Project 1<br>12%</div>
-            </span>
-            <span class="pieLabel" id="pieLabel2" style="position: absolute; top: 126px; left: 202px; ">
-              <div style="font-size:8pt;text-align:center;padding:2px;color:white;">Project 3<br>21%</div>
-            </span>
-            <span class="pieLabel" id="pieLabel3" style="position: absolute; top: 187px; left: 133px; ">
-              <div style="font-size:8pt;text-align:center;padding:2px;color:white;">Project 4<br>16%</div>
-            </span>
-            <span class="pieLabel" id="pieLabel4" style="position: absolute; top: 153px; left: 53px; ">
-              <div style="font-size:8pt;text-align:center;padding:2px;color:white;">Project 5<br>19%</div>
-            </span>
-            <span class="pieLabel" id="pieLabel5" style="position: absolute; top: 47px; left: 61px; ">
-              <div style="font-size:8pt;text-align:center;padding:2px;color:white;">Project 6<br>26%</div>
-            </span>
-          </div>
-        </div>
-      </div>
-</div>
-<div class="accordion-group">
-  <div class="accordion-heading">
-    <a href="#statements" data-toggle="collapse" class="accordion-toggle" data-original-title="">
-      <i class="icon-globe icon-white"></i> 
-      <span class="divider-vertical"></span> 
-      Notifications <i class="icon-chevron-down icon-white pull-right"></i>
-    </a>
-  </div>
-  <div class="accordion-body collapse in" id="statements">
-    <div class="accordion-inner">
-      <table class="table table-striped">
-        <tbody>
-          <tr>
-            <td>
-              <i class="icon-user"></i>
-            </td>
-            <td>
-              <a href="" data-original-title="">
-                <strong>Hanafi ALMOJRIM</strong> added 
-                <strong>23 users</strong> 
-              </a><em>4 hours ago</em>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <i class="icon-envelope">
-              </i>
-            </td>
-            <td>
-              <a href="" data-original-title="">
-                <strong>Abderrahim NIBET</strong> sent you  <strong>message</strong> 
-              </a><em>Yesterday</em>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <i class="icon-tag">
-              </i>
-            </td>
-            <td>
-              <a href="" data-original-title=""><strong>Youssef BASSIR</strong> invite you to  <strong>dinner</strong> 
-              </a><em>2 days ago</em>
-            </td>
-          </tr>
-          <tr>
-            <td>
-            </td>
-            <td>
-              <a class="pull-right" href="" data-original-title="">Show all</a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
-<div class="accordion-group">
-  <div class="accordion-heading">
-    <a href="#latest" data-toggle="collapse" class="accordion-toggle" data-original-title="">
-      <i class="icon-th icon-white"></i> <span class="divider-vertical"></span> Tabbed Container <i class="icon-chevron-down icon-white pull-right"></i>
-    </a>
-  </div>
-  <div class="accordion-body collapse in" id="latest">
-    <div class="accordion-inner">
-      <div class="tabbable"> <!-- Only required for left/right tabs -->
-        <ul class="nav nav-tabs">
-          <li>
-            <a href="#t1" data-toggle="tab" data-original-title="">Products</a>
-          </li>
-          <li class="active">
-            <a href="#t2" data-toggle="tab" data-original-title="">Posts</a>
-          </li>
-          <li>
-            <a href="#t3" data-toggle="tab" data-original-title="">Media</a>
-          </li>
-        </ul>
-        <div class="tab-content">
-          <div class="tab-pane" id="t1">
-            <ul>
-                <li><a href="" data-original-title="">Proin elit arcu, rutrum commodo</a></li>
-                <li><a href="" data-original-title="">Aenean tempor ullamcorper leo</a></li>
-                <li><a href="" data-original-title="">Vehicula tempus, commodo a, risus</a></li>
-                <li><a href="" data-original-title="">Donec sollicitudin mi sit amet mauris</a></li>
-                <li><a href="" data-original-title="">Curabitur nec arcu</a></li>
-            </ul>
-          </div>
-          <div class="tab-pane active" id="t2">
-            <ul class="nav nav-list">
-              <li><a href="#" data-original-title=""><img src="./Maniadmin_files/thumb1.png" alt=""> button groups for a toolbar, navigation</a></li>
-              <li><a href="#" data-original-title=""><img src="./Maniadmin_files/thumb2.png" alt=""> Use them in buttons, button groups for a toolbar, navigation</a></li>
-              <li><a href="#" data-original-title=""><img src="./Maniadmin_files/thumb3.png" alt=""> button groups for a toolbar, navigation</a></li>
-              <li><a href="#" data-original-title=""><img src="./Maniadmin_files/thumb4.png" alt=""> Use them in buttons, button groups for a toolbar, navigation</a></li>
-            </ul>
-          </div>
-          <div class="tab-pane" id="t3">
-            <ul class="unstyled flickr">
-              <li><a href="http://farm8.staticflickr.com/7153/6839672369_687f2c49e8_b.jpg" data-original-title="Down the rabbit hole [Framed]"><img src="./Maniadmin_files/6839672369_687f2c49e8_s.jpg" alt="" class="img_nofade"></a>
-              </li>
-              <li><a href="http://farm6.staticflickr.com/5235/7156342506_3180179c4d_b.jpg" data-original-title="Looking Up"><img src="./Maniadmin_files/7156342506_3180179c4d_s.jpg" alt="" class="img_nofade"></a>
-              </li>
-              <li><a href="http://farm8.staticflickr.com/7248/6894937942_475bce7076_b.jpg" data-original-title="Your eyes are open"><img src="./Maniadmin_files/6894937942_475bce7076_s.jpg" alt="" class="img_nofade"></a>
-              </li>
-              <li><a href="http://farm8.staticflickr.com/7280/7023103445_62489017a0_b.jpg" data-original-title="Mel McGowan"><img src="./Maniadmin_files/7023103445_62489017a0_s.jpg" alt="" class="img_nofade"></a>
-              </li>
-              <li><a href="http://farm8.staticflickr.com/7243/6853027310_00cdd402ee_b.jpg" data-original-title="We will be forever calm"><img src="./Maniadmin_files/6853027310_00cdd402ee_s.jpg" alt="" class="img_nofade"></a>
-              </li>
-              <li><a href="http://farm8.staticflickr.com/7196/6837771770_6d771aa7cf_b.jpg" data-original-title="Videographer"><img src="./Maniadmin_files/6837771770_6d771aa7cf_s.jpg" alt="" class="img_nofade"></a>
-              </li>
-              <li><a href="http://farm8.staticflickr.com/7200/6829158646_d4f32ea229_b.jpg" data-original-title="Daylight Reveals Colors"><img src="./Maniadmin_files/6829158646_d4f32ea229_s.jpg" alt="" class="img_nofade"></a>
-              </li>
-              <li><a href="http://farm8.staticflickr.com/7200/6950787615_65517ec924_b.jpg" data-original-title="Jennifer Ziliotto x3"><img src="./Maniadmin_files/6950787615_65517ec924_s.jpg" alt="" class="img_nofade"></a>
-              </li>
-              <li><a href="http://farm8.staticflickr.com/7186/6937410907_234f15a111_b.jpg" data-original-title="Broadway St. Santa Monica"><img src="./Maniadmin_files/6937410907_234f15a111_s.jpg" alt="" class="img_nofade"></a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-    </div>
-</div>
-<div class="accordion-group">
-    <div class="accordion-heading">
-        <a href="#elements" data-toggle="collapse" class="accordion-toggle" data-original-title="">
-            <i class="icon-star-empty icon-white"></i> <span class="divider-vertical"></span> Events <i class="icon-chevron-down icon-white pull-right"></i>
+        </div><!--某一疾病圖表內容結束-->
+      </div><!--某一疾病tab結束-->
+    </div><!--所有疾病對應tab結束-->
+  </div><!--section-body 結束-->
+</div><!--中間針對各疾病出現圖表記錄項目結束-->
+<!--右邊欄位開始-->
+<div class="span4" id="widget">
+  <div id="accordion4" class="accordion">
+    <!-- 生理指數開始囉！ -->
+    <div class="accordion-group">
+      <div class="accordion-heading">
+        <a href="#physi" data-toggle="collapse" class="accordion-toggle" data-original-title="">
+          <i class=" icon-dashboard icon-white"></i> 
+          <span class="divider-vertical"></span> 
+          生理指數 <i class="icon-chevron-down icon-white pull-right"></i>
         </a>
-    </div>
-    <div class="accordion-body collapse in" id="elements">
-        <div class="accordion-inner paddind">
-            <span class="label">23/12/2012</span>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
-
-
-            <span class="label label-warning">23/02/2012</span>
-            <p>Lorem ipsum dolor sit amet dolore.</p>
-
-            <span class="label label-important">13/02/2012</span> 
-            <p>Lorem ipsum dolor sit amet dolore.</p>
-            <br>   
+      </div>
+      <div class="accordion-body collapse in" id="physi">
+        <div class="accordion-inner">
+          <div class="tabbable"> 
+          <!-- 生理指數標籤開始！ -->
+          <ul class="nav nav-tabs">
+            <li>
+              <a href="#wf" data-toggle="tab" data-original-title="">體重與體脂</a>
+            </li>
+            <li class="active">
+              <a href="#bp" data-toggle="tab" data-original-title="">血壓與脈搏</a>
+            </li>
+            <li>
+              <a href="#temperature" data-toggle="tab" data-original-title="">體溫</a>
+            </li>
+          </ul><!-- 生理指數標籤結束！ -->
+          <!-- 生理指數圖表內容開始！ -->
+          <div class="tab-content">
+            <!-- 生理指數-體重與體脂圖表！ -->
+            <div class="tab-pane" id="wf" align="center">
+              <div class="chart_container" id="combochart" style="position: relative; "><img src="http://placehold.it/350x300">
+              </div>
+            </div>
+            <!-- 生理指數-體重與體脂圖表結束！ -->
+            <!-- 生理指數-血壓與脈搏圖表！ -->
+            <div class="tab-pane active" id="bp" align="center">
+              <div class="chart_container" id="combochart" style="position: relative; "><img src="http://placehold.it/350x300">
+              </div>
+            </div>
+            <!-- 生理指數-血壓與脈搏圖表結束！ -->
+            <!-- 生理指數-體溫與生理期(如果有的話)圖表！ -->
+            <div class="tab-pane" id="temperature" align="center">
+              <div class="chart_container" id="combochart" style="position: relative; "><img src="http://placehold.it/350x300">
+              </div>
+            </div>
+            <!-- 生理指數-體溫與生理期(如果有的話)圖表結束！ -->
+          </div><!-- 生理指數圖表內容結束！ -->
+          </div><!-- 生理指數結束！ -->
+        </div>
+      </div>
+    </div> <!-- 生理指數結束！ -->
+    <!-- 行事曆數開始囉！ -->
+    <div class="accordion-group">
+      <div class="accordion-heading">
+        <a href="#calendar" data-toggle="collapse" class="accordion-toggle" data-original-title="">
+          <i class="icon-calendar icon-white"></i> 
+          <span class="divider-vertical"></span> 
+          行事曆 <i class="icon-chevron-down icon-white pull-right"></i>
+        </a>
+      </div>
+      <div class="accordion-body collapse in" id="calendar">
+        <div class="accordion-inner">
+          <div align="center">
+            <img src="http://placehold.it/350x400">
+          </div>
+        </div>
+      </div>
+    </div><!-- 行事曆數結束！ -->
+    <!-- 社交功能開始 -->
+    <div class="accordion-group">
+      <div class="accordion-heading">
+        <a href="#latest" data-toggle="collapse" class="accordion-toggle" data-original-title="">
+          <i class="icon-group icon-white"></i> 
+          <span class="divider-vertical"></span> 
+          與我有相同症狀的病友<i class="icon-chevron-down icon-white pull-right"></i>
+        </a>
+      </div>
+      <div class="accordion-body collapse in" id="latest">
+        <div class="accordion-inner">
+          <div class="tabbable"> 
+            <!--依照病症來分 -->
+            <ul class="nav nav-tabs">
+              <li class="active">
+                <a href="#d1" data-toggle="tab" data-original-title="">{disease_name1}</a>
+              </li>
+              <li>
+                <a href="#d2" data-toggle="tab" data-original-title="">{disease_name2}</a>
+              </li>
+              <li>
+                <a href="#d3" data-toggle="tab" data-original-title="">{disease_name3}</a>
+              </li>
+            </ul>
+            <div class="tab-content">
+              <div class="tab-pane active" id="d1">
+                <ul class="unstyled flickr">
+                  <li><a href="#" ><img src="http://placehold.it/56x56" alt="" class="img_nofade"></a>
+                  </li>
+                  <li><a href="#" ><img src="http://placehold.it/56x56" alt="" class="img_nofade"></a>
+                  </li>
+                  <li><a href="#" ><img src="http://placehold.it/56x56" alt="" class="img_nofade"></a>
+                  </li>
+                  <li><a href="#" ><img src="http://placehold.it/56x56" alt="" class="img_nofade"></a>
+                  </li>
+                  <li><a href="#" ><img src="http://placehold.it/56x56" alt="" class="img_nofade"></a>
+                  </li>
+                  <li><a href="#" ><img src="http://placehold.it/56x56" alt="" class="img_nofade"></a>
+                  </li>
+                  <li><a href="#" ><img src="http://placehold.it/56x56" alt="" class="img_nofade"></a>
+                  </li>
+                  <li><a href="#" ><img src="http://placehold.it/56x56" alt="" class="img_nofade"></a>
+                  </li>
+                  <li><a href="#" ><img src="http://placehold.it/56x56" alt="" class="img_nofade"></a>
+                  </li>
+                </ul>
+              </div>
+              <div class="tab-pane" id="d2">
+                <ul class="unstyled flickr">
+                  <li><a href="#" ><img src="http://placehold.it/56x56" alt="" class="img_nofade"></a>
+                  </li>
+                  <li><a href="#" ><img src="http://placehold.it/56x56" alt="" class="img_nofade"></a>
+                  </li>
+                  <li><a href="#" ><img src="http://placehold.it/56x56" alt="" class="img_nofade"></a>
+                  </li>
+                  <li><a href="#" ><img src="http://placehold.it/56x56" alt="" class="img_nofade"></a>
+                  </li>
+                  <li><a href="#" ><img src="http://placehold.it/56x56" alt="" class="img_nofade"></a>
+                  </li>
+                  <li><a href="#" ><img src="http://placehold.it/56x56" alt="" class="img_nofade"></a>
+                  </li>
+                  <li><a href="#" ><img src="http://placehold.it/56x56" alt="" class="img_nofade"></a>
+                  </li>
+                  <li><a href="#" ><img src="http://placehold.it/56x56" alt="" class="img_nofade"></a>
+                  </li>
+                  <li><a href="#" ><img src="http://placehold.it/56x56" alt="" class="img_nofade"></a>
+                  </li>
+                </ul>
+              </div>
+              <div class="tab-pane" id="d3">
+                <ul class="unstyled flickr">
+                  <li><a href="#" ><img src="http://placehold.it/56x56" alt="" class="img_nofade"></a>
+                  </li>
+                  <li><a href="#" ><img src="http://placehold.it/56x56" alt="" class="img_nofade"></a>
+                  </li>
+                  <li><a href="#" ><img src="http://placehold.it/56x56" alt="" class="img_nofade"></a>
+                  </li>
+                  <li><a href="#" ><img src="http://placehold.it/56x56" alt="" class="img_nofade"></a>
+                  </li>
+                  <li><a href="#" ><img src="http://placehold.it/56x56" alt="" class="img_nofade"></a>
+                  </li>
+                  <li><a href="#" ><img src="http://placehold.it/56x56" alt="" class="img_nofade"></a>
+                  </li>
+                  <li><a href="#" ><img src="http://placehold.it/56x56" alt="" class="img_nofade"></a>
+                  </li>
+                  <li><a href="#" ><img src="http://placehold.it/56x56" alt="" class="img_nofade"></a>
+                  </li>
+                  <li><a href="#" ><img src="http://placehold.it/56x56" alt="" class="img_nofade"></a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
         </div>
     </div>
+    <!-- 社交功能結束 -->
+  </div>
 </div>
+<!--右邊欄位結束-->
 {% endblock %}

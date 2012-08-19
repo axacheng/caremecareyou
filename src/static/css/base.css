@@ -174,7 +174,7 @@ li.accordion-menu .nav-list a {
   padding: 9px 0;
 }
 #widget .accordion-heading .accordion-toggle {
-  background: #333333;
+  background: #4D4D4D;
   text-shadow: 1px 1px #222222;
   color: #FFFFFF;
   text-transform: uppercase;
@@ -194,7 +194,7 @@ li.accordion-menu .nav-list a {
   margin: 6px;
 }
 .flickr img {
-  border: 3px solid #000;
+  border: 3px solid #4D4D4D;
   width: 50px;
 }
 #block-top .thumbnails a {
@@ -382,7 +382,7 @@ li.accordion-menu .nav-list a {
        Footer
 ************************************ **/
 footer {
-  background: #333333;
+  background: #4D4D4D;
   color: #FFFFFF;
   padding: 10px 10px 4px;
 }
