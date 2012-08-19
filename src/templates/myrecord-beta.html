@@ -6,25 +6,38 @@
   <div id="section-body" class="tabbable">
     <ul class="nav nav-tabs">
       <li class="active">
-        <a href="#tab1-1" data-toggle="tab" data-original-title=""> {{ report.disease_name }} XXX 病的記錄 <i class="icon-bar-chart"></i> 
+        <a href="#tab1" data-toggle="tab" data-original-title=""> {{ report.disease_name }} XXX 病的記錄 <i class="icon-bar-chart"></i> 
+        </a>
+      </li>
+      <!--若有其他病症，請用 for 去跑，連結會對應下方 id -->
+      <li class="">
+        <a href="#tab2" data-toggle="tab"> xxx 病的紀錄<i class="icon-bar-chart"></i> 
         </a>
       </li>
       <li class="">
-        <a href="#tab1-2" data-toggle="tab"> xxx 病的紀錄<i class="icon-bar-chart"></i> 
-        </a>
-      </li>
-      <li class="">
-        <a href="#tab1-3" data-toggle="tab"> xxxx 病的紀錄 <i class="icon-bar-chart"></i>
+        <a href="#tab3" data-toggle="tab"> xxxx 病的紀錄 <i class="icon-bar-chart"></i>
         </a>
       </li>
     </ul>
     <div class="tab-content">
-      <div class="tab-pane active" id="tab1">
+      <div class="tab-pane active" id="tab1"> <!--此 id 來自 for 迴圈-->
         <div class="row-fluid">
-          <div id="graph-medicine"></div>
-          <div id="graph-sideeffect"></div>
-          <div id="graph-feeling"></div>
-          <div id="graph-check"></div>
+          <!--圖表一：用藥明細-->
+          <div id="graph-medicine">
+            <span class="label label-success"><i class="icon-beaker icon-white"></i> 處方用藥 </span>
+          </div>
+          <!--圖表二：副作用-->
+          <div id="graph-sideeffect">
+            <span class="label label-warning"><i class="icon-retweet icon-white"></i> 副作用 </span>
+          </div>
+          <!--圖表三：檢查記錄-->
+          <div id="graph-check">
+           <span class="label label-important"><i class="icon-check icon-white"></i> 檢查記錄 </span>
+         </div>
+          <!--圖表四：圖像記錄-->
+          <div id="photo-record">
+            <span class="label label-info"><i class="icon-camera icon-white"></i> 圖像記錄 </span>
+          </div>
 
         </div>
       </div>
