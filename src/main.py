@@ -158,9 +158,18 @@ class MyRecord(webapp2.RequestHandler):
         my_reports = models.Report.query_personal_report(ancestor_key)
         logging.info('All user\'s Report %s' % my_reports.fetch())
 
+        my_disease_name = []
+        for i in my_reports:
+            my_disease_name.append(i.disease_name.encode('utf-8'))
+
+        my_disease_name_encode = ', '.join(name for name in set(my_disease_name))
+        logging.info('CCCCCC %s' % my_disease_name_encode)
+
+
         today = datetime.datetime.today().strftime('%Y-%m-%d')
         template_dict = {'username': username,
                          'my_reports': my_reports,
+                         'my_disease_name': my_disease_name_encode,
                          'today': today, 'user_protray': user_protray}
 
         path = os.path.join(os.path.dirname(__file__), 'templates/myrecord-beta.html')
@@ -186,9 +195,11 @@ class SearchDisease(webapp2.RequestHandler):
 
 
 class SearchMedicine(webapp2.RequestHandler):
-    def get(self):
+    def get(self, term):
         medicine_result = []
         search_word = self.request.get('term')
+        logging.info('MY TERM   :::::: %s' % search_word)
+
         all_medicine = models.Medicine.query(models.Medicine.medicine_name >= unicode(search_word.capitalize()))
         result = all_medicine.fetch(10)
 
@@ -255,15 +266,87 @@ class test(webapp2.RequestHandler):
        self.response.out.write(template.render(path, ''))
 
 
+class AddExamReport(webapp2.RequestHandler):
+    def get(self):
+        self.response.out.write('Oops ~ you can not do it.')
+
+    def post(self):
+        username = ''.join(UserLoginHandler(self).keys())
+        username = '123456:[[[[[[[[[ TEST ]]]]]]]]:facebook'  # Mocks
+        populate_data = {'disease_name': '', 'exam_name': '', 'exam_value': ''}
+        terms = self.request.get_all('term')
+        fetched_report_date = self.request.get_all('report_date')  # [u'2012-08-31']
+        recorded_date = datetime.datetime(*time.strptime(''.join(fetched_report_date).encode('utf-8'), "%Y-%m-%d")[0:5])
+
+        logging.info
+        populate_data['disease_name'] = terms[0]
+        populate_data['exam_name'] = terms[1].rstrip(', ')
+        populate_data['exam_value'] = terms[2].rstrip(', ')
+
+        models.Report.testAddExamReport(username, populate_data, recorded_date)
+        self.redirect('/myrecord')
+
+
+class TagSearch(webapp2.RequestHandler):
+    def get(self, term):
+        medicine_result = []
+        search_word = self.request.get('term')
+        logging.info('MY TERM   :::::: %s' % search_word)
+
+        # query.filter("Display", True)
+        # query.filter("Word >=", unicode(search_word))
+        # query.filter("Word <", unicode(search_word) + u'\ufffd')
+
+
+        all_medicine = models.Medicine.query(models.Medicine.medicine_name >= unicode(search_word.capitalize()))
+        result = all_medicine.fetch(10)
+
+        if result:
+            for medicine in result:
+                medicine_result.append(medicine.medicine_name)
+
+            self.response.headers['Content-Type'] = 'application/json'
+            self.response.out.write(json.dumps(medicine_result))
+
+        # path = os.path.join(os.path.dirname(__file__), 'templates/justTest.html')
+        # self.response.out.write(template.render(path, 'template_dict'))
+
+    def post(self):
+        username = ''.join(UserLoginHandler(self).keys())
+        username = '123456:[[[[[[[[[ TEST ]]]]]]]]:facebook'  # Mocks
+        populate_data = {'disease_name': '', 'medicine': '', 'side_effect': ''}
+        terms = self.request.get_all('term')
+        fetched_report_date = self.request.get_all('report_date')  # [u'2012-08-31']
+        recorded_date = datetime.datetime(*time.strptime(''.join(fetched_report_date).encode('utf-8'), "%Y-%m-%d")[0:5])
+
+        logging.info
+        populate_data['disease_name'] = 'Tag disease'
+        populate_data['medicine'] = terms[1].rstrip(', ')
+        populate_data['side_effect'] = terms[2].rstrip(', ')
+
+        models.Report.AddMedicineReport(username, populate_data, recorded_date)
+        self.redirect('/myrecord')
+
+
+class TagPage(webapp2.RequestHandler):
+    def get(self):
+        path = os.path.join(os.path.dirname(__file__), 'templates/justTest.html')
+        self.response.out.write(template.render(path, 'template_dict'))
+
+
+
 app = webapp2.WSGIApplication([('/', MainPage),
                                 ('/add_report', AddReport),
+                                ('/add_exam_report', AddExamReport),
                                 ('/myrecord', MyRecord),
+                                ('/tagsearch/(.*)', TagSearch),
+                                ('/tagpage', TagPage),
                                 ('/oauth/facebook_login', foauth.LoginHandler),
                                 ('/oauth/facebook_logout', foauth.LogoutHandler),
                                 ('/oauth/weibo_login', auth.weibo_oauth_v2.LoginHandler),
                                 ('/oauth/weibo_logout', auth.weibo_oauth_v2.LogoutHandler),
                                 ('/search_disease/', SearchDisease),
-                                ('/search_medicine/', SearchMedicine),
+                                ('/search_medicine/(.*)', SearchMedicine),
                                 ('/search_side_effect/', SearchSideEffect),
                                 ('/upload', mockup.generate_mockup.UploadData),
                                 ('/delete', mockup.generate_mockup.DeleteData),
