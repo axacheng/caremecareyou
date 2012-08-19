@@ -19,6 +19,8 @@
     <script src="static/js/jquery-ui.min.js"></script>
     <script src="static/js/bootstrap-datepicker.js"></script>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script src="static/js/jquery.tagsinput.js"></script>
+    <link rel="stylesheet" type="text/css" href="static/css/jquery.tagsinput.css" />
 
 <!-- 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
@@ -30,17 +32,17 @@
            $( "#date_report" ).datepicker();
          });
 
-        $(function() {
-          $( "#search_disease" ).autocomplete({
-              source: "/search_disease/?"
-          }); //autocomplete
-        });
+        // $(function() {
+        //   $( "#search_disease" ).autocomplete({
+        //       source: "/search_disease/?"
+        //   }); //autocomplete
+        // });
 
-        $(function() {
-          $( "#search_medicine" ).autocomplete({
-              source: "/search_medicine/?"
-          }); //autocomplete
-        });
+        // $(function() {
+        //   $( "#search_medicine" ).autocomplete({
+        //       source: "/search_medicine/?"
+        //   }); //autocomplete
+        // });
 
         $(function() {
           function split( val ) {
@@ -50,7 +52,7 @@
             return split( term ).pop();
           }
 
-          $( "#search_side_effect, #search_medicine" )
+          $( "#search_side_effect" )
             // don't navigate away from the field on tab when selecting an item
             .bind( "keydown", function( event ) {
               if ( event.keyCode === $.ui.keyCode.TAB &&
@@ -88,44 +90,73 @@
               }
             }); //end autocomplete
 
+            // Tag input search.
+            $(function(){
+              $('#search_medicine').tagsInput({
+                //http://localhost:8080/tagsearch/?term=Alinamin
+                autocomplete_url:'/tagsearch/',
+                autocomplete:{selectFirst:true,
+                              width:'200px',
+                              autoFill:true},
+                placeholderColor : '#006666',
+                defaultText: '請輸入症狀名稱...',
 
-          $( "#search_medicine" )
-            // don't navigate away from the field on tab when selecting an item
-            .bind( "keydown", function( event ) {
-              if ( event.keyCode === $.ui.keyCode.TAB &&
-                  $( this ).data( "autocomplete" ).menu.active ) {
-                event.preventDefault();
-              }
-            })
-            .autocomplete({
-              source: function( request, response ) {
-                $.getJSON( "/search_medicine/?", {
-                  term: extractLast( request.term )
-                }, response );
-              },
-              search: function() {
-                // custom minLength
-                var term = extractLast( this.value );
-                if ( term.length < 1 ) {
-                  return false;
-                }
-              },
-              focus: function() {
-                // prevent value inserted on focus
-                return false;
-              },
-              select: function( event, ui ) {
-                var terms = split( this.value );
-                // remove the current input
-                terms.pop();
-                // add the selected item
-                terms.push( ui.item.value );
-                // add placeholder to get the comma-and-space at the end
-                terms.push( "" );
-                this.value = terms.join( ", " );
-                return false;
-              }
-            }); //end autocomplete
+              });
+            }); 
+
+            $(function(){
+              $('#search_disease').tagsInput({
+                // autocomplete_url:'/tagsearch/',
+                // autocomplete:{selectFirst:true,
+                //               width:'200px',
+                //               autoFill:true},
+                placeholderColor : '#006666',
+                defaultText: '請選擇一項您要記錄的症狀名',
+                height:'200px',
+                width:'500px',
+              });
+            });
+
+
+
+
+          // $( "#search_medicine" )
+          //   // don't navigate away from the field on tab when selecting an item
+          //   .bind( "keydown", function( event ) {
+          //     if ( event.keyCode === $.ui.keyCode.TAB &&
+          //         $( this ).data( "autocomplete" ).menu.active ) {
+          //       event.preventDefault();
+          //     }
+          //   })
+          //   .autocomplete({
+          //     source: function( request, response ) {
+          //       $.getJSON( "/2/?", {
+          //         term: extractLast( request.term )
+          //       }, response );
+          //     },
+          //     search: function() {
+          //       // custom minLength
+          //       var term = extractLast( this.value );
+          //       if ( term.length < 1 ) {
+          //         return false;
+          //       }
+          //     },
+          //     focus: function() {
+          //       // prevent value inserted on focus
+          //       return false;
+          //     },
+          //     select: function( event, ui ) {
+          //       var terms = split( this.value );
+          //       // remove the current input
+          //       terms.pop();
+          //       // add the selected item
+          //       terms.push( ui.item.value );
+          //       // add placeholder to get the comma-and-space at the end
+          //       terms.push( "" );
+          //       this.value = terms.join( ", " );
+          //       return false;
+          //     }
+          //   }); //end autocomplete
 
 
 
@@ -222,6 +253,114 @@
      <!-- Le fav and touch icons -->
      <link rel="shortcut icon" href="static/ico/favicon.ico">
      {% endblock %}
+
+
+
+
+  <script type="text/javascript">
+        google.load('visualization', '1', {packages: ['annotatedtimeline']});
+        google.setOnLoadCallback(drawChartMedicine);
+
+        function drawChartMedicine() {
+            var url_medicine = "http://localhost:8080/123456:[[[[[[[[[%20TEST%20]]]]]]]]:facebook/急性咽喉炎/chart/medicinetakenjson";
+            //var url_medicine = "http://localhost:8080/showchartjson";
+            var query_medicine = new google.visualization.Query(url_medicine);
+            query_medicine.send(callback_draw_timeline_medicine);
+
+            function callback_draw_timeline_medicine(response) {
+                if (response.isError()) {
+                    alert("Error in query_medicine: " + response.getMessage());
+                    return;
+                };
+                var data_medicine = response.getDataTable();
+                var chart_medicine = new google.visualization.AnnotatedTimeLine(document.getElementById('timeline1'));
+                chart_medicine.draw(data_medicine, {displayAnnotations: true, thickness: 3, fill:5,
+                                  dateFormat: 'yyyy-M-dd', annotationsWidth: 10});
+            };
+        };
+
+    </script> 
+
+
+  <script type="text/javascript">
+        google.load('visualization', '1', {packages: ['annotatedtimeline']});
+        google.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            var url = "http://localhost:8080/123456:[[[[[[[[[%20TEST%20]]]]]]]]:facebook/上瞼下垂/chart/sideeffectjson";
+            //var url = "http://localhost:8080/showchartjson";
+            var query = new google.visualization.Query(url);
+            query.send(callback_draw_timeline);
+
+            function callback_draw_timeline(response) {
+                if (response.isError()) {
+                    alert("Error in query: " + response.getMessage());
+                    return;
+                };
+                var data = response.getDataTable();
+                var chart = new google.visualization.AnnotatedTimeLine(document.getElementById('timeline2'));
+                chart.draw(data, {displayAnnotations: true, thickness: 3, fill:5,
+                                  dateFormat: 'yyyy-M-dd', annotationsWidth: 10,
+                                  displayAnnotationsFilter:true});
+            };
+        };
+
+    </script> 
+
+
+  <script type="text/javascript">
+        google.load('visualization', '1', {packages: ['annotatedtimeline']});
+        google.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            var url = "http://localhost:8080/123456:[[[[[[[[[%20TEST%20]]]]]]]]:facebook/上瞼下垂/chart/mindingjson";
+            //var url = "http://localhost:8080/showchartjson";
+            var query = new google.visualization.Query(url);
+            query.send(callback_draw_timeline);
+
+            function callback_draw_timeline(response) {
+                if (response.isError()) {
+                    alert("Error in query: " + response.getMessage());
+                    return;
+                };
+                var data = response.getDataTable();
+                var chart = new google.visualization.AnnotatedTimeLine(document.getElementById('timeline3'));
+                chart.draw(data, {displayAnnotations: true, thickness: 3, fill:5,
+                                  dateFormat: 'yyyy-M-dd', annotationsWidth: 10,
+                                  displayAnnotationsFilter:true});
+            };
+        };
+
+    </script> 
+
+
+  <script type="text/javascript">
+        google.load('visualization', '1', {packages: ['annotatedtimeline']});
+        google.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            var url = "http://localhost:8080/123456:[[[[[[[[[%20TEST%20]]]]]]]]:facebook/高寫只/chart/examjson";
+            //var url = "http://localhost:8080/showchartjson";
+            var query = new google.visualization.Query(url);
+            query.send(callback_draw_timeline);
+
+            function callback_draw_timeline(response) {
+                if (response.isError()) {
+                    alert("Error in query: " + response.getMessage());
+                    return;
+                };
+                var data = response.getDataTable();
+                var chart = new google.visualization.AnnotatedTimeLine(document.getElementById('timeline4'));
+                chart.draw(data, {'displayAnnotations': true, 'thickness': 3, 'fill':5,
+                                  'dateFormat': 'yyyy-M-dd', 'annotationsWidth': 10,
+                                  'displayAnnotationsFilter':true});
+            };
+        };
+
+
+    </script> 
+
+
   </head>
 
   <body>
@@ -229,6 +368,18 @@
     <div id="header">
       {% block header %} {% include "loginheader.html" %} {% endblock %}
     </div> <!-- navbar -->
+
+
+
+
+              <div id="timeline1" style='height: 240px; width:800px;'>藥品服用記錄圖</div> 
+              <hr>
+              <div id="timeline2" style='height: 240px; width:800px;'>副作用記錄圖</div>
+              <hr>
+              <div id="timeline3" style='height: 240px; width:800px;'>生理指數</div>
+              <hr>
+              <div id="timeline4" style='height: 240px; width:800px;'>檢查記錄</div>
+
    <!-- only for desktop
   =============================== -->
     <div id="maincontainer" class="left-sb-fluid">
@@ -241,6 +392,10 @@
       </div>
     </div>
 
+
+
+
+
     {% block modal1 %}
     <div class="modal hide" id="service">
       <div class="modal-header">
@@ -248,19 +403,20 @@
         <h2><font color= "#600000">請輸入你的用藥記錄：</font></h2>
       </div>
       <div class="modal-body">
-        <form action="/add_report" name="add_report" id="report" method="POST" accept-charset="UTF-8">
-          疾病名稱: <input id="search_disease" type="text" name="term" /> <br>
+        <form action="/add_exam_report" name="add_report" id="report" method="POST" accept-charset="UTF-8">
+          疾病名稱: <input id="search_disease" type="text" name="term" value="{{ my_disease_name }}" /> <br>
           <div class="input-append date" id="date_report" data-date="{{ today }}" data-date-format="yyyy-mm-dd">
           時間:  <input class="span2" name="report_date" size="16" type="text" value="{{ today }}" >
                 <span class="add-on"><i class="icon-th"></i></span>
           </div>
-          藥名: <input id="search_medicine"    type="text" name="term" /> <br>
-          副作用: <input id="search_side_effect" type="text" name="term" />
+          檢查內容: <input id="exam_name" type="text" name="term" /> <br>
+          檢查數值: <input id="exam_value" type="text" name="term" />
           <div class="modal-footer">
             <input id="search_input" class="btn btn-primary" type="submit" value="按我新增記錄" />
             <a href="#" class="btn" data-dismiss="modal">Close</a>
           </div>
         </form> <!-- add_report end -->
+
       </div> <!-- modal-body end -->
     </div> <!-- modal hide end -->
     {% endblock %}
