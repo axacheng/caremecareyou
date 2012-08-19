@@ -228,7 +228,7 @@
     
     <style type="text/css">
       body {
-        padding-top: 30px;
+        padding-top: 40px;
         padding-bottom: 40px;
       }
       .sidebar-nav {
@@ -392,34 +392,227 @@
       </div>
     </div>
 
+<<<<<<< HEAD
 
 
 
 
+=======
+    <!--用藥記錄填寫表單-->
+>>>>>>> f08a8cc1b126eb59c3f14fae07931fc9bc904b12
     {% block modal1 %}
-    <div class="modal hide" id="service">
+    <div class="modal hide" id="medicine">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">×</button>
-        <h2><font color= "#600000">請輸入你的用藥記錄：</font></h2>
+        <h2><font color= "#600000"><i class="icon-edit"></i> 用藥記錄：</font></h2>
       </div>
       <div class="modal-body">
+<<<<<<< HEAD
         <form action="/add_exam_report" name="add_report" id="report" method="POST" accept-charset="UTF-8">
           疾病名稱: <input id="search_disease" type="text" name="term" value="{{ my_disease_name }}" /> <br>
+=======
+        <form action="/add_report" name="add_report" id="report" method="POST" accept-charset="UTF-8">
+          <i class="icon-folder-open"></i> 請選擇你要記錄的病症: 
+          <textarea class="input-xlarge" id="search_disease" row="3"></textarea><br>
+>>>>>>> f08a8cc1b126eb59c3f14fae07931fc9bc904b12
           <div class="input-append date" id="date_report" data-date="{{ today }}" data-date-format="yyyy-mm-dd">
-          時間:  <input class="span2" name="report_date" size="16" type="text" value="{{ today }}" >
-                <span class="add-on"><i class="icon-th"></i></span>
+          <i class="icon-chevron-right"></i> 用藥日期:  <input class="span2" name="report_date" size="16" type="text" value="{{ today }}" >
+          <span class="add-on"><i class="icon-calendar"></i></span>
           </div>
+<<<<<<< HEAD
           檢查內容: <input id="exam_name" type="text" name="term" /> <br>
           檢查數值: <input id="exam_value" type="text" name="term" />
           <div class="modal-footer">
             <input id="search_input" class="btn btn-primary" type="submit" value="按我新增記錄" />
             <a href="#" class="btn" data-dismiss="modal">Close</a>
+=======
+          <div class="input-append time" id="time_report" data-date="{{ now }}" data-date-format="hh">
+          <i class="icon-chevron-right"></i> 用藥時間:  <input class="span2" name="report_time" size="16" type="text" value="{{ now }}" >
+          <span class="add-on"><i class="icon-time"></i></span>
+>>>>>>> f08a8cc1b126eb59c3f14fae07931fc9bc904b12
           </div>
+          <i class="icon-chevron-right"></i> 用藥明細:
+          <table class="table">
+            <thead>
+              <tr>
+                <th><i class="icon-tag"></i> 藥名</th>
+                <th><i class="icon-tint"></i> 劑量</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td> 
+                  <input id="search_medicine" type="text" name="term" /> 
+                </td>
+                <td>
+                  <input id="#" type="number" name="term" />
+                </td>
+                <td>
+                </td>
+              </tr>
+              <tr>
+                <td> 
+                  <input id="search_medicine" type="text" name="term" /> 
+                </td>
+                <td>
+                  <input id="#" type="number" name="term" />
+                </td>
+                <td>
+                </td>
+              </tr>
+              <tr>
+                <td> 
+                  <input id="search_medicine"  type="text" name="term" /> 
+                </td>
+                <td>
+                  <input id="#" type="number" name="term" />
+                </td>
+                <td><button class="btn btn-mini"><i class="icon-white icon-plus-sign"></i></button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <i class="icon-chevron-right"></i> 副作用: <textarea class="input-xlarge" id="search_side_effect" row="3"></textarea><br>
+          <i class="icon-chevron-right"></i> 生理感受：
+          <table class="table">
+            <thead>
+              <tr>
+                <th> <i class=" icon-thumbs-down"></i> <i class=" icon-thumbs-down"></i> 很糟</th>
+                <th> <i class=" icon-thumbs-down"></i> 糟</th>
+                <th> 普通</th>
+                <th> <i class=" icon-thumbs-up"></i> 好</th>
+                <th> <i class=" icon-thumbs-up"></i> <i class=" icon-thumbs-up"></i> 很好</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <label class="radio" align="middle">
+                    <input type="radio" name="optionRadio" id="verybad" value="verybad" >
+                  </label>
+                </td> 
+                <td>
+                  <label class="radio">
+                    <input type="radio" name="optionRadio" id="bad" value="bad">
+                  </label>
+                </td>
+                <td>
+                  <label class="radio">
+                    <input type="radio" name="optionRadio" id="soso" value="soso" checked>
+                  </label>
+                </td>
+                <td>
+                  <label class="radio">
+                    <input type="radio" name="optionRadio" id="good" value="good">
+                  </label>
+                </td> 
+                <td>
+                  <label class="radio">
+                    <input type="radio" name="optionRadio" id="verygood" value="verygood">
+                  </label>
+                </td>
+              </tr>
+            </tody>
+          </table>                                     
         </form> <!-- add_report end -->
 
       </div> <!-- modal-body end -->
+      <div class="modal-footer">
+        <input id="search_input" class="btn btn-primary" type="submit" value="按我新增記錄" />
+        <a href="#" class="btn" data-dismiss="modal">Close</a>
+      </div>
     </div> <!-- modal hide end -->
     {% endblock %}
+
+    <!--檢查記錄填寫表單-->
+    {% block modal2 %}
+    <div class="modal hide" id="check">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h2><font color= "#600000"><i class="icon-edit"></i> 檢查記錄：</font></h2>
+      </div>
+      <div class="modal-body">
+        <form action="/add_report" name="add_report" id="report" method="POST" accept-charset="UTF-8">
+          <i class="icon-folder-open"></i> 請選擇你要記錄的病症: 
+          <textarea class="input-xlarge" id="search_disease" row="3"></textarea><br>
+          <div class="input-append date" id="date_report" data-date="{{ today }}" data-date-format="yyyy-mm-dd">
+          <i class="icon-chevron-right"></i> 檢查日期:  <input class="span2" name="report_date" size="16" type="text" value="{{ today }}" >
+          <span class="add-on"><i class="icon-calendar"></i></span>
+          </div>
+          <i class="icon-chevron-right"></i> 檢查報告:
+          <table class="table">
+            <thead>
+              <tr>
+                <th><i class="icon-tag"></i> 內容</th>
+                <th><i class="icon-tint"></i> 數值</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td> 
+                  <input id="search_medicine" type="text" name="term" /> 
+                </td>
+                <td>
+                  <input id="#" type="number" name="term" />
+                </td>
+                <td>
+                </td>
+              </tr>
+              <tr>
+                <td> 
+                  <input id="search_medicine" type="text" name="term" /> 
+                </td>
+                <td>
+                  <input id="#" type="number" name="term" />
+                </td>
+                <td>
+                </td>
+              </tr>
+              <tr>
+                <td> 
+                  <input id="search_medicine"  type="text" name="term" /> 
+                </td>
+                <td>
+                  <input id="#" type="number" name="term" />
+                </td>
+                <td><button class="btn btn-mini"><i class="icon-white icon-plus-sign"></i></button>
+                </td>
+              </tr>
+            </tbody>
+          </table>    
+        </form> <!-- add_report end -->
+      </div> <!-- modal-body end -->
+      <div class="modal-footer">
+        <input id="search_input" class="btn btn-primary" type="submit" value="按我新增記錄" />
+        <a href="#" class="btn" data-dismiss="modal">Close</a>
+      </div>
+    </div> <!-- modal hide end -->
+    {% endblock %}
+
+    <!--新增病症表-->
+    {% block modal3 %}
+    <div class="modal hide" id="addcondition">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h2><font color= "#600000"><i class="icon-edit"></i> 新增你的病症：</font></h2>
+      </div>
+      <div class="modal-body">
+        <form action="/add_report" name="add_report" id="report" method="POST" accept-charset="UTF-8">
+          <i class="icon-folder-open"></i> 新增病症: 
+          <textarea class="input-xlarge" id="search_disease" row="3"></textarea><br>
+          <div class="input-append date" id="date_report" data-date="{{ today }}" data-date-format="yyyy-mm-dd">
+          </div>  
+        </form> <!-- add_report end -->
+      </div> <!-- modal-body end -->
+      <div class="modal-footer">
+        <i class="icon-chevron-right"></i> 下一步...<br>
+        <a class="btn btn-success" href="#medicine"><i class="icon-bar-chart icon-white"></i> 用藥記錄 </a>
+        <a class="btn btn-primary" href="#check"><i class="icon-check icon-white"></i> 檢查記錄 </a>
+        <a href="#" class="btn" data-dismiss="modal">Close</a>
+      </div>
+    </div> <!-- modal hide end -->
+    {% endblock %}
+
     <div class="clearfix"></div>
     <div id="footer">
       {% include 'footer.html' %} 
