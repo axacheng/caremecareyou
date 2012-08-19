@@ -36,11 +36,12 @@ class Report(polymodel.PolyModel):
     date_last_updated = ndb.DateTimeProperty(auto_now=True)
     side_effect = ndb.StringProperty(repeated=True)  # One pill may cause multiple side-effect
     medicine = ndb.StringProperty(repeated=True)
+    exam_name = ndb.StringProperty(repeated=True)
+    exam_value = ndb.StringProperty(repeated=True)
     minding = ndb.StringProperty()
     target = ndb.StringProperty()
     dosage = ndb.StringProperty(repeated=True)
     tool_strength = ndb.StringProperty()
-    data = ndb.StringProperty()
 
 
     @classmethod
@@ -59,9 +60,28 @@ class Report(polymodel.PolyModel):
                         medicine = map(lambda x: x.strip(), populate_data['medicine'].split(',')),
                         minding = 'TBD',
                         target = 'TBD',
-                        dosage = ['40', '20'],
+                        exam_value = ['40', '20'],
                         tool_strength = 'TBD',
                         data = 'TBD')
+        this_key = report.put()
+        logging.info('User:[ %s ] added one report - %s' % (username, this_key))
+
+
+    @classmethod
+    def testAddExamReport(cls, username, populate_data, recorded_date):
+        logging.info('Adding one exam report: %s' % populate_data)
+        logging.info('aaaaa %s ' % map(lambda x: x.strip(), populate_data['exam_name'].split(',')))
+        logging.info('bbbbb %s ' % map(lambda x: x.strip(), populate_data['exam_value'].split(',')))
+
+        report = Report(parent = ndb.Key('Report', username),  # Axa@faceboo_report
+                        disease_name = populate_data['disease_name'],
+                        report_type = 'TBD',
+                        source = 'TBD',
+                        date_created = recorded_date,
+                        exam_name = map(lambda x: x.strip(), populate_data['exam_name'].split(',')),
+                        exam_value = map(lambda x: x.strip(), populate_data['exam_value'].split(',')),
+                        minding = "['10', '20', '30']",
+                        target = 'TBD')
         this_key = report.put()
         logging.info('User:[ %s ] added one report - %s' % (username, this_key))
 
