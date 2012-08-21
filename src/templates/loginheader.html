@@ -1,124 +1,103 @@
 <!DOCTYPE html>
 <div class="navbar navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container-fluid">
-          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </a> 
-          <a class="brand bar-root" href="/"> 永保安康 </a>
-          <div class="nav-collapse">
-            <ul class="nav pull-left bar-root">
-              <li><a href="/use">如何使用</a></li>
-                <li><a href="/myrecord">我的紀錄</a></li>
-                <li><a href="/more">更多統計</a></li>
-            </ul>
-            <!-- user dropdown -->
-                <ul class="nav pull-right bar-root">
-                  <li class="divider-vertical"></li>
-                    <li class="dropdown">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                       <i class="icon-large icon-user icon-white"></i> 
-                       <b class="caret"></b>
-                      </a>
-                    <ul class="dropdown-menu dropdown-user-account">
-                       <li class="account-img-container">
-                        <img class="thumb account-img" src="#">
-                       </li>
-                       <li class="account-info">
-                          <h3>{{ username }}</h3>
-                          <p>
-                          <a href="#"><i class=" icon-briefcase"></i> 我的藥袋 </a>
-                          <a href="#"><i class=" icon-list-alt"></i> 我的病史 </a>
-
-                       </li>
-                       <li class="account-footer">
-                         <div class="row-fluid">
-                           <div class="span8">
-                             <a class="btn btn-primary btn-small" href="#">編輯檔案 </a> 
-                             <a class="btn btn-primary btn-small" href="#">隱私設定</a>
-                           </div>
-                           <div class="span2">
-                             <a class="btn btn-danger btn-small" href="#">登出 <i class="  icon-off"></i></a>
-                           </div>
-                         </div>                  
-                       </li>
-                    </ul>
-                  </li>
-                </ul>
-                <ul class="nav pull-right bar-root">
-                <li class="divider-vertical"></li>
-              <li>
-                <a href="chat.html" data-original-title="">
-                <i class="icon-large icon-comment icon-white"></i>
-                <span class="label label-important">6</span></a> 
+  <div class="navbar-inner">
+    <div class="container-fluid">
+      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a> 
+      <a class="brand bar-root" href="/"> 永保安康 </a>
+      <div class="nav-collapse"><!-- nav bar 選單 -->
+        <ul class="nav pull-left bar-root">
+          <li><a href="/use">如何使用</a></li>
+          <li><a href="/myrecord">我的紀錄</a></li>
+          <li><a href="/more">更多統計</a></li>
+        </ul>
+        <!-- user dropdown -->
+        <ul class="nav pull-right bar-root"><!--ul1-->
+          <li class="divider-vertical">
+          </li>
+          <!--登入後帳號資料-->
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <i class="icon-large icon-user icon-white"></i> 
+              <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu dropdown-user-account">
+              <li class="account-img-container">
+                <img class="thumb account-img" src="http://placehold.it/100x100">
               </li>
-              <li class="dropdown">
-                <a href="#" data-toggle="dropdown" data-original-title=""> 
-                <i class="icon-large icon-envelope icon-white"></i>
-                <span class="label label-important">5 new</span></a> 
-                  <ul class="dropdown-menu">
-                     <li>
-                      <a href="http://wbpreview.com/previews/WB0881879/inbox.html" data-original-title="">
-                        <img src="#" alt=""> Subject : Project
-                        <p class="help-block">
-                          <small>From: ab.alhyane@gmail.com</small>
-                        </p>
-                          <span class="label">23/09/2012</span>
-                      </a>
-                     </li>
-                     <li class="divider"></li>
-                     <li>
-                      <a href="#" data-original-title="">
-                        <img src="#" alt=""> Subject : Film 
-                        <p class="help-block">
-                          <small>From: ab.alhyane@gmail.com</small>
-                        </p>
-                        <span class="label">21/04/2012</span> 
-                       </a>
-                      </li>
-                      <li class="divider"></li>
-                      <li>
-                      <a href="#" data-original-title="">
-                        <img src="#" alt=""> Subject : Film 
-                        <p class="help-block">
-                          <small>From: ab.alhyane@gmail.com</small>
-                        </p>
-                        <span class="label">21/04/2012</span> 
-                       </a>
-                      </li>
-                      <li class="divider"></li>
-                      <li>
-                      <a href="#" data-original-title="">
-                        <img src="#" alt=""> Subject : Film 
-                        <p class="help-block">
-                          <small>From: ab.alhyane@gmail.com</small>
-                        </p>
-                        <span class="label">21/04/2012</span> 
-                       </a>
-                      </li>
-                      <li class="divider"></li>
-                      <li class="active"><a href="#" data-original-title=""> 顯示全部 </a></li>
-                  </ul>
-                </li>
-                <li class="dropdown">
-                  <a href="http://wbpreview.com/previews/WB0881879/#" data-toggle="dropdown" data-original-title=""> 
-                  <i class="icon-large icon-refresh icon-white"></i>
-                  <span class="label label-info">3 Updates</span></a> 
-                  <ul class="dropdown-menu">
-                      <li><a href="#" data-original-title=""> xxx </a></li>
-                      <li><a href="#" data-original-title=""> xxx</a></li>
-                      <li><a href="#" data-original-title=""> xxx</a></li>
-                      <li class="divider"></li>
-                      <li class="active"><a href="#" data-original-title=""> 顯示全部 </a></li>
-                  </ul>
-                </li>
+              <li class="account-info">
+                  <h3>{{ username }}</h3>
+                  <p>
+                  <a href="#"><i class=" icon-briefcase"></i> 我的藥袋 </a>
+                  <a href="#"><i class=" icon-list-alt"></i> 我的病史 </a>
+              </li>
+              <li class="account-footer">
+                <div class="row-fluid">
+                  <div class="span8">
+                    <a class="btn btn-primary btn-small" href="#">編輯檔案 </a> 
+                    <a class="btn btn-primary btn-small" href="#">隱私設定</a>
+                  </div>
+                  <div class="span2">
+                    <a class="btn btn-danger btn-small" href="#">登出 <i class="  icon-off"></i></a>
+                  </div>
+                </div>                  
+              </li>
             </ul>
-            <form action="#" class="navbar-search pull-right">
-            <input type="text" placeholder="搜尋" class="search-query span2">
-            </form> 
-          </div>
-        </div> <!-- container -->
-      </div> <!-- navbar-inner -->
-    </div> <!-- navbar -->
+          </li><!--登入後帳號資料結束-->
+        </ul><!--ul1結束-->
+        <ul class="nav pull-right bar-root"><!--ul2-->
+          <li class="divider-vertical"><!--分隔線-->
+          </li>
+          <!--來信通知-->
+          <li class="dropdown">
+            <a href="#" data-toggle="dropdown" data-original-title=""> 
+              <i class="icon-large icon-envelope icon-white"></i>
+              <span class="label label-important">5 new</span>
+            </a> 
+            <ul class="dropdown-menu">
+              <li> <!--來信通知1-->
+                <a href="#mail1" data-original-title="">
+                  <i class="icon-envelope-alt"></i> 主旨: Project
+                  <p class="help-block">
+                    <small>From: ab.alhyane@gmail.com</small>
+                  </p>
+                    <span class="label">23/09/2012</span>
+                </a>
+              </li><!--來信通知1 結束-->
+              <li class="divider"></li><!--分隔線-->
+              <li><!--來信通知2-->
+                <a href="#" data-original-title="">
+                  <i class="icon-envelope-alt"></i> 主旨 : Film 
+                  <p class="help-block">
+                    <small>From: ab.alhyane@gmail.com</small>
+                  </p>
+                  <span class="label">21/04/2012</span> 
+                </a>
+              </li><!--來信通知2 結束-->
+              <li class="divider"></li><!--分隔線-->
+              <li><!--來信通知3-->
+                <a href="#" data-original-title="">
+                  <i class="icon-envelope-alt"></i> 主旨 : Film 
+                  <p class="help-block">
+                    <small>From: ab.alhyane@gmail.com</small>
+                  </p>
+                  <span class="label">21/04/2012</span> 
+                </a>
+              </li><!--來信通知3 結束-->
+              <li class="divider"></li><!--分隔線-->
+              <li class="active"><a href="#" data-original-title=""> 顯示全部 </a>
+              </li>
+            </ul>
+          </li>
+        </ul><!--ul2結束-->
+        <!-- 搜尋 -->
+        <form action="#" class="navbar-search pull-right">
+          <input type="text" placeholder="搜尋" class="search-query span2">
+        </form> <!-- 搜尋結束 -->
+      </div><!-- nav bar 選單結束 -->
+    </div> <!-- container-fluid -->
+  </div> <!-- navbar-inner -->
+</div> <!-- navbar -->
