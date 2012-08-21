@@ -146,7 +146,7 @@ class MyRecord(webapp2.RequestHandler):
 
     def get(self):
         #username = ''.join(UserLoginHandler(self).keys())
-        username = '123456:[[[[[[[[[ TEST ]]]]]]]]:facebook'  # Mocks/please remove after testing
+        username = '123456:[ TEST ]:facebook'  # Mocks/please remove after testing
         user_id = username.split(':')[0] + '_' + username.split(':')[2]
 
         #user_entity = models.User.get_by_id(user_id).to_dict()
@@ -162,14 +162,17 @@ class MyRecord(webapp2.RequestHandler):
         for i in my_reports:
             my_disease_name.append(i.disease_name.encode('utf-8'))
 
-        my_disease_name_encode = ', '.join(name for name in set(my_disease_name))
+        my_disease_name = set(my_disease_name)
+        my_disease_name_encode = ', '.join(name for name in my_disease_name)
         logging.info('CCCCCC %s' % my_disease_name_encode)
 
+        #my_disease_name =['大頭症']
 
         today = datetime.datetime.today().strftime('%Y-%m-%d')
         template_dict = {'username': username,
                          'my_reports': my_reports,
                          'my_disease_name': my_disease_name_encode,
+                         'my_disease_name_nav_menu': my_disease_name,
                          'today': today, 'user_protray': user_protray}
 
         path = os.path.join(os.path.dirname(__file__), 'templates/myrecord-beta.html')
@@ -230,13 +233,12 @@ class AddReport(webapp2.RequestHandler):
 
     def post(self):
         username = ''.join(UserLoginHandler(self).keys())
-        username = '123456:[[[[[[[[[ TEST ]]]]]]]]:facebook'  # Mocks
+        username = '123456:[ TEST ]:facebook'  # Mocks
         populate_data = {'disease_name': '', 'medicine': '', 'side_effect': ''}
         terms = self.request.get_all('term')
         fetched_report_date = self.request.get_all('report_date')  # [u'2012-08-31']
         recorded_date = datetime.datetime(*time.strptime(''.join(fetched_report_date).encode('utf-8'), "%Y-%m-%d")[0:5])
 
-        logging.info
         populate_data['disease_name'] = terms[0]
         populate_data['medicine'] = terms[1].rstrip(', ')
         populate_data['side_effect'] = terms[2].rstrip(', ')
@@ -272,7 +274,7 @@ class AddExamReport(webapp2.RequestHandler):
 
     def post(self):
         username = ''.join(UserLoginHandler(self).keys())
-        username = '123456:[[[[[[[[[ TEST ]]]]]]]]:facebook'  # Mocks
+        username = '123456:[ TEST ]:facebook'  # Mocks
         populate_data = {'disease_name': '', 'exam_name': '', 'exam_value': ''}
         terms = self.request.get_all('term')
         fetched_report_date = self.request.get_all('report_date')  # [u'2012-08-31']
@@ -313,7 +315,7 @@ class TagSearch(webapp2.RequestHandler):
 
     def post(self):
         username = ''.join(UserLoginHandler(self).keys())
-        username = '123456:[[[[[[[[[ TEST ]]]]]]]]:facebook'  # Mocks
+        username = '123456:[ TEST ]:facebook'  # Mocks
         populate_data = {'disease_name': '', 'medicine': '', 'side_effect': ''}
         terms = self.request.get_all('term')
         fetched_report_date = self.request.get_all('report_date')  # [u'2012-08-31']
@@ -330,8 +332,13 @@ class TagSearch(webapp2.RequestHandler):
 
 class TagPage(webapp2.RequestHandler):
     def get(self):
-        path = os.path.join(os.path.dirname(__file__), 'templates/justTest.html')
-        self.response.out.write(template.render(path, 'template_dict'))
+        t = {'my_disease_name_nav_menu': {'name': ['鼻涕丸', '高血脂', '大頭症'],
+                                          'req_id': [0, 1, 2, 3, 4, 5],
+                                          'chart_type': ['medicinetakenjson', 'sideeffectjson']},
+             'username': '123456:[ TEST ]:facebook'}
+
+        path = os.path.join(os.path.dirname(__file__), 'templates/justTest1.html')
+        self.response.out.write(template.render(path, t))
 
 
 
@@ -354,7 +361,8 @@ app = webapp2.WSGIApplication([('/', MainPage),
 
                                 ########### Draw Chart Handlers ###########
                                 # /username/disease_name/chart/medicinetakenjson
-                                ('/(.*)/(.*)/chart/(.*)', jsonapi.drawchart.MedicineTakenJson),
+                                ('/(.*)/(.*)/chart/(.*)/(\d{1})', jsonapi.drawchart.MedicineTakenJson),
+                                #('/(.*)/(.*)/chart/sideeffectjson/(\d{1})', jsonapi.drawchart.SideEffectJson),
                                 ('/showchart', jsonapi.drawchart.ShowChart),
                                 ('/base', base),
                                 ('/loginbase', loginbase),

@@ -5,44 +5,83 @@
 <div id="content" class="span9 section-body">
   <div id="section-body" class="tabbable">
     <ul class="nav nav-tabs">
-      <li class="active">
-        <a href="#tab1" data-toggle="tab" data-original-title=""> {{ report.disease_name }} XXX 病的記錄 <i class="icon-bar-chart"></i> 
-        </a>
-      </li>
-      <!--若有其他病症，請用 for 去跑，連結會對應下方 id -->
-      <li class="">
-        <a href="#tab2" data-toggle="tab"> xxx 病的紀錄<i class="icon-bar-chart"></i> 
-        </a>
-      </li>
-      <li class="">
-        <a href="#tab3" data-toggle="tab"> xxxx 病的紀錄 <i class="icon-bar-chart"></i>
-        </a>
-      </li>
+      {% if my_disease_name_nav_menu %}
+        {% for disease_name in my_disease_name_nav_menu %}
+          {% if forloop.first %}        
+            <li class="active">
+              <a href="#{{ disease_name }}" data-toggle="tab" data-original-title=""> {{ disease_name }} 的記錄 <i class="icon-bar-chart"></i> 
+              </a>
+            </li>
+          {% else %}
+            <li class="">
+              <a href="#{{ disease_name }}" data-toggle="tab" data-original-title=""> {{ disease_name }} 的記錄 <i class="icon-bar-chart"></i> 
+              </a>
+            </li>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
     </ul>
-    <div class="tab-content">
-      <div class="tab-pane active" id="tab1"> <!--此 id 來自 for 迴圈-->
-        <div class="row-fluid">
-          <!--圖表一：用藥明細-->
-          <div id="graph-medicine">
-            <span class="label label-success"><i class="icon-beaker icon-white"></i> 處方用藥 </span>
-          </div>
-          <!--圖表二：副作用-->
-          <div id="graph-sideeffect">
-            <span class="label label-warning"><i class="icon-retweet icon-white"></i> 副作用 </span>
-          </div>
-          <!--圖表三：檢查記錄-->
-          <div id="graph-check">
-           <span class="label label-important"><i class="icon-check icon-white"></i> 檢查記錄 </span>
-         </div>
-          <!--圖表四：圖像記錄-->
-          <div id="photo-record">
-            <span class="label label-info"><i class="icon-camera icon-white"></i> 圖像記錄 </span>
-          </div>
 
-        </div>
-      </div>
-    </div>
-  </div>
+<!--
+
+$('div.tab-pane').attr('class','tab-pane');
+$('div.tab-pane:first').attr('class', 'tab-pane active');
+-->
+    <div class="tab-content">
+      {% if my_disease_name_nav_menu %}
+        {% for disease_name in my_disease_name_nav_menu %}
+            <div class="tab-pane active" id="{{ disease_name }}">
+              <div class="row-fluid">
+                <!--圖表一：用藥明細-->
+                  <script type="text/javascript">
+                    google.load('visualization', '1', {packages: ['annotatedtimeline']});
+                    google.setOnLoadCallback(drawChartMedicine);
+
+                    function drawChartMedicine() {
+                        var url_medicine = "http://localhost:8080/{{ username }}/{{ disease_name }}/chart/medicinetakenjson/{{ forloop.counter0 }}";
+                        var query_medicine = new google.visualization.Query(url_medicine);
+                        query_medicine.send(callback_draw_timeline_medicine);
+
+                        function callback_draw_timeline_medicine(response) {
+                            if (response.isError()) {
+                                alert("Error in query_medicine: " + response.getMessage());
+                                return;
+                            };
+                            var data_medicine = response.getDataTable();
+                            var chart_medicine = new google.visualization.AnnotatedTimeLine(document.getElementById('timeline1{{ forloop.counter0 }}'));
+                                chart_medicine.draw(data_medicine, {displayAnnotations: true,
+                                  thickness: 3, fill:5,
+                                  dateFormat: 'yyyy-M-dd',
+                                  annotationsWidth: 10});
+                        };
+                    };
+
+                   </script> 
+                <div id="graph-medicine">
+                  <span class="label label-success"><i class="icon-beaker icon-white"></i> 處方用藥 </span>
+                </div>
+                {{ disease_name }}
+                <div id="timeline1{{ forloop.counter0 }}" style='height:240px; width:800px;'></div> 
+
+
+                <!--圖表二：副作用-->
+                <div id="graph-sideeffect">
+                  <span class="label label-warning"><i class="icon-retweet icon-white"></i> 副作用 </span>
+                </div>
+                <!--圖表三：檢查記錄-->
+                <div id="graph-check">
+                 <span class="label label-important"><i class="icon-check icon-white"></i> 檢查記錄 </span>
+               </div>
+                <!--圖表四：圖像記錄-->
+                <div id="photo-record">
+                  <span class="label label-info"><i class="icon-camera icon-white"></i> 圖像記錄 </span>
+                </div>
+              </div> <!-- row-fluid -->
+            </div> <!-- tab pane -->
+        {% endfor %}
+      {% endif %}  
+    </div> <!-- tab-content -->
+  </div> <!-- section-body -->
 </div>
 <div class="span3" id="widget">
       <div id="accordion4" class="accordion">
@@ -218,4 +257,26 @@
         </div>
     </div>
 </div>
+
+
+    <script type="text/javascript">
+      // 在 annotated timeline要畫圖時我們必須要準備好畫圖的 div DOM
+      // 但由於我們用 django template system 的 forloop render, 所以會發生
+      // annotated timeline 的js執行完後，但畫圖的 div DOM還沒有在頁面上產生，導致出現以下錯誤：
+      // Uncaught Error: Container width is zero. Expecting a valid width. 
+      // 這也是為什麼我們在 forloop中的 tab-pane都是給他active 讓 annotated timeline 可以找到
+      // 畫圖的div位置後，給他畫上圖，之後在用 load() 把所有的
+      // tab-pane 的active拿掉，在把第一個 tab-pane element給active ，這樣就能正確產生圖表。
+      // (TODO) 需要小明大提供更好的方式來解決～
+      function load(){
+        $('div.tab-pane').attr('class','tab-pane');
+        $('div.tab-pane:first').attr('class', 'tab-pane active');      
+      }
+
+       $(document).ready(function() {
+          setTimeout("load()",2000);
+       });
+    </script>
+
+
 {% endblock %}

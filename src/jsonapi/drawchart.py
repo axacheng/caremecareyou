@@ -11,7 +11,7 @@ from google.appengine.ext import ndb
 from google.appengine.ext.webapp import template
 
 
-def _DrawHelper(username, disease_name, chart_type):
+def _DrawHelper(username, disease_name, chart_type, req_id):
     """ 讀取使用者在Report 的資料庫，並以疾病名稱為過濾首要條件，然後藉由gviz_api吐出 json。
 
     這是一個 helper function是為了給 ShowMedicineTakenChartJson使用。
@@ -85,28 +85,29 @@ def _DrawHelper(username, disease_name, chart_type):
         logging.info('eeeeeee %s' % chart_schema)
         data_table = gviz_api.DataTable(chart_schema)
         data_table.LoadData(chart_data_template)
-        response = data_table.ToJSonResponse(columns_order=columns_order, order_by='time')
+        import random
+        logging.info('req_id %s' % req_id)
+        response = data_table.ToJSonResponse(columns_order=columns_order, order_by='time', req_id=req_id)
         return response
       else:
         pass  #(TODO) Need to work on here when there is no user's Report can be found.
-
 
     ###### 副作用記錄追蹤圖 ######
     if chart_type == 'sideeffectjson':
         chart_data_template = []
 
-        for data in my_reports.filter(models.Report.disease_name == disease_name).fetch():  #(TODO) 需要在 filter by 'disease_name'
+        for data in my_reports.filter(models.Report.disease_name == disease_name).fetch():
             chart_data = {}
             chart_data['time'] = data.date_created
 
             side_effect_index = 5
             side_effect_position = []
             for i in sorted(data.side_effect):
-              side_effect_position.append(side_effect_index)
-              side_effect_index += 5
+                side_effect_position.append(side_effect_index)
+                side_effect_index += 5
 
-              sideeffect_y_axis_data = zip(data.side_effect, map(int, side_effect_position))
-              chart_data_template.append( dict(chart_data, **(dict(sideeffect_y_axis_data))) )
+                sideeffect_y_axis_data = zip(data.side_effect, map(int, side_effect_position))
+                chart_data_template.append(dict(chart_data, **(dict(sideeffect_y_axis_data))))
 
 
         columns_order_list = []
@@ -126,7 +127,7 @@ def _DrawHelper(username, disease_name, chart_type):
         data_table = gviz_api.DataTable(chart_schema)
         data_table.LoadData(chart_data_template)
         response = data_table.ToJSonResponse(columns_order=columns_order, order_by='time',
-                                             req_id=1)
+                                             req_id=req_id)
         return response
     else:
         pass 
@@ -229,9 +230,9 @@ def _DrawHelper(username, disease_name, chart_type):
 
 
 class MedicineTakenJson(webapp2.RequestHandler):
-    def get(self, username, disease_name, chart_type):
+    def get(self, username, disease_name, chart_type ,req_id):
         #username = '123456:[[[[[[[[[ TEST ]]]]]]]]:facebook'
-        response = _DrawHelper(username, disease_name, chart_type, )
+        response = _DrawHelper(username, disease_name, chart_type, req_id)
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(response)
 
