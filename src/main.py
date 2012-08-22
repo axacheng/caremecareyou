@@ -7,6 +7,7 @@ import json
 import jsonapi.drawchart
 import logging
 import mockup.generate_mockup
+import mockup.mytest
 import models
 import os
 import time
@@ -111,6 +112,47 @@ def UserLoginHandler(self):
         return {}
 
 
+class AddReport(webapp2.RequestHandler):
+    def get(self):
+        self.response.out.write('Oops ~ you can not do it.')
+
+    def post(self):
+        username = ''.join(UserLoginHandler(self).keys())
+        username = '123456:[ TEST ]:facebook'  # Mocks
+        populate_data = {'disease_name': '', 'medicine': '', 'side_effect': ''}
+        terms = self.request.get_all('term')
+        fetched_report_date = self.request.get_all('report_date')  # [u'2012-08-31']
+        recorded_date = datetime.datetime(*time.strptime(''.join(fetched_report_date).encode('utf-8'), "%Y-%m-%d")[0:5])
+
+        populate_data['disease_name'] = terms[0]
+        populate_data['medicine'] = terms[1].rstrip(', ')
+        populate_data['side_effect'] = terms[2].rstrip(', ')
+
+        models.Report.AddMedicineReport(username, populate_data, recorded_date)
+        self.redirect('/myrecord')
+
+
+class AddExamReport(webapp2.RequestHandler):
+    def get(self):
+        self.response.out.write('Oops ~ you can not do it.')
+
+    def post(self):
+        username = ''.join(UserLoginHandler(self).keys())
+        username = '123456:[ TEST ]:facebook'  # Mocks
+        populate_data = {'disease_name': '', 'exam_name': '', 'exam_value': ''}
+        terms = self.request.get_all('term')
+        fetched_report_date = self.request.get_all('report_date')  # [u'2012-08-31']
+        recorded_date = datetime.datetime(*time.strptime(''.join(fetched_report_date).encode('utf-8'), "%Y-%m-%d")[0:5])
+
+        logging.info
+        populate_data['disease_name'] = terms[0]
+        populate_data['exam_name'] = terms[1].rstrip(', ')
+        populate_data['exam_value'] = terms[2].rstrip(', ')
+
+        models.Report.testAddExamReport(username, populate_data, recorded_date)
+        self.redirect('/myrecord')
+
+
 class MainPage(webapp2.RequestHandler):
     def get(self):
         username = "".join(UserLoginHandler(self).keys())
@@ -126,16 +168,11 @@ class MainPage(webapp2.RequestHandler):
             url_text = '請先登入'
             login_status = None
 
-        # Compile all the 'key' to template_dict and pass them to index.html
-        # This url_link could be logout_link or login_link depends on whether
-        # username exist or not. If it's exist then url_link is logout_link,
-        # vice versa.
         template_dict = {'username': username, 'url_link': url_link, 'url_text': url_text,
                          'login_status': login_status}
 
         path = os.path.join(os.path.dirname(__file__), 'templates/index.html')
         self.response.out.write(template.render(path, template_dict))
-
 
 
 class MyRecord(webapp2.RequestHandler):
@@ -159,15 +196,12 @@ class MyRecord(webapp2.RequestHandler):
         logging.info('All user\'s Report %s' % my_reports.fetch())
 
         my_disease_name = []
-        for i in my_reports:
-            my_disease_name.append(i.disease_name.encode('utf-8'))
+        for report in my_reports:
+            my_disease_name.append(report.disease_name.encode('utf-8'))
 
         my_disease_name = set(my_disease_name)
         my_disease_name_encode = ', '.join(name for name in my_disease_name)
         logging.info('CCCCCC %s' % my_disease_name_encode)
-
-        #my_disease_name =['大頭症']
-
         today = datetime.datetime.today().strftime('%Y-%m-%d')
         template_dict = {'username': username,
                          'my_reports': my_reports,
@@ -177,7 +211,6 @@ class MyRecord(webapp2.RequestHandler):
 
         path = os.path.join(os.path.dirname(__file__), 'templates/myrecord-beta.html')
         self.response.out.write(template.render(path, template_dict))
-
 
 
 class SearchDisease(webapp2.RequestHandler):
@@ -227,145 +260,24 @@ class SearchSideEffect(webapp2.RequestHandler):
             self.response.out.write(json.dumps(side_effect_result))
 
 
-class AddReport(webapp2.RequestHandler):
-    def get(self):
-        self.response.out.write('Oops ~ you can not do it.')
-
-    def post(self):
-        username = ''.join(UserLoginHandler(self).keys())
-        username = '123456:[ TEST ]:facebook'  # Mocks
-        populate_data = {'disease_name': '', 'medicine': '', 'side_effect': ''}
-        terms = self.request.get_all('term')
-        fetched_report_date = self.request.get_all('report_date')  # [u'2012-08-31']
-        recorded_date = datetime.datetime(*time.strptime(''.join(fetched_report_date).encode('utf-8'), "%Y-%m-%d")[0:5])
-
-        populate_data['disease_name'] = terms[0]
-        populate_data['medicine'] = terms[1].rstrip(', ')
-        populate_data['side_effect'] = terms[2].rstrip(', ')
-
-        models.Report.AddMedicineReport(username, populate_data, recorded_date)
-        self.redirect('/myrecord')
-
-class base(webapp2.RequestHandler):
-    # @basicAuth
-
-    def get(self):
-       path = os.path.join(os.path.dirname(__file__), 'templates/base.html')   
-       self.response.out.write(template.render(path, ''))
-
-class loginbase(webapp2.RequestHandler):
-    # @basicAuth
-
-    def get(self):
-       path = os.path.join(os.path.dirname(__file__), 'templates/loginbase.html')   
-       self.response.out.write(template.render(path, ''))
-
-class test(webapp2.RequestHandler):
-    # @basicAuth
-
-    def get(self):
-       path = os.path.join(os.path.dirname(__file__), 'templates/test.html')   
-       self.response.out.write(template.render(path, ''))
-
-
-class AddExamReport(webapp2.RequestHandler):
-    def get(self):
-        self.response.out.write('Oops ~ you can not do it.')
-
-    def post(self):
-        username = ''.join(UserLoginHandler(self).keys())
-        username = '123456:[ TEST ]:facebook'  # Mocks
-        populate_data = {'disease_name': '', 'exam_name': '', 'exam_value': ''}
-        terms = self.request.get_all('term')
-        fetched_report_date = self.request.get_all('report_date')  # [u'2012-08-31']
-        recorded_date = datetime.datetime(*time.strptime(''.join(fetched_report_date).encode('utf-8'), "%Y-%m-%d")[0:5])
-
-        logging.info
-        populate_data['disease_name'] = terms[0]
-        populate_data['exam_name'] = terms[1].rstrip(', ')
-        populate_data['exam_value'] = terms[2].rstrip(', ')
-
-        models.Report.testAddExamReport(username, populate_data, recorded_date)
-        self.redirect('/myrecord')
-
-
-class TagSearch(webapp2.RequestHandler):
-    def get(self, term):
-        medicine_result = []
-        search_word = self.request.get('term')
-        logging.info('MY TERM   :::::: %s' % search_word)
-
-        # query.filter("Display", True)
-        # query.filter("Word >=", unicode(search_word))
-        # query.filter("Word <", unicode(search_word) + u'\ufffd')
-
-
-        all_medicine = models.Medicine.query(models.Medicine.medicine_name >= unicode(search_word.capitalize()))
-        result = all_medicine.fetch(10)
-
-        if result:
-            for medicine in result:
-                medicine_result.append(medicine.medicine_name)
-
-            self.response.headers['Content-Type'] = 'application/json'
-            self.response.out.write(json.dumps(medicine_result))
-
-        # path = os.path.join(os.path.dirname(__file__), 'templates/justTest.html')
-        # self.response.out.write(template.render(path, 'template_dict'))
-
-    def post(self):
-        username = ''.join(UserLoginHandler(self).keys())
-        username = '123456:[ TEST ]:facebook'  # Mocks
-        populate_data = {'disease_name': '', 'medicine': '', 'side_effect': ''}
-        terms = self.request.get_all('term')
-        fetched_report_date = self.request.get_all('report_date')  # [u'2012-08-31']
-        recorded_date = datetime.datetime(*time.strptime(''.join(fetched_report_date).encode('utf-8'), "%Y-%m-%d")[0:5])
-
-        logging.info
-        populate_data['disease_name'] = 'Tag disease'
-        populate_data['medicine'] = terms[1].rstrip(', ')
-        populate_data['side_effect'] = terms[2].rstrip(', ')
-
-        models.Report.AddMedicineReport(username, populate_data, recorded_date)
-        self.redirect('/myrecord')
-
-
-class TagPage(webapp2.RequestHandler):
-    def get(self):
-        t = {'my_disease_name_nav_menu': {'name': ['鼻涕丸', '高血脂', '大頭症'],
-                                          'req_id': [0, 1, 2, 3, 4, 5],
-                                          'chart_type': ['medicinetakenjson', 'sideeffectjson']},
-             'username': '123456:[ TEST ]:facebook'}
-
-        path = os.path.join(os.path.dirname(__file__), 'templates/justTest1.html')
-        self.response.out.write(template.render(path, t))
-
-
-
 app = webapp2.WSGIApplication([('/', MainPage),
                                 ('/add_report', AddReport),
                                 ('/add_exam_report', AddExamReport),
+                                ('/mockup', mockup.generate_mockup.MockData),
                                 ('/myrecord', MyRecord),
-                                ('/tagsearch/(.*)', TagSearch),
-                                ('/tagpage', TagPage),
                                 ('/oauth/facebook_login', foauth.LoginHandler),
                                 ('/oauth/facebook_logout', foauth.LogoutHandler),
                                 ('/oauth/weibo_login', auth.weibo_oauth_v2.LoginHandler),
                                 ('/oauth/weibo_logout', auth.weibo_oauth_v2.LogoutHandler),
+                                ('/showchart', jsonapi.drawchart.ShowChart),
                                 ('/search_disease/', SearchDisease),
                                 ('/search_medicine/(.*)', SearchMedicine),
                                 ('/search_side_effect/', SearchSideEffect),
-                                ('/upload', mockup.generate_mockup.UploadData),
-                                ('/delete', mockup.generate_mockup.DeleteData),
-                                ('/mockup', mockup.generate_mockup.MockData),
+                                ('/testtagsearch/(.*)', mockup.TagSearch),
+                                ('/testtagpage', mockup.TagPage),
 
                                 ########### Draw Chart Handlers ###########
                                 # /username/disease_name/chart/medicinetakenjson
                                 ('/(.*)/(.*)/chart/(.*)/(\d{1})', jsonapi.drawchart.MedicineTakenJson),
-                                #('/(.*)/(.*)/chart/sideeffectjson/(\d{1})', jsonapi.drawchart.SideEffectJson),
-                                ('/showchart', jsonapi.drawchart.ShowChart),
-                                ('/base', base),
-                                ('/loginbase', loginbase),
-                                ('/test', test),
                                ],
                                 debug=True)

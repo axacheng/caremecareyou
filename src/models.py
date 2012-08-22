@@ -26,13 +26,6 @@ class Profile(ndb.Model):
     url = ndb.StringProperty()
 
 
-class Genera(object):
-    """docstring for Genera"""
-    def __init__(self, arg):
-        super(Genera, self).__init__()
-        self.arg = arg
-        
-
 class Report(polymodel.PolyModel):
     """docstring for Profile"""
 
