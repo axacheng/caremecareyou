@@ -93,6 +93,16 @@ class MockData(webapp2.RequestHandler):
         self.redirect('/myrecord')
 
 
+        ### Add some medicines in Medicine model.
+        medicine_list =['Zinc', 'Unitussin', 'Tyrothricin', 'Trimetoquinol', 'Treis',
+                        'Sodlum', 'Salagen', 'Methylcysteine', 'Mepivacaine', 'Lovely-b12',
+                        'Isoflurane', 'Hydrocortisone', 'Hymecromone', 'Cernitin', 'Casara',
+                        'Bilo', 'Azithromycin', 'Aluminum', 'A122', 'Acrovigor', 'Aczym']
+        for medicine in medicine_list:
+            m = models.Medicine(parent=ndb.Key('Medicine', 'medicine'),
+                                medicine_name=medicine)     
+            m.put()
+
 
 class UploadData(webapp2.RequestHandler):
     def get(self):
