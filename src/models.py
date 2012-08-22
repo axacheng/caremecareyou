@@ -26,6 +26,13 @@ class Profile(ndb.Model):
     url = ndb.StringProperty()
 
 
+class Genera(object):
+    """docstring for Genera"""
+    def __init__(self, arg):
+        super(Genera, self).__init__()
+        self.arg = arg
+        
+
 class Report(polymodel.PolyModel):
     """docstring for Profile"""
 
@@ -38,11 +45,8 @@ class Report(polymodel.PolyModel):
     medicine = ndb.StringProperty(repeated=True)
     exam_name = ndb.StringProperty(repeated=True)
     exam_value = ndb.StringProperty(repeated=True)
-    minding = ndb.StringProperty()
     target = ndb.StringProperty()
     dosage = ndb.StringProperty(repeated=True)
-    tool_strength = ndb.StringProperty()
-
 
     @classmethod
     def query_personal_report(cls, ancestor_key):
@@ -53,35 +57,26 @@ class Report(polymodel.PolyModel):
         logging.info('Adding one report: %s' % populate_data)
         report = Report(parent = ndb.Key('Report', username),  # Axa@faceboo_report
                         disease_name = populate_data['disease_name'],
-                        report_type = 'TBD',
-                        source = 'TBD',
+                        report_type = populate_data['report_type'],
                         date_created = recorded_date,
                         side_effect = map(lambda x: x.strip(), populate_data['side_effect'].split(',')),
                         medicine = map(lambda x: x.strip(), populate_data['medicine'].split(',')),
-                        minding = 'TBD',
-                        target = 'TBD',
-                        exam_value = ['40', '20'],
-                        tool_strength = 'TBD',
-                        data = 'TBD')
+                        dosage = map(lambda x: x.strip(), populate_data['dosage'].split(',')),
+                        )
         this_key = report.put()
         logging.info('User:[ %s ] added one report - %s' % (username, this_key))
 
-
     @classmethod
-    def testAddExamReport(cls, username, populate_data, recorded_date):
+    def AddExamReport(cls, username, populate_data, recorded_date):
         logging.info('Adding one exam report: %s' % populate_data)
-        logging.info('aaaaa %s ' % map(lambda x: x.strip(), populate_data['exam_name'].split(',')))
-        logging.info('bbbbb %s ' % map(lambda x: x.strip(), populate_data['exam_value'].split(',')))
-
         report = Report(parent = ndb.Key('Report', username),  # Axa@faceboo_report
                         disease_name = populate_data['disease_name'],
-                        report_type = 'TBD',
-                        source = 'TBD',
+                        report_type = populate_data['report_type'],
+                        source = populate_data['source'],
                         date_created = recorded_date,
                         exam_name = map(lambda x: x.strip(), populate_data['exam_name'].split(',')),
                         exam_value = map(lambda x: x.strip(), populate_data['exam_value'].split(',')),
-                        minding = "['10', '20', '30']",
-                        target = 'TBD')
+                        )
         this_key = report.put()
         logging.info('User:[ %s ] added one report - %s' % (username, this_key))
 
