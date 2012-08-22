@@ -5041,3 +5041,7 @@ a.badge:hover {
 .show-grid .show-grid {
   background-color: #ccc;
 }
+
+.affix {
+  position: fixed;
+}
