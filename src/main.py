@@ -273,8 +273,10 @@ app = webapp2.WSGIApplication([('/', MainPage),
                                 ('/search_disease/', SearchDisease),
                                 ('/search_medicine/(.*)', SearchMedicine),
                                 ('/search_side_effect/', SearchSideEffect),
-                                ('/testtagsearch/(.*)', mockup.TagSearch),
-                                ('/testtagpage', mockup.TagPage),
+
+                                ########### Testing section ###############
+                                ('/testtagsearch/(.*)', mockup.mytest.TagSearch),
+                                ('/testtagpage', mockup.mytest.TagPage),
 
                                 ########### Draw Chart Handlers ###########
                                 # /username/disease_name/chart/medicinetakenjson
