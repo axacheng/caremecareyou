@@ -22,78 +22,7 @@
       {% endif %}
     </ul>
 
-<!--
-
-$('div.tab-pane').attr('class','tab-pane');
-$('div.tab-pane:first').attr('class', 'tab-pane active');
--->
     <div class="tab-content">
-<<<<<<< HEAD
-      {% if my_disease_name_nav_menu %}
-        {% for disease_name in my_disease_name_nav_menu %}
-            <div class="tab-pane active" id="{{ disease_name }}">
-              <div class="row-fluid">
-                <!--圖表一：用藥明細-->
-                  <script type="text/javascript">
-                    google.load('visualization', '1', {packages: ['annotatedtimeline']});
-                    google.setOnLoadCallback(drawChartMedicine);
-
-                    function drawChartMedicine() {
-                        var url_medicine = "http://localhost:8080/{{ username }}/{{ disease_name }}/chart/medicinetakenjson/{{ forloop.counter0 }}";
-                        var query_medicine = new google.visualization.Query(url_medicine);
-                        query_medicine.send(callback_draw_timeline_medicine);
-
-                        function callback_draw_timeline_medicine(response) {
-                            if (response.isError()) {
-                                alert("Error in query_medicine: " + response.getMessage());
-                                return;
-                            };
-                            var data_medicine = response.getDataTable();
-                            var chart_medicine = new google.visualization.AnnotatedTimeLine(document.getElementById('timeline1{{ forloop.counter0 }}'));
-                                chart_medicine.draw(data_medicine, {displayAnnotations: true,
-                                  thickness: 3, fill:5,
-                                  dateFormat: 'yyyy-M-dd',
-                                  annotationsWidth: 10});
-                        };
-                    };
-
-                   </script> 
-                <div id="graph-medicine">
-                  <span class="label label-success"><i class="icon-beaker icon-white"></i> 處方用藥 </span>
-                </div>
-                {{ disease_name }}
-                <div id="timeline1{{ forloop.counter0 }}" style='height:240px; width:800px;'></div> 
-
-
-                <!--圖表二：副作用-->
-                <div id="graph-sideeffect">
-                  <span class="label label-warning"><i class="icon-retweet icon-white"></i> 副作用 </span>
-                </div>
-                <!--圖表三：檢查記錄-->
-                <div id="graph-check">
-                 <span class="label label-important"><i class="icon-check icon-white"></i> 檢查記錄 </span>
-               </div>
-                <!--圖表四：圖像記錄-->
-                <div id="photo-record">
-                  <span class="label label-info"><i class="icon-camera icon-white"></i> 圖像記錄 </span>
-                </div>
-              </div> <!-- row-fluid -->
-            </div> <!-- tab pane -->
-        {% endfor %}
-      {% endif %}  
-    </div> <!-- tab-content -->
-  </div> <!-- section-body -->
-</div>
-<div class="span3" id="widget">
-      <div id="accordion4" class="accordion">
-        <div class="accordion-group">
-          <div class="accordion-heading">
-            <a href="#event" data-toggle="collapse" class="accordion-toggle" data-original-title="">
-              <i class="icon-bookmark icon-white"></i> 
-              <span class="divider-vertical"></span> 
-              Earning <i class="icon-chevron-down icon-white pull-right"></i>
-            </a>
-=======
       <div class="tab-pane active" id="tab1"> <!--此 id 來自 for 迴圈-->
         <div class="row-fluid">
           <!--圖表一：用藥明細-->
@@ -214,7 +143,6 @@ $('div.tab-pane:first').attr('class', 'tab-pane active');
             <!-- 生理指數-體溫與生理期(如果有的話)圖表結束！ -->
           </div><!-- 生理指數圖表內容結束！ -->
           </div><!-- 生理指數結束！ -->
->>>>>>> 04c10435b726c9f9f6f2f1e9831ab7b95678b499
         </div>
       </div>
     </div> <!-- 生理指數結束！ -->
@@ -334,9 +262,6 @@ $('div.tab-pane:first').attr('class', 'tab-pane active');
     <!-- 社交功能結束 -->
   </div>
 </div>
-<<<<<<< HEAD
-
-
     <script type="text/javascript">
       // 在 annotated timeline要畫圖時我們必須要準備好畫圖的 div DOM
       // 但由於我們用 django template system 的 forloop render, 所以會發生
@@ -355,9 +280,5 @@ $('div.tab-pane:first').attr('class', 'tab-pane active');
           setTimeout("load()",2000);
        });
     </script>
-
-
-=======
 <!--右邊欄位結束-->
->>>>>>> 04c10435b726c9f9f6f2f1e9831ab7b95678b499
 {% endblock %}
