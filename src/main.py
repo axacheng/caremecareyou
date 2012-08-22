@@ -261,25 +261,24 @@ class SearchSideEffect(webapp2.RequestHandler):
 
 
 app = webapp2.WSGIApplication([('/', MainPage),
-                                ('/add_report', AddReport),
-                                ('/add_exam_report', AddExamReport),
-                                ('/mockup', mockup.generate_mockup.MockData),
-                                ('/myrecord', MyRecord),
-                                ('/oauth/facebook_login', foauth.LoginHandler),
-                                ('/oauth/facebook_logout', foauth.LogoutHandler),
-                                ('/oauth/weibo_login', auth.weibo_oauth_v2.LoginHandler),
-                                ('/oauth/weibo_logout', auth.weibo_oauth_v2.LogoutHandler),
-                                ('/showchart', jsonapi.drawchart.ShowChart),
-                                ('/search_disease/', SearchDisease),
-                                ('/search_medicine/(.*)', SearchMedicine),
-                                ('/search_side_effect/', SearchSideEffect),
+                               ('/add_report', AddReport),
+                               ('/add_exam_report', AddExamReport),
+                               ('/mockup', mockup.generate_mockup.MockData),
+                               ('/myrecord', MyRecord),
+                               ('/oauth/facebook_login', foauth.LoginHandler),
+                               ('/oauth/facebook_logout', foauth.LogoutHandler),
+                               ('/oauth/weibo_login', auth.weibo_oauth_v2.LoginHandler),
+                               ('/oauth/weibo_logout', auth.weibo_oauth_v2.LogoutHandler),
+                               ('/showchart', jsonapi.drawchart.ShowChart),
+                               ('/search_disease/', SearchDisease),
+                               ('/search_medicine/(.*)', SearchMedicine),
+                               ('/search_side_effect/', SearchSideEffect),
 
-                                ########### Testing section ###############
-                                ('/testtagsearch/(.*)', mockup.mytest.TagSearch),
-                                ('/testtagpage', mockup.mytest.TagPage),
+                               ########### Testing section ###############
+                               ('/testtagsearch/(.*)', mockup.mytest.TagSearch),
+                               ('/testtagpage', mockup.mytest.TagPage),
 
-                                ########### Draw Chart Handlers ###########
-                                # /username/disease_name/chart/medicinetakenjson
-                                ('/(.*)/(.*)/chart/(.*)/(\d{1})', jsonapi.drawchart.MedicineTakenJson),
-                               ],
-                                debug=True)
+                               ########### Draw Chart Handlers ###########
+                               # /username/disease_name/chart/medicinetakenjson
+                               ('/(.*)/(.*)/chart/(.*)/(\d{1})', jsonapi.drawchart.MedicineTakenJson),
+                              ], debug=True)

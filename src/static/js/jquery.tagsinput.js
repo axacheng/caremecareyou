@@ -100,8 +100,8 @@
                         $('<span>').text(value).append('&nbsp;&nbsp;'),
                         $('<a>', {
                             href  : '#',
-                            title : 'Removing tag',
-                            text  : 'x'
+                            title : '點 X 移除症狀',
+                            text  : 'X'
                         }).click(function () {
                             return $('#' + id).removeTag(escape(value));
                         })
