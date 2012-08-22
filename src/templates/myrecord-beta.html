@@ -262,23 +262,5 @@
     <!-- 社交功能結束 -->
   </div>
 </div>
-    <script type="text/javascript">
-      // 在 annotated timeline要畫圖時我們必須要準備好畫圖的 div DOM
-      // 但由於我們用 django template system 的 forloop render, 所以會發生
-      // annotated timeline 的js執行完後，但畫圖的 div DOM還沒有在頁面上產生，導致出現以下錯誤：
-      // Uncaught Error: Container width is zero. Expecting a valid width. 
-      // 這也是為什麼我們在 forloop中的 tab-pane都是給他active 讓 annotated timeline 可以找到
-      // 畫圖的div位置後，給他畫上圖，之後在用 load() 把所有的
-      // tab-pane 的active拿掉，在把第一個 tab-pane element給active ，這樣就能正確產生圖表。
-      // (TODO) 需要小明大提供更好的方式來解決～
-      function load(){
-        $('div.tab-pane').attr('class','tab-pane');
-        $('div.tab-pane:first').attr('class', 'tab-pane active');      
-      }
-
-       $(document).ready(function() {
-          setTimeout("load()",2000);
-       });
-    </script>
 <!--右邊欄位結束-->
 {% endblock %}
