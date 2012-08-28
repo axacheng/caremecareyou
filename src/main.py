@@ -259,6 +259,13 @@ class SearchSideEffect(webapp2.RequestHandler):
 
             self.response.out.write(json.dumps(side_effect_result))
 
+class myprofile(webapp2.RequestHandler):
+    # @basicAuth
+
+    def get(self):
+       path = os.path.join(os.path.dirname(__file__), 'templates/myprofile.html')   
+       self.response.out.write(template.render(path, ''))
+
 
 app = webapp2.WSGIApplication([('/', MainPage),
                                 ('/add_report', AddReport),
@@ -273,6 +280,7 @@ app = webapp2.WSGIApplication([('/', MainPage),
                                 ('/search_disease/', SearchDisease),
                                 ('/search_medicine/(.*)', SearchMedicine),
                                 ('/search_side_effect/', SearchSideEffect),
+                                ('/myprofile', myprofile),
 
                                 ########### Testing section ###############
                                 ('/testtagsearch/(.*)', mockup.mytest.TagSearch),
