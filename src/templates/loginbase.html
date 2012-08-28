@@ -6,8 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title> {% block title %} xxx - 我的紀錄 {% endblock %}</title>
+    <title> {% block title %} {{ username }} - 我的紀錄 {% endblock %}</title>
     {% block scripts %}
+<<<<<<< HEAD
     <!--Jdashboard-->
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
     <script src="static/js/jdashboard.min.js"></script>
@@ -29,6 +30,17 @@
     <script src="static/js/bootstrap-datepicker.js"></script>
     <script type="text/javascript" src="https://www.google.com/jsapi">
     </script>
+=======
+    <script type="text/javascript" src="static/js/jquery.js"></script>
+    <script type="text/javascript" src="static/js/bootstrap-modal.js"></script>
+    <script type="text/javascript" src="static/js/bootstrap-carousel.js"></script>
+    <script type="text/javascript" src="static/js/jquery.min.js"></script>
+    <script type="text/javascript" src="static/js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="static/js/bootstrap.min.js"></script>    
+    <script type="text/javascript" src="static/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="static/js/jquery.tagsinput.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+>>>>>>> d3e77ead1fe5753cf704aaf94fb248e71db1417d
     <script type="text/javascript">
       $(document).ready(function(){
         $('.carousel').carousel();
@@ -36,7 +48,7 @@
       });
     </script>
 
-    <script>
+     <script>
         //datepicker for calendar
          $(function() {
            $( "#date_report" ).datepicker();
@@ -53,6 +65,13 @@
               source: "/search_medicine/?"
           }); //autocomplete
         });
+
+        $(function(){
+          $('#add_medicine_disease_name, #add_exam_disease_name, #add_picture_disease_name').tagsInput({
+              'defaultText':'請選擇一種您要記錄的症狀',
+          });
+
+        })
 
         $(function() {
           function split( val ) {
@@ -206,6 +225,9 @@
 
     <!-- home page css -->
     <link href="static/css/home-page.css" rel="stylesheet">
+
+    <!-- taginput -->
+    <link rel="stylesheet" type="text/css" href="static/css/jquery.tagsinput.css" />
     
     <style type="text/css">
       body {
@@ -339,7 +361,7 @@
       <div class="modal-body">
         <form action="/add_report" name="add_report" id="report" method="POST" accept-charset="UTF-8">
           <i class="icon-folder-open"></i> 請選擇你要記錄的病症：
-          <textarea class="input-xlarge" id="search_disease" row="3"></textarea><br>
+          <textarea class="input-xlarge" id="add_medicine_disease_name" row="3"> {{ my_disease_name }} </textarea><br>
           <div class="input-append date" id="date_report" data-date="{{ today }}" data-date-format="yyyy-mm-dd">
           <i class="icon-chevron-right"></i> 用藥日期： <input class="span2" name="report_date" size="16" type="text" value="{{ today }}" >
           <span class="add-on"><i class="icon-calendar"></i></span>
@@ -409,7 +431,7 @@
       <div class="modal-body">
         <form action="/add_report" name="add_report" id="report" method="POST" accept-charset="UTF-8">
           <i class="icon-folder-open"></i> 請選擇你要記錄的病症：
-          <textarea class="input-xlarge" id="search_disease" row="3"></textarea><br>
+          <textarea class="input-xlarge" id="add_exam_disease_name" row="3"> {{ my_disease_name }} </textarea><br>
           <div class="input-append date" id="date_report" data-date="{{ today }}" data-date-format="yyyy-mm-dd">
           <i class="icon-chevron-right"></i> 檢查日期： <input class="span2" name="report_date" size="16" type="text" value="{{ today }}" >
           <span class="add-on"><i class="icon-calendar"></i></span>
@@ -455,7 +477,7 @@
                 </td>
               </tr>
             </tbody>
-          </table>    
+          </table> 
         </form> <!-- add_report end -->
       </div> <!-- modal-body end -->
       <div class="modal-footer">
@@ -465,7 +487,11 @@
     </div> <!-- modal hide end -->
     {% endblock %}
 
+<<<<<<< HEAD
      <!--圖像記錄填寫表單-->
+=======
+     <!--圖片記錄填寫表單-->
+>>>>>>> d3e77ead1fe5753cf704aaf94fb248e71db1417d
     {% block modal3 %}
     <div class="modal hide" id="photo">
       <div class="modal-header">
@@ -475,7 +501,7 @@
       <div class="modal-body">
         <form action="/add_report" name="add_report" id="report" method="POST" accept-charset="UTF-8">
           <i class="icon-folder-open"></i> 請選擇你要記錄的病症：
-          <textarea class="input-xlarge" id="search_disease" row="3"></textarea><br>
+          <textarea class="input-xlarge" id="add_picture_disease_name" row="3"> {{ my_disease_name }} </textarea><br>
           <div class="input-append date" id="date_report" data-date="{{ today }}" data-date-format="yyyy-mm-dd">
           <i class="icon-chevron-right"></i> 記錄日期： <input class="span2" name="report_date" size="16" type="text" value="{{ today }}" >
           <span class="add-on"><i class="icon-calendar"></i></span>
@@ -484,7 +510,7 @@
             <i class="icon-chevron-right"></i> 圖像上傳：
             <i class="icon-file"></i>  <input class="input-file" id="fileInput" type="file"><br>
           </div> 
-          <i class="icon-chevron-right"></i> 備註說明： <textarea class="input-xlarge" id="search_disease" row="3"></textarea>  
+          <i class="icon-chevron-right"></i> 備註說明： <textarea class="input-xlarge" id="exam_comment" row="3"></textarea>  
         </form> <!-- add_report end -->
       </div> <!-- modal-body end -->
       <div class="modal-footer">
@@ -504,7 +530,7 @@
       <div class="modal-body">
         <form action="/add_report" name="add_report" id="report" method="POST" accept-charset="UTF-8">
           <i class="icon-folder-open"></i> 新增病症： 
-          <textarea class="input-xlarge" id="search_disease" row="3"></textarea><br>
+          <textarea class="input-xlarge" id="add_new_disease_name" value="{{ my_disease_name }}" row="3"></textarea><br>
           <div class="input-append date" id="date_report" data-date="{{ today }}" data-date-format="yyyy-mm-dd">
           </div>  
         </form> <!-- add_report end -->
