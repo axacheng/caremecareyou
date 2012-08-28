@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+{% extends "loginbase.html" %}
+
+{% block content %}
+<div class="tabbable" style="margin-bottom: 18px;">
+  <ul class="nav nav-tabs">
+    <li class=""><a href="#tab1" data-toggle="tab">Section 1</a></li>
+    <li class=""><a href="#tab2" data-toggle="tab">Section 2</a></li>
+    <li class="active"><a href="#tab3" data-toggle="tab">Section 3</a></li>
+  </ul>
+  <div class="tab-content" style="padding-bottom: 9px; border-bottom: 1px solid #ddd;">
+    <div class="tab-pane" id="tab1">
+      <p>I'm in Section 1.</p>
+    </div>
+    <div class="tab-pane" id="tab2">
+      <p>Howdy, I'm in Section 2.</p>
+    </div>
+    <div class="tab-pane active" id="tab3">
+      <p>What up girl, this is Section 3.</p>
+    </div>
+  </div>
+</div>
+<div id="content" class="span9 section-body">
+  <div id="section-body" class="tabbable">
+    <ul class="nav nav-tabs">
+      <li class="active">
+        <a href="#tab1" data-toggle="tab" data-original-title="">{{ username }} 的紀錄</a>
+      </li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane active" id="tab1">
+      {% if my_reports %}
+        {{ my_reports }}
+          {% for report in my_reports %}
+            <div class="row-fluid">
+            <!--Tabs1-->
+              <div class="span12">
+                <div id="accordion1" class="accordion">
+                  <div class="accordion-group">
+                    <div class="accordion-heading">
+                      <a href="#graph-{{ report.key.id }}" data-toggle="collapse" class="accordion-toggle in" data-original-title="">
+                        <i class="icon-signal icon-white"></i> 
+                        <span class="divider-vertical"></span> {{ report.disease_name }} 的記錄
+                        <span> 最後更新於 {{ report.date_last_updated|date:"Y-m-d" }}" </span> 
+                        <i class="icon-chevron-down icon-white pull-right"></i>
+                      </a>
+                    </div>
+                    <div class="accordion-body collapse in" id="graph-{{ report.key.id }}">
+                      <div class="accordion-inner paddind">
+                        <div id="placeholder" class="span12" style="height: 300px; padding: 0px; position: relative;">
+                          <!-- Here, We need to user forloop to decode unicode to ascii.-->
+                          {% for side_effect in report.side_effect %}
+                            {{ side_effect }}
+                          {% endfor %}
+                          <div class="tickLabels" style="font-size:smaller">
+                            <div class="xAxis x1Axis" style="color:#545454"></div>
+                            <div class="yAxis y1Axis" style="color:#545454"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+      {% else %}
+          {% if xxx %}
+            <!-- hide 用藥記錄 與檢查記錄 -->
+            Use javasript remove
+          {% endif %}
+
+      {% endif %}
+
+
+          <!--/Tabs1-->
+      </div>
+
+    </div>
+        <!--/Row fluid-->
+    <div class="row-fluid">
+      <!--Tabs2-->
+      <div class="span6">
+        <div id="accordion2" class="accordion">
+          <div class="accordion-group">
+            <div class="accordion-heading">
+              <a href="#widget-tabs" data-toggle="collapse" class="accordion-toggle in" data-original-title="">
+                <i class="icon-bullhorn icon-white"></i> <span class="divider-vertical"></span> Order <i class="icon-chevron-down icon-white pull-right"></i>
+              </a>
+            </div>
+            <div class="accordion-body collapse in" id="widget-tabs">
+              <div class="accordion-inner">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Last week</th>
+                      <th>This week</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                      <td>$11.00</td>
+                      <td>$99.00</td>
+                      <td>
+                        <a data-original-title="Validate" class="btn btn-small" href="javascript:;">
+                          <i class="icon-ok"></i>
+                        </a>
+                        <a data-original-title="Remove" class="btn btn-small btn-danger" onclick="return confirm(&#39;Are you sure  ?&#39;);" href="javascript:;">
+                          <i class="icon-white icon-remove"></i>
+                        </a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>2</td>
+                      <td>$56.00</td>
+                      <td>$3344.00</td>
+                      <td>
+                        <a data-original-title="Validate" class="btn btn-small" href="javascript:;">
+                          <i class="icon-ok"></i> 
+                        </a>
+                        <a data-original-title="Remove" class="btn btn-small btn-danger" onclick="return confirm(&#39;Are you sure  ?&#39;);" href="javascript:;">
+                          <i class="icon-white icon-remove"></i>
+                        </a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>3</td>
+                      <td>$76.00</td>
+                      <td>$889.00</td>
+                      <td>
+                        <a data-original-title="Validate" class="btn btn-small" href="javascript:;">
+                          <i class="icon-ok"></i>
+                        </a>
+                        <a data-original-title="Remove" class="btn btn-small btn-danger" onclick="return confirm(&#39;Are you sure  ?&#39;);" href="javascript:;">
+                          <i class="icon-white icon-remove"></i>
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="span6">
+        <div id="accordion3" class="accordion">
+          <div class="accordion-group">
+            <div class="accordion-heading">
+              <a href="#annoncement" data-toggle="collapse" class="accordion-toggle in" data-original-title="">
+                <i class="icon-calendar icon-white"></i> 
+                <span class="divider-vertical"></span> 
+                Calendar <i class="icon-chevron-down icon-white pull-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="span3" id="widget">
+      <div id="accordion4" class="accordion">
+        <div class="accordion-group">
+          <div class="accordion-heading">
+            <a href="#event" data-toggle="collapse" class="accordion-toggle" data-original-title="">
+              <i class="icon-bookmark icon-white"></i> 
+              <span class="divider-vertical"></span> 
+              Earning <i class="icon-chevron-down icon-white pull-right"></i>
+            </a>
+        </div>
+        <div class="accordion-body collapse in" id="event">
+          <div class="accordion-inner">
+          <div id="earning" class="graph" style="height: 250px; width: 100%; padding: 0px; position: relative; ">
+            <span class="pieLabel" id="pieLabel0" style="position: absolute; top: 27px; left: 151px; ">
+              <div style="font-size:8pt;text-align:center;padding:2px;color:white;">Project 1<br>12%</div>
+            </span>
+            <span class="pieLabel" id="pieLabel2" style="position: absolute; top: 126px; left: 202px; ">
+              <div style="font-size:8pt;text-align:center;padding:2px;color:white;">Project 3<br>21%</div>
+            </span>
+            <span class="pieLabel" id="pieLabel3" style="position: absolute; top: 187px; left: 133px; ">
+              <div style="font-size:8pt;text-align:center;padding:2px;color:white;">Project 4<br>16%</div>
+            </span>
+            <span class="pieLabel" id="pieLabel4" style="position: absolute; top: 153px; left: 53px; ">
+              <div style="font-size:8pt;text-align:center;padding:2px;color:white;">Project 5<br>19%</div>
+            </span>
+            <span class="pieLabel" id="pieLabel5" style="position: absolute; top: 47px; left: 61px; ">
+              <div style="font-size:8pt;text-align:center;padding:2px;color:white;">Project 6<br>26%</div>
+            </span>
+          </div>
+        </div>
+      </div>
+</div>
+<div class="accordion-group">
+  <div class="accordion-heading">
+    <a href="#statements" data-toggle="collapse" class="accordion-toggle" data-original-title="">
+      <i class="icon-globe icon-white"></i> 
+      <span class="divider-vertical"></span> 
+      Notifications <i class="icon-chevron-down icon-white pull-right"></i>
+    </a>
+  </div>
+  <div class="accordion-body collapse in" id="statements">
+    <div class="accordion-inner">
+      <table class="table table-striped">
+        <tbody>
+          <tr>
+            <td>
+              <i class="icon-user"></i>
+            </td>
+            <td>
+              <a href="" data-original-title="">
+                <strong>Hanafi ALMOJRIM</strong> added 
+                <strong>23 users</strong> 
+              </a><em>4 hours ago</em>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <i class="icon-envelope">
+              </i>
+            </td>
+            <td>
+              <a href="" data-original-title="">
+                <strong>Abderrahim NIBET</strong> sent you  <strong>message</strong> 
+              </a><em>Yesterday</em>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <i class="icon-tag">
+              </i>
+            </td>
+            <td>
+              <a href="" data-original-title=""><strong>Youssef BASSIR</strong> invite you to  <strong>dinner</strong> 
+              </a><em>2 days ago</em>
+            </td>
+          </tr>
+          <tr>
+            <td>
+            </td>
+            <td>
+              <a class="pull-right" href="" data-original-title="">Show all</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="accordion-group">
+  <div class="accordion-heading">
+    <a href="#latest" data-toggle="collapse" class="accordion-toggle" data-original-title="">
+      <i class="icon-th icon-white"></i> <span class="divider-vertical"></span> Tabbed Container <i class="icon-chevron-down icon-white pull-right"></i>
+    </a>
+  </div>
+  <div class="accordion-body collapse in" id="latest">
+    <div class="accordion-inner">
+      <div class="tabbable"> <!-- Only required for left/right tabs -->
+        <ul class="nav nav-tabs">
+          <li>
+            <a href="#t1" data-toggle="tab" data-original-title="">Products</a>
+          </li>
+          <li class="active">
+            <a href="#t2" data-toggle="tab" data-original-title="">Posts</a>
+          </li>
+          <li>
+            <a href="#t3" data-toggle="tab" data-original-title="">Media</a>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane" id="t1">
+            <ul>
+                <li><a href="" data-original-title="">Proin elit arcu, rutrum commodo</a></li>
+                <li><a href="" data-original-title="">Aenean tempor ullamcorper leo</a></li>
+                <li><a href="" data-original-title="">Vehicula tempus, commodo a, risus</a></li>
+                <li><a href="" data-original-title="">Donec sollicitudin mi sit amet mauris</a></li>
+                <li><a href="" data-original-title="">Curabitur nec arcu</a></li>
+            </ul>
+          </div>
+          <div class="tab-pane active" id="t2">
+            <ul class="nav nav-list">
+              <li><a href="#" data-original-title=""><img src="./Maniadmin_files/thumb1.png" alt=""> button groups for a toolbar, navigation</a></li>
+              <li><a href="#" data-original-title=""><img src="./Maniadmin_files/thumb2.png" alt=""> Use them in buttons, button groups for a toolbar, navigation</a></li>
+              <li><a href="#" data-original-title=""><img src="./Maniadmin_files/thumb3.png" alt=""> button groups for a toolbar, navigation</a></li>
+              <li><a href="#" data-original-title=""><img src="./Maniadmin_files/thumb4.png" alt=""> Use them in buttons, button groups for a toolbar, navigation</a></li>
+            </ul>
+          </div>
+          <div class="tab-pane" id="t3">
+            <ul class="unstyled flickr">
+              <li><a href="http://farm8.staticflickr.com/7153/6839672369_687f2c49e8_b.jpg" data-original-title="Down the rabbit hole [Framed]"><img src="./Maniadmin_files/6839672369_687f2c49e8_s.jpg" alt="" class="img_nofade"></a>
+              </li>
+              <li><a href="http://farm6.staticflickr.com/5235/7156342506_3180179c4d_b.jpg" data-original-title="Looking Up"><img src="./Maniadmin_files/7156342506_3180179c4d_s.jpg" alt="" class="img_nofade"></a>
+              </li>
+              <li><a href="http://farm8.staticflickr.com/7248/6894937942_475bce7076_b.jpg" data-original-title="Your eyes are open"><img src="./Maniadmin_files/6894937942_475bce7076_s.jpg" alt="" class="img_nofade"></a>
+              </li>
+              <li><a href="http://farm8.staticflickr.com/7280/7023103445_62489017a0_b.jpg" data-original-title="Mel McGowan"><img src="./Maniadmin_files/7023103445_62489017a0_s.jpg" alt="" class="img_nofade"></a>
+              </li>
+              <li><a href="http://farm8.staticflickr.com/7243/6853027310_00cdd402ee_b.jpg" data-original-title="We will be forever calm"><img src="./Maniadmin_files/6853027310_00cdd402ee_s.jpg" alt="" class="img_nofade"></a>
+              </li>
+              <li><a href="http://farm8.staticflickr.com/7196/6837771770_6d771aa7cf_b.jpg" data-original-title="Videographer"><img src="./Maniadmin_files/6837771770_6d771aa7cf_s.jpg" alt="" class="img_nofade"></a>
+              </li>
+              <li><a href="http://farm8.staticflickr.com/7200/6829158646_d4f32ea229_b.jpg" data-original-title="Daylight Reveals Colors"><img src="./Maniadmin_files/6829158646_d4f32ea229_s.jpg" alt="" class="img_nofade"></a>
+              </li>
+              <li><a href="http://farm8.staticflickr.com/7200/6950787615_65517ec924_b.jpg" data-original-title="Jennifer Ziliotto x3"><img src="./Maniadmin_files/6950787615_65517ec924_s.jpg" alt="" class="img_nofade"></a>
+              </li>
+              <li><a href="http://farm8.staticflickr.com/7186/6937410907_234f15a111_b.jpg" data-original-title="Broadway St. Santa Monica"><img src="./Maniadmin_files/6937410907_234f15a111_s.jpg" alt="" class="img_nofade"></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+</div>
+<div class="accordion-group">
+    <div class="accordion-heading">
+        <a href="#elements" data-toggle="collapse" class="accordion-toggle" data-original-title="">
+            <i class="icon-star-empty icon-white"></i> <span class="divider-vertical"></span> Events <i class="icon-chevron-down icon-white pull-right"></i>
+        </a>
+    </div>
+    <div class="accordion-body collapse in" id="elements">
+        <div class="accordion-inner paddind">
+            <span class="label">23/12/2012</span>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
+
+
+            <span class="label label-warning">23/02/2012</span>
+            <p>Lorem ipsum dolor sit amet dolore.</p>
+
+            <span class="label label-important">13/02/2012</span> 
+            <p>Lorem ipsum dolor sit amet dolore.</p>
+            <br>   
+        </div>
+    </div>
+</div>
+{% endblock %}

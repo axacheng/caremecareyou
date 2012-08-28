@@ -8,9 +8,21 @@
     <meta name="author" content="">
     <title> {% block title %} xxx - 我的紀錄 {% endblock %}</title>
     {% block scripts %}
+    <!--Jdashboard-->
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+    <script src="static/js/jdashboard.min.js"></script>
+    <script type="text/javascript">
+      
+      $(function() {
+        $("#jDash").jDashboard({ columns: 3 });
+      });
+      
+    </script>
+
+    <!--基本的-->
     <script src="static/js/jquery.js"></script>
     <script src="static/js/bootstrap-modal.js"></script>
-    <script src="./static/js/bootstrap-carousel.js"></script>
+    <script src="static/js/bootstrap-carousel.js"></script>
     <script src="static/js/jquery.min.js"></script>
     <script src="static/js/bootstrap.min.js"></script>
     <script src="static/js/jquery-ui.min.js"></script>
@@ -453,7 +465,7 @@
     </div> <!-- modal hide end -->
     {% endblock %}
 
-     <!--檢查記錄填寫表單-->
+     <!--圖像記錄填寫表單-->
     {% block modal3 %}
     <div class="modal hide" id="photo">
       <div class="modal-header">

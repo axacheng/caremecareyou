@@ -25,70 +25,7 @@
     <div class="tab-content">
       <div class="tab-pane active" id="tab1"> <!--此 id 來自 for 迴圈-->
         <div class="row-fluid">
-          <!--圖表一：用藥明細-->
-          <div id="graph-medicine">
-            <span class="label label-success"><i class="icon-beaker icon-white"></i> 處方用藥 </span><p>
-            <div id="graph1">
-              <img src="http://placehold.it/800x240">
-            </div>
-          </div><!--圖表一：用藥明細結束-->
-          <hr>
-          <!--圖表二：副作用-->
-          <div id="graph-sideeffect">
-            <span class="label label-warning"><i class="icon-retweet icon-white"></i> 副作用 </span><p>
-            <div id="graph2">
-              <img src="http://placehold.it/800x240">
-            </div>
-          </div><!--圖表二：副作用結束-->
-          <hr>
-          <!--圖表三：檢查記錄-->
-          <div id="graph-check">
-            <span class="label label-important"><i class="icon-check icon-white"></i> 檢查記錄 </span><p>
-            <div id="graph3">
-              <img src="http://placehold.it/800x240">
-            </div>
-         </div> <!--圖表三：檢查記錄結束-->
-         <hr>
-          <!--圖表四：圖像記錄-->
-          <div id="photo-record">
-            <span class="label label-info"><i class="icon-camera icon-white"></i> 圖像記錄 </span><p>
-            <div class="row-fluid" id="photo_slider">
-              <div id="landing_carousel" class="carousel">
-                <div class="carousel-inner">
-                  <!--一排四張圖，若超過四張，則再出現下一個item-->
-                  <div class="item active">
-                    <a href="#"><img alt="YYYY-MM-DD; comment" src="http://placehold.it/198x150"></a>
-                  
-                    <a href="#"><img alt="YYYY-MM-DD; comment" src="http://placehold.it/198x150"></a>
-                  
-                    <a href="#"><img alt="YYYY-MM-DD; comment" src="http://placehold.it/198x150"></a>
-                  
-                    <a href="#"><img alt="YYYY-MM-DD; comment" src="http://placehold.it/198x150"></a>
-                  </div> <!--第一排結束-->
-                  <div class="item">
-                    <a href="#"><img alt="YYYY-MM-DD; comment" src="http://placehold.it/198x150"></a>
-                  
-                    <a href="#"><img alt="YYYY-MM-DD; comment" src="http://placehold.it/198x150"></a>
-                  
-                    <a href="#"><img alt="YYYY-MM-DD; comment" src="http://placehold.it/198x150"></a>
-                  
-                    <a href="#"><img alt="YYYY-MM-DD; comment" src="http://placehold.it/198x150"></a>
-                  </div> <!--第二排結束-->
-                  <div class="item">
-                    <a href="#"><img alt="YYYY-MM-DD; comment" src="http://placehold.it/198x150"></a>
-                  
-                    <a href="#"><img alt="YYYY-MM-DD; comment" src="http://placehold.it/198x150"></a>
-                  
-                    <a href="#"><img alt="YYYY-MM-DD; comment" src="http://placehold.it/198x150"></a>
-                  
-                    <a href="#"><img alt="YYYY-MM-DD; comment" src="http://placehold.it/198x150"></a>
-                  </div> <!--第三排結束-->
-                </div>
-                <a class="carousel-controls left" href="#landing_carousel" data-slide="prev">‹</a>
-                <a class="carousel-controls right" href="#landing_carousel" data-slide="next">›</a>
-              </div><!--圖表四：圖像記錄結束-->
-            </div>
-          </div>
+          {% include "graph.html" %}
         </div><!--某一疾病圖表內容結束-->
       </div><!--某一疾病tab結束-->
     </div><!--所有疾病對應tab結束-->
@@ -110,39 +47,19 @@
         <div class="accordion-inner">
           <div class="tabbable"> 
           <!-- 生理指數標籤開始！ -->
-          <ul class="nav nav-tabs">
-            <li>
-              <a href="#wf" data-toggle="tab" data-original-title="">體重與體脂</a>
-            </li>
-            <li class="active">
-              <a href="#bp" data-toggle="tab" data-original-title="">血壓與脈搏</a>
-            </li>
-            <li>
-              <a href="#temperature" data-toggle="tab" data-original-title="">體溫</a>
-            </li>
-          </ul><!-- 生理指數標籤結束！ -->
-          <!-- 生理指數圖表內容開始！ -->
-          <div class="tab-content">
-            <!-- 生理指數-體重與體脂圖表！ -->
-            <div class="tab-pane" id="wf" align="center">
-              <div class="chart_container" id="combochart" style="position: relative; "><img src="http://placehold.it/350x300">
-              </div>
-            </div>
-            <!-- 生理指數-體重與體脂圖表結束！ -->
-            <!-- 生理指數-血壓與脈搏圖表！ -->
-            <div class="tab-pane active" id="bp" align="center">
-              <div class="chart_container" id="combochart" style="position: relative; "><img src="http://placehold.it/350x300">
-              </div>
-            </div>
-            <!-- 生理指數-血壓與脈搏圖表結束！ -->
-            <!-- 生理指數-體溫與生理期(如果有的話)圖表！ -->
-            <div class="tab-pane" id="temperature" align="center">
-              <div class="chart_container" id="combochart" style="position: relative; "><img src="http://placehold.it/350x300">
-              </div>
-            </div>
-            <!-- 生理指數-體溫與生理期(如果有的話)圖表結束！ -->
-          </div><!-- 生理指數圖表內容結束！ -->
-          </div><!-- 生理指數結束！ -->
+            <ul class="nav nav-tabs">
+              <li>
+                <a href="#wf" data-toggle="tab" data-original-title="">體重與體脂</a>
+              </li>
+              <li class="active">
+                <a href="#bp" data-toggle="tab" data-original-title="">血壓與脈搏</a>
+              </li>
+              <li>
+                <a href="#temperature" data-toggle="tab" data-original-title="">體溫</a>
+              </li>
+            </ul><!-- 生理指數標籤結束！ -->
+            {% include "phygraph.html" %}
+          </div>
         </div>
       </div>
     </div> <!-- 生理指數結束！ -->
@@ -177,87 +94,29 @@
           <div class="tabbable"> 
             <!--依照病症來分 -->
             <ul class="nav nav-tabs">
-              <li class="active">
-                <a href="#d1" data-toggle="tab" data-original-title="">{disease_name1}</a>
-              </li>
-              <li>
-                <a href="#d2" data-toggle="tab" data-original-title="">{disease_name2}</a>
-              </li>
-              <li>
-                <a href="#d3" data-toggle="tab" data-original-title="">{disease_name3}</a>
-              </li>
+              {% if my_disease_name_nav_menu %}
+                {% for disease_name in my_disease_name_nav_menu %}
+                  {% if forloop.first %}        
+                    <li class="active">
+                      <a href="#{{ disease_name }}" data-toggle="tab" data-original-title="">{{ disease_name }} </a>
+                    </li>
+                    {% else %}
+                    <li class="">
+                      <a href="#{{ disease_name }}" data-toggle="tab" data-original-title=""> {{ disease_name }} </i> 
+                      </a>
+                    </li>
+                  {% endif %}
+                {% endfor %}
+              {% endif %}
             </ul>
             <div class="tab-content">
-              <div class="tab-pane active" id="d1">
-                <ul class="unstyled flickr">
-                  <li><a href="#" ><img src="http://placehold.it/56x56" alt="" class="img_nofade"></a>
-                  </li>
-                  <li><a href="#" ><img src="http://placehold.it/56x56" alt="" class="img_nofade"></a>
-                  </li>
-                  <li><a href="#" ><img src="http://placehold.it/56x56" alt="" class="img_nofade"></a>
-                  </li>
-                  <li><a href="#" ><img src="http://placehold.it/56x56" alt="" class="img_nofade"></a>
-                  </li>
-                  <li><a href="#" ><img src="http://placehold.it/56x56" alt="" class="img_nofade"></a>
-                  </li>
-                  <li><a href="#" ><img src="http://placehold.it/56x56" alt="" class="img_nofade"></a>
-                  </li>
-                  <li><a href="#" ><img src="http://placehold.it/56x56" alt="" class="img_nofade"></a>
-                  </li>
-                  <li><a href="#" ><img src="http://placehold.it/56x56" alt="" class="img_nofade"></a>
-                  </li>
-                  <li><a href="#" ><img src="http://placehold.it/56x56" alt="" class="img_nofade"></a>
-                  </li>
-                </ul>
-              </div>
-              <div class="tab-pane" id="d2">
-                <ul class="unstyled flickr">
-                  <li><a href="#" ><img src="http://placehold.it/56x56" alt="" class="img_nofade"></a>
-                  </li>
-                  <li><a href="#" ><img src="http://placehold.it/56x56" alt="" class="img_nofade"></a>
-                  </li>
-                  <li><a href="#" ><img src="http://placehold.it/56x56" alt="" class="img_nofade"></a>
-                  </li>
-                  <li><a href="#" ><img src="http://placehold.it/56x56" alt="" class="img_nofade"></a>
-                  </li>
-                  <li><a href="#" ><img src="http://placehold.it/56x56" alt="" class="img_nofade"></a>
-                  </li>
-                  <li><a href="#" ><img src="http://placehold.it/56x56" alt="" class="img_nofade"></a>
-                  </li>
-                  <li><a href="#" ><img src="http://placehold.it/56x56" alt="" class="img_nofade"></a>
-                  </li>
-                  <li><a href="#" ><img src="http://placehold.it/56x56" alt="" class="img_nofade"></a>
-                  </li>
-                  <li><a href="#" ><img src="http://placehold.it/56x56" alt="" class="img_nofade"></a>
-                  </li>
-                </ul>
-              </div>
-              <div class="tab-pane" id="d3">
-                <ul class="unstyled flickr">
-                  <li><a href="#" ><img src="http://placehold.it/56x56" alt="" class="img_nofade"></a>
-                  </li>
-                  <li><a href="#" ><img src="http://placehold.it/56x56" alt="" class="img_nofade"></a>
-                  </li>
-                  <li><a href="#" ><img src="http://placehold.it/56x56" alt="" class="img_nofade"></a>
-                  </li>
-                  <li><a href="#" ><img src="http://placehold.it/56x56" alt="" class="img_nofade"></a>
-                  </li>
-                  <li><a href="#" ><img src="http://placehold.it/56x56" alt="" class="img_nofade"></a>
-                  </li>
-                  <li><a href="#" ><img src="http://placehold.it/56x56" alt="" class="img_nofade"></a>
-                  </li>
-                  <li><a href="#" ><img src="http://placehold.it/56x56" alt="" class="img_nofade"></a>
-                  </li>
-                  <li><a href="#" ><img src="http://placehold.it/56x56" alt="" class="img_nofade"></a>
-                  </li>
-                  <li><a href="#" ><img src="http://placehold.it/56x56" alt="" class="img_nofade"></a>
-                  </li>
-                </ul>
+              <div class="tab-pane active" id="{{ disease_name }}">
+                {% include "plm.html" %}
               </div>
             </div>
           </div>
         </div>
-        </div>
+      </div>
     </div>
     <!-- 社交功能結束 -->
   </div>

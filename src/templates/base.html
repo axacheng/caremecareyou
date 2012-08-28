@@ -210,7 +210,8 @@
 
   <body>
     <div id="header">
-      {% include 'header.html' %} 
+      {% if not login_status %}{% include 'header.html' %} 
+      {% else %}{% include 'loginheader.html' %} {% endif %} 
     </div>
     <div id="content">
       {% block content %} {% endblock %}

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+{% extends "loginbase.html" %}
+{% block title %} 我的檔案 {% endblock %}
+
+
+{% block content %}
+<div id="content" class="span12 section-body">
+  <div id="section-body" class="tabbable">
+    <ul class="nav nav-tabs">
+    	<li class="active">
+    		<a href="mydrugbag" data-toggle="tab" data-original-title=""> 我的藥袋 <i class="icon-briefcase"></i> 
+            </a>
+        </li>
+        <li>
+    		<a href="mycasehistory" data-toggle="tab" data-original-title=""> 我的病史 <i class="icon-file"></i> 
+            </a>
+        </li>
+        <li>
+    		<a href="mycasehistory" data-toggle="tab" data-original-title=""> 我的設定 <i class="icon-info-sign"></i> 
+            </a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane active" id="mydrugbag"> <!--此 id 來自 for 迴圈-->
+            
+        </div>
+    </div>
+
+
+{% endblock %}
