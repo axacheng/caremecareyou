@@ -52,9 +52,9 @@ class Report(polymodel.PolyModel):
                         disease_name = populate_data['disease_name'],
                         report_type = populate_data['report_type'],
                         date_created = recorded_date,
-                        side_effect = map(lambda x: x.strip(), populate_data['side_effect'].split(',')),
-                        medicine = map(lambda x: x.strip(), populate_data['medicine'].split(',')),
-                        dosage = map(lambda x: x.strip(), populate_data['dosage'].split(',')),
+                        side_effect = populate_data['side_effect'].split(','),
+                        medicine = populate_data['medicine'],
+                        dosage = populate_data['dosage'],
                         )
         this_key = report.put()
         logging.info('User:[ %s ] added one report - %s' % (username, this_key))

@@ -29,20 +29,20 @@ class MockData(webapp2.RequestHandler):
         for dn in ['大頭症', '鼻涕丸', '高血脂']:
             if dn == '大頭症':
                 date_list = ['5', '10', '15', '20', '25']
-                m = 'Fecole, Zafirlukast'
+                m = ['Fecole', 'Zafirlukast']
                 s = '手指冰冷, 上火, 頭昏, 發冷'
-                d = '10, 20'
+                d = ['10', '20']
 
             elif dn == '鼻涕丸':
                 date_list = ['3', '9', '22']
-                m = 'Allegra, Anpec'
+                m = ['Allegra', 'Anpec']
                 s = '五枝無力, 牙齒痛'
-                d = '5, 10'
+                d = ['5', '10']
             else:
                 date_list = ['1', '4', '7', '13', '22', '27', '28', '29']
-                m = 'Zocor'
+                m = ['Zocor']
                 s = '睡不著, 疲累'
-                d = '10'
+                d = ['10']
 
             for i in date_list:
                 if dn == '大頭症' and (i == '10' or i == '15'):
@@ -50,9 +50,9 @@ class MockData(webapp2.RequestHandler):
                     side_effect = s
                     dosage = d
                 elif dn == '大頭症':
-                    medicine = 'Eafunin, Fecole, Gaba-p'
+                    medicine = ['Eafunin', 'Fecole', 'Gaba-p']
                     side_effect = '上火, 昏沉, 無力感'
-                    dosage = '10, 40, 10'
+                    dosage = ['10', '40', '10']
                 else:
                     medicine = m
                     side_effect = s
@@ -102,6 +102,25 @@ class MockData(webapp2.RequestHandler):
             m = models.Medicine(parent=ndb.Key('Medicine', 'medicine'),
                                 medicine_name=medicine)     
             m.put()
+
+
+        ### Add Side Effect 
+        sideeffect_list = ['上火', '昏沉', '無力感', '睡不著', '疲累', '五枝無力',
+                           '牙齒痛','手指冰冷', '上火', '頭昏', '發冷']
+        for sf in sideeffect_list:
+            s = models.SideEffect(parent=ndb.Key('SideEffect', 'sideeffect'),
+                                  name=sf)
+            s.put()
+
+
+        ### Add Disease name.
+        disease_name_list = ['高血壓', '紅斑性狼瘡', '高膽固醇', '高血脂',
+                             '大頭症', '菜花', '德國麻疹', '尿結石', '視覺障礙',
+                             '肥胖']
+        for i in disease_name_list:
+            j = models.Disease(parent=ndb.Key('Disease', 'disease_name'),
+                               name=''.join(i),)
+            j.put()
 
 
 class UploadData(webapp2.RequestHandler):
