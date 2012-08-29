@@ -18,6 +18,7 @@ from google.appengine.api import users
 from google.appengine.ext.webapp import template
 
 
+
 def UserLoginHandler(self):
     """ This method offers username and logout_link to MainPage().
 
