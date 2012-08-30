@@ -18,6 +18,7 @@ from google.appengine.api import users
 from google.appengine.ext.webapp import template
 
 
+
 def UserLoginHandler(self):
     """ This method offers username and logout_link to MainPage().
 
@@ -113,20 +114,41 @@ def UserLoginHandler(self):
 
 
 class AddReport(webapp2.RequestHandler):
+    """ 新增用藥紀錄 http handler.
+
+    post:
+        It calls models.Report.AddMedicineReport method to write data to ndb.
+
+        username: string, return from UserLoginHandler object.
+        populate_data: dict, 餵給資料庫的其中一部份的資料.
+            {'medicine': ['A122', 'Casara', 'Isoflurane'],
+             'side_effect': '頭痛, 四肢無力,',
+             'disease_name': '大頭症',
+             'dosage': ['20', '40', '60'],
+             'report_type': 'Medicine'}     
+        recorded_date: datetime format.
+    """
     def get(self):
         self.response.out.write('Oops ~ you can not do it.')
 
     def post(self):
         username = ''.join(UserLoginHandler(self).keys())
         username = '123456:[ TEST ]:facebook'  # Mocks
-        populate_data = {'disease_name': '', 'medicine': '', 'side_effect': ''}
-        terms = self.request.get_all('term')
+        report_type = 'Medicine'
+        populate_data = {'disease_name': '', 'report_type': 'Medicine',
+                         'medicine': '', 'side_effect': '', 'dosage': ''}
+
+        term_medicine_name = self.request.get_all('term_medicine_name')
+        side_effect = self.request.get('my_side_effect')
+        term_dosage = self.request.get_all('term_dosage')
+
+        populate_data['disease_name'] = self.request.get('my_disease_name')
+        populate_data['medicine'] = filter(None, term_medicine_name) #terms[0].rstrip(', ')
+        populate_data['side_effect'] = side_effect.rstrip(', ') #terms[2].rstrip(', ')
+        populate_data['dosage'] = filter(None, term_dosage)
+
         fetched_report_date = self.request.get_all('report_date')  # [u'2012-08-31']
         recorded_date = datetime.datetime(*time.strptime(''.join(fetched_report_date).encode('utf-8'), "%Y-%m-%d")[0:5])
-
-        populate_data['disease_name'] = terms[0]
-        populate_data['medicine'] = terms[1].rstrip(', ')
-        populate_data['side_effect'] = terms[2].rstrip(', ')
 
         models.Report.AddMedicineReport(username, populate_data, recorded_date)
         self.redirect('/myrecord')
