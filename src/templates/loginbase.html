@@ -180,9 +180,19 @@
           <span class="add-on"><i class="icon-time"></i></span>
           </div>
           <i class="icon-chevron-right"></i> 用藥明細：
+
+              <!-- 暫時的 -->
+              {% for i in my_last_medicine_report %}
+                 <!-- level1: {{ i }} <br>  -->
+                {% for j in i %}
+                  level2: {{ j.disease_name }} ---- {{ j.medicine }} ---- {{ j.dosage }}<hr>
+                {% endfor %}
+              {% endfor %}
+
           <table class="table">
             <thead>
               <tr>
+
                 <th><i class="icon-tag"></i> 藥名</th>
                 <th><i class="icon-tint"></i> 劑量</th>
               </tr>

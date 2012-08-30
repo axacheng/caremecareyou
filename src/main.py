@@ -217,16 +217,30 @@ class MyRecord(webapp2.RequestHandler):
         my_reports = models.Report.query_personal_report(ancestor_key)
         logging.info('All user\'s Report %s' % my_reports.fetch())
 
+        # 這是給/myrecord 總覽的 Tab用的
         my_disease_name = []
         for report in my_reports:
             my_disease_name.append(report.disease_name.encode('utf-8'))
-
         my_disease_name = set(my_disease_name)
         my_disease_name_encode = ', '.join(name for name in my_disease_name)
-        logging.info('CCCCCC %s' % my_disease_name_encode)
+
+        logging.info('ccccccc %s', my_disease_name_encode)
+
+
+        # my_last_medicine_report 這是點選 '新增用藥記錄' 時讓user快速記錄的資料
+        # 抓取每個症狀最新(date_created) 的一筆entity 並存到 my_last_medicine_report
+        my_last_medicine_report = []
+        for dn in my_disease_name:
+            my_last_medicine_report.append(
+                my_reports.filter(models.Report.disease_name == dn,
+                                  models.Report.report_type == 'Medicine').order(
+                                  models.Report.date_created).fetch(1))
+        logging.info('xxxxxxx %s', my_last_medicine_report)
+
         today = datetime.datetime.today().strftime('%Y-%m-%d')
         template_dict = {'username': username,
                          'my_reports': my_reports,
+                         'my_last_medicine_report': my_last_medicine_report,
                          'my_disease_name': my_disease_name_encode,
                          'my_disease_name_nav_menu': my_disease_name,
                          'today': today, 'user_protray': user_protray}
