@@ -183,9 +183,9 @@
 
               <!-- 暫時的 -->
               {% for i in my_last_medicine_report %}
-                 <!-- level1: {{ i }} <br>  -->
+                 <!-- level1: {{ i }} ---- {{ i.Id }}<br> -->
                 {% for j in i %}
-                  level2: {{ j.disease_name }} ---- {{ j.medicine }} ---- {{ j.dosage }}<hr>
+                  level2: {{ j.key.id }} ---- {{ j.disease_name }} ---- {{ j.medicine }} ---- {{ j.dosage }}<hr>
                 {% endfor %}
               {% endfor %}
 

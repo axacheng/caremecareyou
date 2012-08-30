@@ -7,13 +7,34 @@
   <link type="text/css" rel="stylesheet" href="static/css/autoSuggest.css">
   <script type="text/javascript">
 	  $(document).ready(function(){
-		$("input[type=text]").autoSuggest("http://localhost:8080/testtagsearch/",
+
+		$("input[type=text]").autoSuggest("http://54.248.93.194/json.php",
+//		$("input[type=text]").autoSuggest("http://localhost:8080/testtagsearch/",
 			{minChars: 1,
 			 queryParam: 'term',
-			 retrieveComplete:function(data){
+			 selectedItemProp: "name",
+			 selectedValuesProp: "value",
+			 searchObjProps: "name",
+			 retrieveComplete: function(data){
 			 	console.log(data);
+			 	console.log(data.constructor);
 			 }}
-		 );
+		 );	  	
+
+	 //  	var data = [{value: "21", name: "Mick Jagger"},
+		// 			{value: "43", name: "Johnny Storm"}];
+
+		// console.log(data.constructor)
+
+		// $("input[type=text]").autoSuggest(data,
+		// 	{minChars: 1,
+		// 	 queryParam: 'term',
+		// 	 selectedItemProp: "name",
+		// 	 searchObjProps: "name",
+		// 	 retrieveComplete: function(data){
+		// 	 	console.log(data);
+		// 	 }}
+		//  );
 	  });
   </script>
 

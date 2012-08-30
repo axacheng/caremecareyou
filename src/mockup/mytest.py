@@ -25,8 +25,14 @@ class TagSearchJson(webapp2.RequestHandler):
                 medicine_result.append(medicine.medicine_name)
 
             self.response.headers['Content-Type'] = 'application/json'
-#            self.response.out.write(json.dumps({'name':medicine_result}))
-            self.response.out.write(json.dumps(medicine_result))
+            xxxx = [{'value':'1', 'name': 'AAA'},
+                    {'value':'2', 'name': 'BBB'},
+                    {'value':'3', 'name': 'CCC'}]
+
+            
+            self.response.out.write(json.dumps(xxxx))
+            #self.response.out.write(xxxx)
+            #self.response.out.write(json.dumps(medicine_result))
 
 
     def post(self):

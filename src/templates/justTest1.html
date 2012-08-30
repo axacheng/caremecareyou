@@ -12,7 +12,7 @@
       去做一個GET且也回了200 OK 但是在呈現的時候卻永遠只有第5和第6個div可以畫圖...其他都沒有辦法把圖畫出來
 -->
 
-<!--
+
   <script type="text/javascript">
   function MyCounter() {
       if( typeof MyCounter.counter == 'undefined' ) {
@@ -46,7 +46,7 @@
                   };
                   var data_medicine = response.getDataTable();
                   var chart_medicine = new google.visualization.AnnotatedTimeLine(document.getElementById('timeline'+ccc));
-                      chart_medicine.draw(data_medicine, {});
+                      chart_medicine.draw(data_medicine, {displayAnnotations: true});
               }; // callback_draw_timeline_medicine
           };
 
@@ -56,8 +56,7 @@
   {% endif %}  
 
 
--->
-
+<!--
   以下的 hardcode卻可以...和上面用django forloop同樣的行為，但是這個hardcode程式跑起來都沒問題，會產生6張圖.....
 
     <script type="text/javascript">
@@ -215,21 +214,22 @@
       };
 
     </script> 
-
+-->
 
 
 <body style="font-family: Arial;border: 0 none;">
   <!-- block for test1 -->
-  <!--<div id="maindiv"></div><br>-->
+  <div id="maindiv"></div><br>
 
   <!-- block for test2 -->
+  <!--
   <div id="timeline0" style='height:240px; width:800px;'></div> 
   <div id="timeline1" style='height:240px; width:800px;'></div> 
   <div id="timeline2" style='height:240px; width:800px;'></div> 
   <div id="timeline3" style='height:240px; width:800px;'></div> 
   <div id="timeline4" style='height:240px; width:800px;'></div> 
   <div id="timeline5" style='height:240px; width:800px;'></div> 
-
+-->
 </body>
 </html>
 ​
