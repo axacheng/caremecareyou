@@ -9,6 +9,17 @@ $(document).ready(function(){
 });
 
 
+$(document).ready(function(){
+  $('#axa').click(function(){
+    var text = $('textarea#add_new_disease_name').val();
+    $('#add_medicine_disease_name').append(text);
+    $('#addcondition').modal('hide')
+  })
+})
+
+
+
+
 //datepicker for calendar
 $(function() {
    $( "#date_report_minding, #date_report_period, #date_report_medicine, \
