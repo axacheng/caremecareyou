@@ -11,28 +11,23 @@ import webapp2
 from google.appengine.ext.webapp import template
 
 
-class TagSearch(webapp2.RequestHandler):
+class TagSearchJson(webapp2.RequestHandler):
     def get(self, term):
         medicine_result = []
         search_word = self.request.get('term')
         logging.info('MY TERM   :::::: %s' % search_word)
 
-        # query.filter("Display", True)
-        # query.filter("Word >=", unicode(search_word))
-        # query.filter("Word <", unicode(search_word) + u'\ufffd')
-
         all_medicine = models.Medicine.query(models.Medicine.medicine_name >= unicode(search_word.capitalize()))
-        result = all_medicine.fetch(10)
+        result = all_medicine.fetch(5)
 
         if result:
             for medicine in result:
                 medicine_result.append(medicine.medicine_name)
 
             self.response.headers['Content-Type'] = 'application/json'
+#            self.response.out.write(json.dumps({'name':medicine_result}))
             self.response.out.write(json.dumps(medicine_result))
 
-        # path = os.path.join(os.path.dirname(__file__), 'templates/justTest.html')
-        # self.response.out.write(template.render(path, 'template_dict'))
 
     def post(self):
         username = '123456:[ TEST ]:facebook'  # Mocks
@@ -48,6 +43,15 @@ class TagSearch(webapp2.RequestHandler):
 
         models.Report.AddMedicineReport(username, populate_data, recorded_date)
         self.redirect('/myrecord')
+
+
+class TagShow(webapp2.RequestHandler):
+    """TagSearchJson render page"""
+    def get(self):
+        path = os.path.join(os.path.dirname(__file__), '../templates/justTagTest.html')
+        self.response.out.write(template.render(path, 'template_dict'))
+
+
 
 
 class TagPage(webapp2.RequestHandler):
