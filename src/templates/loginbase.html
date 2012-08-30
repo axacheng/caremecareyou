@@ -284,18 +284,18 @@
                 </td>
               </tr>
             </tbody>
-          </table> 
+          </table>
+          <div class="modal-footer">
+            <input id="search_input" class="btn btn-primary" type="submit" value="按我新增記錄" />
+            <a href="#" class="btn" data-dismiss="modal">Close</a>
+          </div> 
         </form> <!-- add_report end -->
-      </div> <!-- modal-body end -->
-      <div class="modal-footer">
-        <input id="search_input" class="btn btn-primary" type="submit" value="按我新增記錄" />
-        <a href="#" class="btn" data-dismiss="modal">Close</a>
-      </div>
+      </div> <!-- modal-body end -->    
     </div> <!-- modal hide end -->
     {% endblock %}
 
 
-     <!--圖片記錄填寫表單-->
+    <!--圖片記錄填寫表單-->
     {% block modal3 %}
     <div class="modal hide" id="photo">
       <div class="modal-header">
@@ -314,13 +314,13 @@
             <i class="icon-chevron-right"></i> 圖像上傳：
             <i class="icon-file"></i>  <input class="input-file" id="fileInput" type="file"><br>
           </div> 
-          <i class="icon-chevron-right"></i> 備註說明： <textarea class="input-xlarge" id="exam_comment" row="3"></textarea>  
+          <i class="icon-chevron-right"></i> 備註說明： <textarea class="input-xlarge" id="exam_comment" row="3"></textarea>
+          <div class="modal-footer">
+            <input id="search_input" class="btn btn-primary" type="submit" value="按我新增記錄" />
+            <a href="#" class="btn" data-dismiss="modal">Close</a>
+          </div>  
         </form> <!-- add_report end -->
       </div> <!-- modal-body end -->
-      <div class="modal-footer">
-        <input id="search_input" class="btn btn-primary" type="submit" value="按我新增記錄" />
-        <a href="#" class="btn" data-dismiss="modal">Close</a>
-      </div>
     </div> <!-- modal hide end -->
     {% endblock %}
 
@@ -336,15 +336,15 @@
           <i class="icon-folder-open"></i> 新增病症： 
           <textarea class="input-xlarge" id="add_new_disease_name" value="" row="3"></textarea><br>
           <div class="input-append date" id="date_report_addcondition" data-date="{{ today }}" data-date-format="yyyy-mm-dd">
-          </div>  
+          </div> 
+          <div class="modal-footer">
+            <a class="btn btn-success" href="#medicine"><i class="icon-bar-chart icon-white"></i> 用藥記錄 </a>
+            <a class="btn btn-primary" href="#exam"><i class="icon-check icon-white"></i> 檢查記錄 </a>
+            <a href="#" class="btn" data-dismiss="modal">Close</a>
+          </div> 
         </form> <!-- add_report end -->
       </div> <!-- modal-body end -->
-      <div class="modal-footer">
-        <i class="icon-chevron-right"></i> 下一步...<br>
-        <a class="btn btn-success" href="#medicine"><i class="icon-bar-chart icon-white"></i> 用藥記錄 </a>
-        <a class="btn btn-primary" href="#exam"><i class="icon-check icon-white"></i> 檢查記錄 </a>
-        <a href="#" class="btn" data-dismiss="modal">Close</a>
-      </div>
+      
     </div> <!-- modal hide end -->
     {% endblock %}
 
