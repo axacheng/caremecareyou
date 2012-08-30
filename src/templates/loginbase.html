@@ -221,7 +221,7 @@
                 <td>
                   <input id="#" type="number" name="term_dosage" />
                 </td>
-                <td><button class="btn btn-mini"><i class="icon-white icon-plus-sign"></i></button>
+                <td><button class="btn btn-mini"><i class="icon-white icon-plus-fsign"></i></button>
                 </td>
               </tr>
             </tbody>
@@ -334,7 +334,11 @@
     </div> <!-- modal hide end -->
     {% endblock %}
 
+
     <!--新增病症表-->
+
+
+    
     {% block modal4 %}
     <div class="modal hide" id="addcondition">
       <div class="modal-header">
@@ -351,12 +355,16 @@
       </div> <!-- modal-body end -->
       <div class="modal-footer">
         <i class="icon-chevron-right"></i> 下一步...<br>
-        <a class="btn btn-success" href="#medicine"><i class="icon-bar-chart icon-white"></i> 用藥記錄 </a>
+        <a id="axa" data-toggle="modal" class="btn btn-success" href="#medicine"><i class="icon-bar-chart icon-white"></i> 用藥記錄 </a>
         <a class="btn btn-primary" href="#exam"><i class="icon-check icon-white"></i> 檢查記錄 </a>
         <a href="#" class="btn" data-dismiss="modal">Close</a>
       </div>
     </div> <!-- modal hide end -->
     {% endblock %}
+
+
+
+
 
     <div class="clearfix"></div>
     <div id="footer">
