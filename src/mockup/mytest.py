@@ -57,6 +57,6 @@ class TagPage(webapp2.RequestHandler):
                                           'chart_type': ['medicinetakenjson', 'sideeffectjson']},
              'username': '123456:[ TEST ]:facebook'}
 
-        path = os.path.join(os.path.dirname(__file__), 'templates/justTest1.html')
+        path = os.path.join(os.path.dirname(__file__), '../templates/justTest1.html')
         self.response.out.write(template.render(path, t))
 

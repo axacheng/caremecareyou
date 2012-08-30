@@ -10,8 +10,9 @@
 <!--  這是用一個名叫MyCounter 的function加上 django template的 forloop 去取得 chart json output
       但是這個方式卻一直行不通 ...你在browser debug console裡面的Network可以看到他有向localhost:8080
       去做一個GET且也回了200 OK 但是在呈現的時候卻永遠只有第5和第6個div可以畫圖...其他都沒有辦法把圖畫出來
+-->
 
-
+<!--
   <script type="text/javascript">
   function MyCounter() {
       if( typeof MyCounter.counter == 'undefined' ) {
@@ -35,6 +36,7 @@
               var url_medicine = "http://localhost:8080/123456:[ TEST ]:facebook/{{ disease_name }}/chart/medicinetakenjson/"+ccc;
 
               var query_medicine = new google.visualization.Query(url_medicine);
+              //alert(url_medicine)
               query_medicine.send(callback_draw_timeline_medicine);
 
               function callback_draw_timeline_medicine(response) {
@@ -44,47 +46,20 @@
                   };
                   var data_medicine = response.getDataTable();
                   var chart_medicine = new google.visualization.AnnotatedTimeLine(document.getElementById('timeline'+ccc));
-                      chart_medicine.draw(data_medicine, {displayAnnotations: true,
-                        thickness: 3, fill:5,
-                        dateFormat: 'yyyy-M-dd',
-                        annotationsWidth: 10});
+                      chart_medicine.draw(data_medicine, {});
               }; // callback_draw_timeline_medicine
           };
-        </script> 
 
-        <script type="text/javascript">
-          google.load('visualization', '1', {packages: ['annotatedtimeline']});
-          google.setOnLoadCallback(drawChartSideEffect);
 
-          function drawChartSideEffect() {
-              ddd = MyCounter()
-              $("#maindiv").append("<div id='timeline" + ddd + "' style='height:240px; width:800px;'></div><hr>");
-
-              var url_sideeffect = "http://localhost:8080/123456:[ TEST ]:facebook/{{ disease_name }}/chart/sideeffectjson/"+ddd;
-              
-              var query_sideeffect = new google.visualization.Query(url_sideeffect);
-              query_sideeffect.send(callback_draw_timeline_sideeffect);
-
-              function callback_draw_timeline_sideeffect(response) {
-                  if (response.isError()) {
-                      alert("Error in query_sideeffect: " + response.getMessage());
-                      return;
-                  };
-                  var data_sideeffect = response.getDataTable();
-                  var chart_sideeffect = new google.visualization.AnnotatedTimeLine(document.getElementById('timeline'+ddd));
-                      chart_sideeffect.draw(data_sideeffect, {displayAnnotations: true,
-                        thickness: 3, fill:5,
-                        dateFormat: 'yyyy-M-dd',
-                        annotationsWidth: 10});
-              }; // callback_draw_timeline_sideeffect
-          };
         </script> 
     {% endfor %}
   {% endif %}  
+
+
 -->
 
+  以下的 hardcode卻可以...和上面用django forloop同樣的行為，但是這個hardcode程式跑起來都沒問題，會產生6張圖.....
 
-  <!-- 以下的 hardcode卻可以...和上面用django forloop同樣的行為，但是這個hardcode程式跑起來都沒問題，會產生6張圖.....-->
     <script type="text/javascript">
       google.load('visualization', '1', {packages: ['annotatedtimeline']});
       google.setOnLoadCallback(drawChartMedicine);
@@ -245,8 +220,7 @@
 
 <body style="font-family: Arial;border: 0 none;">
   <!-- block for test1 -->
-  <!--<div id="maindiv"></div><br> -->
-
+  <!--<div id="maindiv"></div><br>-->
 
   <!-- block for test2 -->
   <div id="timeline0" style='height:240px; width:800px;'></div> 
@@ -255,7 +229,6 @@
   <div id="timeline3" style='height:240px; width:800px;'></div> 
   <div id="timeline4" style='height:240px; width:800px;'></div> 
   <div id="timeline5" style='height:240px; width:800px;'></div> 
-
 
 </body>
 </html>
