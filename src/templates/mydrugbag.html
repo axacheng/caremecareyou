@@ -1,0 +1,74 @@
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="static/css/jdashboard.css">
+		
+	<style type="text/css">
+		
+		body {
+			background: white;
+		}
+		
+		#jDash {
+			min-height: 500px;
+			background: white;
+			-moz-border-radius: 4px;	
+			margin: 0px;
+			margin-top: 0px;	
+		}
+		
+		div.jdash-head-title span.sub-title {
+			display: inline;
+			margin: 0;
+			font-size: 11px;
+			color: #888888;
+		}
+		
+	</style>
+	
+	<script type="text/javascript" src="static/js/jquery.min.js"></script>
+	<script type="text/javascript" src="static/js/jdashboard.min.js"></script>
+	<script type="text/javascript">
+		
+		$(function() {
+			$("#jDash").jDashboard({ columns: 3 });
+		});
+		
+	</script>
+</head>
+<body>	
+	<div id="jDash" class="jdash">
+		<div class="jdash-item">
+			<h1 class="jdash-head">
+                <table cellpadding="0" cellspacing="0" style="width: 100%; ">
+                	<tbody>
+                		<tr>
+                			<td>
+                				<div class="jdash-head-title">藥袋 1 - yyyy / mm / dd
+                				</div>
+                			</td>
+                			<td style="width: 31px; vertical-align: middle; ">
+                				<div class="jdash-head-collapse">
+                				</div>
+                			</td>
+                		</tr>
+                	</tbody>
+                </table>
+		    </h1>
+			<div class="jdash-body">
+				<i class="icon-large icon-beaker"></i> 藥名：XXX
+			</div>
+		</div>
+		<div class="jdash-item">
+			<h1 class="jdash-head">
+				Toolbar
+				<div class="jdash-toolbar">
+					<button>Button</button>
+					<button>Another Button</button>
+				</div>
+			</h1>
+			<div class="jdash-body">
+				Each dashboard item can have their own toolbar, where any html can be added. The toolbar won't be hidden when the item is collapsed.
+			</div>
+		</div>
+	</div>
+</body>
