@@ -229,6 +229,9 @@ class MyRecord(webapp2.RequestHandler):
 
         # my_last_medicine_report 這是點選 '新增用藥記錄' 時讓user快速記錄的資料
         # 抓取每個症狀最新(date_created) 的一筆entity 並存到 my_last_medicine_report
+        # 這邊無法用 projection + filter的原因是因為我們有指定 == 'Medicine' 和
+        # == dn 因為projection query equality 的限制
+        # https://developers.google.com/appengine/docs/python/datastore/projectionqueries#Limitations_on_Projections 
         my_last_medicine_report = []
         for dn in my_disease_name:
             my_last_medicine_report.append(
@@ -319,7 +322,8 @@ app = webapp2.WSGIApplication([('/', MainPage),
                                 ('/myprofile', myprofile),
 
                                 ########### Testing section ###############
-                                ('/testtagsearch/(.*)', mockup.mytest.TagSearch),
+                                ('/testtagsearch/(.*)', mockup.mytest.TagSearchJson),
+                                ('/testtagshow', mockup.mytest.TagShow),
                                 ('/testtagpage', mockup.mytest.TagPage),
 
                                 ########### Draw Chart Handlers ###########
