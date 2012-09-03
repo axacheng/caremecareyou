@@ -15,7 +15,6 @@ class TagSearchJson(webapp2.RequestHandler):
     def get(self, term):
         medicine_result = []
         search_word = self.request.get('term')
-        logging.info('MY TERM   :::::: %s' % search_word)
 
         all_medicine = models.Medicine.query(models.Medicine.medicine_name >= unicode(search_word.capitalize()))
         result = all_medicine.fetch(5)
@@ -24,16 +23,12 @@ class TagSearchJson(webapp2.RequestHandler):
             for medicine in result:
                 medicine_result.append(medicine.medicine_name)
 
-            self.response.headers['Content-Type'] = 'application/json'
-            xxxx = [{'value':'1', 'name': 'AAA'},
+        self.response.headers['Content-Type'] = 'application/json'
+        xxxx = [{'value':'1', 'name': 'AAA'},
                     {'value':'2', 'name': 'BBB'},
                     {'value':'3', 'name': 'CCC'}]
 
-            
-            self.response.out.write(json.dumps(xxxx))
-            #self.response.out.write(xxxx)
-            #self.response.out.write(json.dumps(medicine_result))
-
+        self.response.out.write(json.dumps(xxxx))
 
     def post(self):
         username = '123456:[ TEST ]:facebook'  # Mocks
